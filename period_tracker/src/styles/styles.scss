@@ -1,0 +1,68 @@
+ $color1: #8FDDC3;
+ $color2: #241E4E;
+ $textcolor: #EAE8FF;
+ $color4: #5C0F47;
+ $color5: #8FDDC3;
+ $color6: #5CFFC9;
+ $button-color:#AF4D98;
+ $login-input-background: #4B203F;
+ $backgroundgrad: linear-gradient($color2, $color4);
+ $drop-shadow-wrappers: (rgba(0,0,0,.4) 0px 5px 10px);
+$radius: 5px;
+$box-padding: 1rem;
+@mixin for-size($size){
+    @if $size == tablet-only{
+        @media (max-width: 768px){ @content;}
+    }
+    @if $size == small-tablet-only{
+        @media (max-width: 720px){ @content;}
+    }
+    @if $size == large-phone-only{
+        @media (max-width: 535px) {@content;}
+    }
+    @if $size == phone-only{
+        @media (max-width: 425px){ @content;}
+    }
+    @if $size == small-desktop{
+        @media (max-width: 1300px){@content;}
+    }
+    @if $size == Desktop{
+        @media (min-width: 1300px) {@content;}
+    }
+}
+
+/* Font familys */
+/* bebas-neue-regular - latin */
+@font-face {
+    font-family: 'Bebas Neue';
+    src: url('./../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.eot');
+    src: local("Bebas Neue"),
+         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff2') format('woff2'),
+         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff') format('woff'),
+         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.ttf') format('truetype')
+  }
+
+/* Comfortaa */
+@font-face {
+    font-family: 'Comfortaa';
+    src: url('./../fonts/Comfortaa/Comfortaa-Light.ttf');
+    src: local('Comfortaa'),
+         url('../fonts/Comfortaa/Comfortaa-Light.ttf') format('truetype')
+}
+
+  $Copy-Font: 'Comfortaa', Display;
+  $Header-Font: 'Bebas Neue', Display;
+
+
+
+p, span, button, a{
+    font-family: $Copy-Font;
+}
+
+h1, h2, h3, h4{
+    font-family: $Header-Font;
+}
+@import './reset';
+@import './wrappers';
+@import './login';
+@import './animations';

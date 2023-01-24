@@ -1,0 +1,16 @@
+/* page setup */
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html ,body{
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    overscroll-behavior: auto;
+}
+body{
+    overflow: auto;
+}

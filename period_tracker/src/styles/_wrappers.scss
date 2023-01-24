@@ -1,0 +1,51 @@
+.wrapper{
+    background-color: $color4;
+    background-image: $backgroundgrad;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.page-wrapper{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-self: center;
+}
+.login-wrapper{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    background-color: $color4;
+    width: 75%;
+    margin-top: 15vh;
+    box-shadow: $drop-shadow-wrappers;
+    border-radius: $radius;
+    padding: $box-padding;
+    h1{
+        color: $textcolor;
+        font-size: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+    button{
+        box-shadow: $drop-shadow-wrappers;
+        width: 95%;
+        height: 2rem;
+        margin: 2rem 0px;
+        font-size: 1.5rem;
+        background-color: $button-color;
+        border-radius: $radius;
+        border: none;
+        color: $textcolor
+    }
+    hr{
+        width: 100%;
+        background-color: $color2;
+        height: 2px;
+        border: none;
+    }
+}
