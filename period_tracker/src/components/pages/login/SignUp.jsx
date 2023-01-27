@@ -53,13 +53,13 @@ function SignUp(){
                     <form onSubmit={handleSubmit}>
                         <Field name='email' >
                             {({input, meta}) => (
-                            <div className='email-input'>
-                                <input {...input} type= 'email' required/>
-                                <label htmlFor='email' className='login-lable'>
-                                    <span className='login-span'>Email<small>*</small></span>
-                                </label>
-                                {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
-                            </div>
+                                <div className='email-input'>
+                                    <input {...input} type= 'email' required/>
+                                    <label htmlFor='email' className='login-lable'>
+                                        <span className='login-span'>Email<small>*</small></span>
+                                    </label>
+                                    {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                                </div>
                             )}
                         </Field>
                         <Field name='username'>
