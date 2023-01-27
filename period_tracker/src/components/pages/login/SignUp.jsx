@@ -1,16 +1,35 @@
 import {Form, Field} from 'react-final-form';
 import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
+import axios from 'axios';
+
+
 
 function SignUp(){
     const navigate = useNavigate();
-    const onSubmit = (values) =>{
-        window.alert(JSON.stringify(values,0,2))
-        navigate('/login')
+    const [regError, setRegError] = useState("");
+    let success = true;
+    async function onSubmit(values){
+        let userInfo = {email: values.email, userName: values.username, password: values.password}
+        try{
+            const results = await axios.post ('http://localhost:8080/signup', {
+                userInfo
+            })
+        }catch(error){
+            success = false;
+            setRegError(error.response.data.error)
+        }
+        if (success === true){
+            navigate('/accountsetup')
+        }
+
     }
+    
     return(
         <section className='login-wrapper'>
-        <h1>Sign Up</h1>
-        <Form
+            <h1>Sign Up</h1>
+            <span className='reg-error'>{regError}</span>
+            <Form
                 onSubmit={onSubmit}
                 validate = {values => {
                     const errors = {}
@@ -79,7 +98,7 @@ function SignUp(){
                         <button type="submit" disabled={submitting}>Submit</button>
                     </form>
                     )}
-                    />
+            />
         </section>
     )
 }

@@ -1,41 +1,59 @@
 const express = require("express");
 const cors = require('cors');
-const {MongoClient} = require('mongodb');
 const app = express();
+const PORT = 8080
+const mongoose = require('mongoose');
+const User = require("./User");
+const bcrypt = require('bcrypt')
+require('dotenv').config()
 
-async function main (){
-  const uri = 'mongodb+srv://FriendFrie77:a6fLzfKCsYZrdnjX@period-tracker.tem1jaw.mongodb.net/?retryWrites=true&w=majority';
-  const client = new MongoClient(uri);
+
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+app.use(cors());
+
+const uri = `${process.env.dburi}`
+
+async function db (){
   try{
-    await client.connect();
-    await listDatabases(client)
-  } catch (e) {
-    console.error(e);
-  } finally {
-    await client.close();
+    await mongoose.connect(uri)
+    console.log('Connected to db')
+  }catch (error){
+    console.error(error);
   }
 }
-test
-main().catch(console.error);
-// app.use('/login', (req, res)=> {
-//   res.send({
-//     token: 'test123'
-//   });
-// });
-async function listDatabases(client){
-  const databaseList = await client.db().admin().listDatabases();
-  console.log("Databases:")
-  databaseList.databases.forEach(db =>{
-    console.log(`- ${db.name}`);
-  })
-};
 
-// async function addlogin
-const PORT = process.env.PORT || 8080;
-  
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
-app.get('/signup', function (req, res){
-  res.console.log('test')
-  listDatabases(client)
+db().catch(console.error);
+
+app.post('/signup', async (req, res)=> {
+  let userInfo = req.body
+  let newUser = {email: userInfo.userInfo.email, userName: userInfo.userInfo.userName, password: userInfo.userInfo.password}
+  const results = await User.exists({email: newUser.email})
+  try{
+    if (!results){
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(newUser.password, salt)
+      const user = new User({email:newUser.email, username: newUser.userName, password:hash})
+      const nuser = await user.save()
+      return res.status(201).json({
+        success:'Register Successfully'
+      })
+    }else{
+      res.status(400).json({
+        error:'Email is already taken. Do you already have an account?'
+      })
+    }
+  }catch (err){
+    res.status(500).json({
+      error:'Sever error, please try again later.'
+    })
+  }
+});
+
+
+
+app.listen(PORT, () =>{
+  console.log(`Listening at http://localhost:${PORT}`)
 })
