@@ -9,7 +9,6 @@ function Login(){
     let success = true;
     async function onSubmit(values){
         let userInfo = {userName: values.username, password: values.password}
-        console.log(userInfo)
         try{
             const results = await axios.post ('http://localhost:8080/login', {
                 userInfo
@@ -19,7 +18,8 @@ function Login(){
             setRegError(error.response.data.error)
         }
         if (success === true){
-            navigate('/accountsetup')
+            // const test = axios.response.headers
+            // console.log(test)
         }
     }
     return(
