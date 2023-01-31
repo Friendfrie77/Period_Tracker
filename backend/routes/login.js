@@ -1,32 +1,48 @@
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const User = require('../mongoose-schmea/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../mongoose-schmea/User');;
 require('dotenv').config()
 
 module.exports =  async (req, res)=>{
-    let userInfo = req.body;
-    let signInInfo = {userName: userInfo.userInfo.userName, password: userInfo.userInfo.password};
-    const results = await User.find({username: signInInfo.userName});
-    try{
-      if(results){
-        const hashpass = results[0].password;
-        const id = results[0].id;
-        const passVaild= bcrypt.compare(signInInfo.password, hashpass);
-        if (passVaild){
-          const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_SECRET);
-          res.cookie('accessToken', accessToken,{
+  let userInfo = req.body;
+  console.log(userInfo)
+  let signInInfo = {email: userInfo.userInfo.email, password: userInfo.userInfo.password};
+  console.log(signInInfo)
+  User.findOne({email: signInInfo.email}, function(err, user){
+    if (err){
+      res.status(500).json({
+        error: 'Internal error please try again later'
+      });
+    } else if (!user) {
+      res.status(401).json({
+        error: 'Incorrect email or password'
+      });
+    } else {
+      user.authPassword(signInInfo.password, function(err, same){
+        if (err){
+          console.log(err)
+          res.status(500).json({
+            error: 'Internal error please try again later'
+          });
+        } else if (!same){
+          res.status(401).json({
+            error: 'Incorrect email or password'
+          });
+        } else{
+          const userId = {id: user.id};
+          const id = user.id;
+          const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'});
+          User.findOneAndUpdate({id: user.id}, {accessToken: accessToken}, (err) =>{
+            if (err){
+              console.log(err)
+            }
+          });
+          res.cookie('token', accessToken, {
             httpOnly: true
           });
-          return res.status(201).json({
-            success:'Register Successfully'
-          })
-        }else{
-          return res.status(401).json({
-            error: 'Invaild username or password.'
-          })
+          res.json({accessToken, id});
         }
-        }
-    }catch(err){
-      console.log(err)
+      });
     }
-  };
+  });
+}

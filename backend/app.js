@@ -7,32 +7,22 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookiePars = require('cookie-parser');
 const expressSessions = require('express-session');
+const tokenAuth = require('../backend/middleware/tokenAuth');
 const loginRoute = require('../backend/routes/login');
 const signupRoute = require('../backend/routes/signup');
+const authRoute =require('../backend/routes/authToken')
 const User = require("../backend/mongoose-schmea/User");
 
 require('dotenv').config()
-
-
+const corsOptions ={
+  exposedHeaders: 'Set-Cookie'
+};
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cookiePars())
-app.use(cors({
-  origin: ["http://http://localhost:3000"],
-  methods: ['GET', 'POST'],
-  credentials: true
-}));
+app.use(cors(corsOptions));
 
-app.use(expressSessions({
-  key: 'accessToken',
-  secret: process.env.ACCESS_TOKEN_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    expires: 60 * 60 * 24,
-  }
-}));
 const uri = `${process.env.dburi}`
 
 async function db (){
@@ -46,21 +36,13 @@ async function db (){
 
 db().catch(console.error);
 
-
+app.get('/checkToken', tokenAuth, function(req , res){
+  res.sendStatus(200);
+});
+app.post('/authToken', authRoute)
 app.post('/login', loginRoute)
 app.post('/signup', signupRoute)
 
-
-function authToken(req, res, next){
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]
-  if (token == null) return res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user)=>{
-    if (err) return res.sendStatus(403)
-    req.user = user
-    next()
-  })
-}
 
 app.listen(PORT, () =>{
   console.log(`Listening at http://localhost:${PORT}`)

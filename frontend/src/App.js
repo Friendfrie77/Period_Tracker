@@ -8,6 +8,7 @@ import PrivateRoutes from './components/utils/PrivateRoutes';
 
 
 function App() {
+
     return (
         <Router>
             <Routes>

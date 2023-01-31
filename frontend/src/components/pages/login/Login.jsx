@@ -3,24 +3,24 @@ import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
+import {useCookies} from 'react-cookie';
 function Login(){
     const navigate = useNavigate();
     const [regError, setRegError] = useState("");
-    let success = true;
     async function onSubmit(values){
-        let userInfo = {userName: values.username, password: values.password}
+        let userInfo = {email: values.email, password: values.password}
         try{
             const results = await axios.post ('http://localhost:8080/login', {
                 userInfo
             })
+            localStorage.setItem('token', results.data.accessToken);
+            localStorage.setItem('id', results.data.id)
         }catch(error){
-            success = false;
             setRegError(error.response.data.error)
         }
-        if (success === true){
-            // const test = axios.response.headers
-            // console.log(test)
-        }
+      
+ 
+
     }
     return(
         <section className='login-wrapper'>
@@ -29,8 +29,8 @@ function Login(){
                 onSubmit={onSubmit}
                 validate = {values => {
                     const errors= {}
-                    if (!values.username){
-                        errors.username = 'Required'
+                    if (!values.email){
+                        errors.email = 'Required'
                     }
                     if (!values.password){
                         errors.password = 'Required'
@@ -39,12 +39,12 @@ function Login(){
                 }}
                 render = {({handleSubmit, form, submitting, pristine, values}) =>(
                     <form onSubmit={handleSubmit}>
-                        <Field name='username'>
+                        <Field name='email'>
                             {({input, meta})=> (
-                            <div className='username-input'>
-                                <input {...input} type='text' required />
-                                <label htmlFor='username' className='login-lable'>
-                                    <span className='login-span'>Username<small>*</small></span>
+                            <div className='email-input'>
+                                <input {...input} type='email' required />
+                                <label htmlFor='email' className='login-lable'>
+                                    <span className='login-span'>Email<small>*</small></span>
                                 </label>
                                 {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
                             </div>
@@ -69,7 +69,7 @@ function Login(){
                     </form>
                 )}
             />
-            <Link className='recover'>Forgot your username or password?</Link>
+            {/* <Link className='recover'>Forgot your username or password?</Link> */}
             <hr></hr>
             <div className='sign-up'>
                 <span>New?</span>
