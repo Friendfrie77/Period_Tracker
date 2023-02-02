@@ -1,34 +1,34 @@
 import {Form, Field} from 'react-final-form';
-import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
-import axios from 'axios';
+import { useRef, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setCredentials } from '../../../utils/authSlice';
+import { useRegisterMutation } from '../../../utils/authApiSlice';
 
 
 
-function SignUp(){
-    const navigate = useNavigate();
-    const [regError, setRegError] = useState("");
-    let success = true;
+export default function SignUp(){
+    const userRef = useRef()
+    const errRef = useRef()
+    const navigate = useNavigate()
+    const [register, { isLoading }] = useRegisterMutation()
+    const dispatch = useDispatch()
+    const [errMsg, setErrMsg] = useState('')
     async function onSubmit(values){
-        let userInfo = {email: values.email, userName: values.username, password: values.password}
         try{
-            const results = await axios.post ('http://localhost:8080/signup', {
-                userInfo
-            })
-        }catch(error){
-            success = false;
-            setRegError(error.response.data.error)
-        }
-        if (success === true){
+            const user = (values.Email)
+            const userData = await register({Email:values.email, Username:values.username, Password:values.password}).unwrap()
+            dispatch(setCredentials({...userData, user }))
             navigate('/accountsetup')
+        }catch(err){
+            console.log(err.data.error)
+            setErrMsg(err.data.error)
         }
-
     }
-    
-    return(
+    const content = isLoading ? <h1>Loading...</h1> :(
         <section className='login-wrapper'>
             <h1>Sign Up</h1>
-            <span className='reg-error'>{regError}</span>
+            <span className='reg-error'>{errMsg}</span>
             <Form
                 onSubmit={onSubmit}
                 validate = {values => {
@@ -100,7 +100,6 @@ function SignUp(){
                     )}
             />
         </section>
-    )
+        )
+    return content
 }
-
-export default SignUp

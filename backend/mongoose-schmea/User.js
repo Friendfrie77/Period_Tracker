@@ -5,17 +5,24 @@ const salt = 15;
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        unique: true
+        unique: true,
+        required: true
     }, 
-    username: String,
-    password: String,
-    accessToken: String,
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    token: String,
     cycle: Number,
     periodStartDate: Date,
     periodEndDate: Date,
     previousPeriod:{
-        startDate: Date,
-        endDate: Date
+        type: Array,
+        default: []
     }
 });
 
@@ -44,6 +51,6 @@ userSchema.methods.authPassword = function(password, callback){
         }
     });
 }
-userSchema.plugin(AutoIncrement, {inc_field:'id'});
+
 
 module.exports = mongoose.model("Users", userSchema)

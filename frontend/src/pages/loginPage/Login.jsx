@@ -1,28 +1,41 @@
 import {Form, Field} from 'react-final-form';
-import { Link } from 'react-router-dom';
+import { Link, useResolvedPath } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios';
-import {useCookies} from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../state';
+import Spinner from '../../components/spinner';
 function Login(){
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
+
     const [regError, setRegError] = useState("");
     async function onSubmit(values){
-        let userInfo = {email: values.email, password: values.password}
-        try{
-            const results = await axios.post ('http://localhost:8080/login', {
-                userInfo
-            })
-            localStorage.setItem('token', results.data.accessToken);
-            localStorage.setItem('id', results.data.id)
-        }catch(error){
-            setRegError(error.response.data.error)
-        }
-      
- 
-
+        setLoading(true)
+        let email = values.email
+        let password = values.password
+        const loginTry = await axios.post('http://localhost:8080/auth/login',{
+            email, password
+        });
+        const user = await loginTry
+        if (user){
+            dispatch(
+                setLogin({
+                  user: user.data.user.username,
+                  token: user.data.accessToken,
+                  cycle: user.data.user.cycle,
+                  periodStartDate: user.data.user.periodStartDate,
+                  periodEndDate: user.data.user.periodEndDate,
+                  previousPeriod: user.data.user.previousPeriod,
+                })
+              );
+        };
+        console.log('test')
+        navigate('/home')
     }
-    return(
+    const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <h1>Sign In</h1>
             <Form
@@ -77,6 +90,7 @@ function Login(){
             </div>
         </section>
     )
+    return content
 };
 
 export default Login

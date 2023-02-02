@@ -19,6 +19,12 @@ h1, h2, h3, h4 {
   font-family: "Bebas Neue", Display;
 }
 
+.pog {
+  margin: auto;
+  color: pink;
+  font-size: 15rem;
+}
+
 /* page setup */
 * {
   margin: 0px;
@@ -207,4 +213,48 @@ body {
 
 .email-input input:focus + .login-lable:after, .email-input input:valid + .login-lable:after {
   translate: 100%;
+}
+
+.loading {
+  background-color: transparent;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 150px;
+  height: 150px;
+  border: 8px solid;
+  border-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spin-anim 1.2s linear infinite;
+          animation: spin-anim 1.2s linear infinite;
+}
+
+@-webkit-keyframes spin-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    border-color: transparent #5CFFC9 transparent transparent;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    border-color: transparent #5CFFC9 transparent transparent;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }/*# sourceMappingURL=styles.css.map */

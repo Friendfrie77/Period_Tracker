@@ -62,7 +62,15 @@ p, span, button, a{
 h1, h2, h3, h4{
     font-family: $Header-Font;
 }
+
+.pog{
+    margin: auto;
+    color: pink;
+    font-size: 15rem;
+}
 @import './reset';
 @import './wrappers';
+@import './nav';
 @import './login';
 @import './animations';
+@import './loading';

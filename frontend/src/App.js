@@ -1,25 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Index from './components/pages/index/index';
-import Login from './components/pages/login/Login';
-import SignUp from './components/pages/login/SignUp';
-import AccountSetup from './components/pages/login/AccountSetup';
-import PrivateRoutes from './components/utils/PrivateRoutes';
-
-
-
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import SignupForm from './pages/signupPage/SignUp'
+import { useSelector } from "react-redux";
+import Home from './pages/homePage/homePage'
+import Login from './pages/loginPage/Login'
+import Spinner from './components/spinner';
+import Nav from './pages/navbar/Nav'
+import AccountSetup from "./pages/accountSetupPage/AccountSetup";
 function App() {
-
+    const isAuth = Boolean(useSelector((state) => state.token));
     return (
-        <Router>
+        <BrowserRouter>
             <Routes>
-                <Route element={<PrivateRoutes />}>
-                    <Route element={<Index />} path = '/' exact />
-                    <Route element={<AccountSetup />} path= '/accountsetup' />
-                </Route>
-                <Route element={<Login />} path='/login' />
-                <Route element={<SignUp />} path='/signup' />
+                <Route path='/test1' element={<AccountSetup/>} />
+                <Route path='/Signup' element={<SignupForm />} />
+                <Route path='/' element={<Login />} />
+                <Route path='/test' element={<Spinner />} />
+                <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>
             </Routes>
-        </Router>
+        </BrowserRouter>
 );
 }
 
