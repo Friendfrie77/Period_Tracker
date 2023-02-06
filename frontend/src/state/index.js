@@ -8,7 +8,11 @@ const initialState = {
     periodStartDate: null,
     periodEndDate: null,
     daysTillPeriod: null,
-    previousPeriod: [],
+    previousPeriod: [{
+        startDate: null,
+        endDate: null,
+        count: null
+    }],
     isLoading: false
 };
 

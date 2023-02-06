@@ -14,11 +14,10 @@ const register = async (req, res) => {
                     console.log(err)
                 } else {
                     delete newUser.password
-                    res.status(201).json(newUser)
+                    res.status(201).json({newUser})
                 }
             })} 
     }catch (err){
-        console.log('reeeee')
         res.status(500).json({error : err.messege})
     }
 }
@@ -58,5 +57,10 @@ const login = async (req, res) => {
         res.status(500).json({error : err.messege})
     }
 }
+
+const addPeriod = async (req, res) => {
+    
+}
+
 
 module.exports = {register, login }

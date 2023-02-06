@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// import 'react-date-range/dist/styles.css'; // main css file
+// import 'react-date-range/dist/theme/default.css'; // theme css file
 import './styles/styles.css';
 import App from './App';
-import {browserRouter, Routes, Route} from 'react-router-dom';
 import { configureStore, ConfigureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import authReducer from "./state";

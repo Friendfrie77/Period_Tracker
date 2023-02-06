@@ -4,7 +4,7 @@
     opacity: .2;
 }
 .username-input input:focus + .login-lable:after, .username-input input:valid + .login-lable:after{
-    translate: 100%
+    translate: 100%;
 }
 
 .password-input input:focus + .login-lable .login-span, .password-input input:valid + .login-lable .login-span{
@@ -13,7 +13,7 @@
     opacity: .2;
 }
 .password-input input:focus + .login-lable:after, .password-input input:valid + .login-lable:after{
-    translate: 100%
+    translate: 100%;
 }
 
 .email-input input:focus + .login-lable .login-span, .email-input input:valid + .login-lable .login-span{
@@ -22,5 +22,5 @@
     opacity: .2;
 }
 .email-input input:focus + .login-lable:after, .email-input input:valid + .login-lable:after{
-    translate: 100%
+    translate: 100%;
 }

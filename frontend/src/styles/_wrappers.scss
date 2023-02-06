@@ -1,16 +1,38 @@
+// .wrapper{
+//     background-color: $color4;
+//     background-image: $backgroundgrad;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+    
+// }
 .wrapper{
-    background-color: $color4;
-    background-image: $backgroundgrad;
     height: 100%;
     display: flex;
     flex-direction: column;
-    
+    background: $backgroundgrad;
+    animation: gradient 25s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
 }
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
 .page-wrapper{
     display: flex;
     position: relative;
-    flex-direction: column;
     align-self: center;
+    flex-direction: column;
 }
 .login-wrapper{
     display: flex;
@@ -26,6 +48,9 @@
     box-shadow: $drop-shadow-wrappers;
     border-radius: $radius;
     padding: $box-padding;
+    @include for-size(Desktop){
+        max-width: 1000px;
+    }
     h1{
         color: $textcolor;
         font-size: 2.5rem;
@@ -47,5 +72,31 @@
         background-color: $color2;
         height: 2px;
         border: none;
+    }
+}
+.setup-wrapper{
+    background-color: $color4;
+    display: flex;
+    box-shadow: $drop-shadow-wrappers;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    padding: 15px;
+    flex-direction: column;
+    h1{
+        color: $textcolor;
+        padding: 10px;
+    }
+    .nextButton{
+        box-shadow: $drop-shadow-wrappers;
+        width: 95%;
+        height: 2rem;
+        margin: 2rem 0px;
+        font-size: 1.5rem;
+        background-color: $button-color;
+        border-radius: $radius;
+        border: none;
+        color: $textcolor
     }
 }

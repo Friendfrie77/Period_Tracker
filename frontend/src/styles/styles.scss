@@ -50,8 +50,15 @@ $box-padding: 1rem;
          url('../fonts/Comfortaa/Comfortaa-Light.ttf') format('truetype')
 }
 
-  $Copy-Font: 'Comfortaa', Display;
-  $Header-Font: 'Bebas Neue', Display;
+@font-face {
+    font-family: 'Varela_Round';
+    src: url('../fonts/Varela_Round/VarelaRound-Regular.ttf');
+    src: local('Varela_Round'),
+         url('../fonts/Varela_Round/VarelaRound-Regular.ttf') format('truetype')
+}
+
+  $Copy-Font: 'Varela_Round', Sans-Serif;
+  $Header-Font: 'Varela_Round', Sans-Serif;
 
 
 
@@ -63,14 +70,12 @@ h1, h2, h3, h4{
     font-family: $Header-Font;
 }
 
-.pog{
-    margin: auto;
-    color: pink;
-    font-size: 15rem;
-}
 @import './reset';
 @import './wrappers';
 @import './nav';
 @import './login';
+@import './react-calendar';
+@import './react-calendar-theme';
 @import './animations';
+@import './waves';
 @import './loading';

@@ -5,7 +5,8 @@ import {useState} from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state';
-import Spinner from '../../components/spinner';
+import Spinner from '../../components/Spinner';
+import Waves from '../../components/Waves';
 function Login(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +33,6 @@ function Login(){
                 })
               );
         };
-        console.log('test')
         navigate('/home')
     }
     const content = loading ? <Spinner /> : (
@@ -88,6 +88,7 @@ function Login(){
                 <span>New?</span>
                 <Link to='/signup'>Create an account here</Link>
             </div>
+            <Waves />
         </section>
     )
     return content
