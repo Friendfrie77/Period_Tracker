@@ -138,6 +138,11 @@ body {
   padding: 15px;
   flex-direction: column;
 }
+@media (min-width: 1300px) {
+  .setup-wrapper {
+    max-width: 1400px;
+  }
+}
 .setup-wrapper h1 {
   color: #EAE8FF;
   padding: 10px;
@@ -152,6 +157,18 @@ body {
   border-radius: 5px;
   border: none;
   color: #EAE8FF;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-content: center;
+  width: 100%;
+}
+.home h1 {
+  color: #EAE8FF;
+  font-size: 1.7rem;
 }
 
 .username-input, .password-input, .email-input {
@@ -409,6 +426,61 @@ body {
 
 .rdrInputRange {
   display: flex;
+}
+
+.inner-circle {
+  height: 300px;
+  width: 300px;
+  background-color: red;
+  border-radius: 50%;
+  position: relative;
+}
+.inner-circle span {
+  position: absolute;
+  left: 35%;
+  bottom: 50%;
+  color: #EAE8FF;
+  font-size: 2rem;
+}
+
+.period-countdown {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding: 1rem;
+}
+.period-countdown h2 {
+  color: #EAE8FF;
+}
+
+.placeholder {
+  width: 100%;
+  height: 50px;
+  background-color: pink;
+}
+
+.check-period {
+  display: flex;
+  flex-direction: column;
+}
+.check-period label {
+  color: #EAE8FF;
+  text-align: center;
+  font-family: "Varela_Round", Sans-Serif;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+.check-period button {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  width: 25%;
+  margin: auto;
+  border-radius: 5px;
+  height: auto;
+  background-color: #AF4D98;
+  color: #EAE8FF;
+  font-family: "Varela_Round", Sans-Serif;
+  font-size: 1.1rem;
+  padding: 5px 8px;
 }
 
 .rdrCalendarWrapper {
@@ -842,7 +914,7 @@ body {
   border-radius: 1000% 1000% 0 0;
   position: fixed;
   width: 200%;
-  height: 12em;
+  height: 6.5rem;
   -webkit-animation: wave 10s -3s linear infinite;
           animation: wave 10s -3s linear infinite;
   transform: translate3d(0, 0, 0);

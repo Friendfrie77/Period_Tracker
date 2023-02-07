@@ -84,6 +84,9 @@
     margin: auto;
     padding: 15px;
     flex-direction: column;
+    @include for-size(Desktop){
+        max-width: 1400px;
+    }
     h1{
         color: $textcolor;
         padding: 10px;
@@ -98,5 +101,17 @@
         border-radius: $radius;
         border: none;
         color: $textcolor
+    }
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-content: center;
+    width: 100%;
+    h1{
+        color: $textcolor;
+        font-size: 1.7rem;
     }
 }

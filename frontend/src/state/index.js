@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: null,
+    email: null,
     token : null,
     cycle: null,
     periodStartDate: null,
@@ -22,6 +23,7 @@ export const authSlice = createSlice({
     reducers: {
         setLogin: (state, action) =>{
             state.user = action.payload.user;
+            state.email = action.payload.email;
             state.token = action.payload.token;
             state.cycle = action.payload.cycle;
             state.periodEndDate = action.payload.periodEndDate

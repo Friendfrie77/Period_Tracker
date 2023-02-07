@@ -8,7 +8,6 @@ const register = async (req, res) => {
         if (!results){
             const newUser = new User({email, username ,password, refreshToken: '', cycle: '', 
             periodStartDate: '', periodEndDate: '', previousPeriod: []});
-            console.log(newUser)
             newUser.save(function(err){
                 if (err){
                     console.log(err)
@@ -58,9 +57,6 @@ const login = async (req, res) => {
     }
 }
 
-const addPeriod = async (req, res) => {
-    
-}
 
 
 module.exports = {register, login }

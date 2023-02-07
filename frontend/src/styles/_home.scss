@@ -1,0 +1,53 @@
+.inner-circle{
+    height: 300px;
+    width: 300px;
+    background-color: red;
+    border-radius: 50%;
+    position: relative;
+    span{
+        position: absolute;
+        left: 35%;
+        bottom: 50%;
+        color: $textcolor;
+        font-size: 2rem;
+    }
+}
+
+.period-countdown{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding: $box-padding;
+    h2{
+        color: $textcolor;
+    }
+}
+
+.placeholder{
+    width: 100%;
+    height: 50px;
+    background-color: pink;
+}
+.check-period{
+    display: flex;
+    flex-direction: column;
+    label{
+        color: $textcolor;
+        text-align: center;
+        font-family: $Header-Font;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    button{
+        box-shadow: $drop-shadow-wrappers;
+        width: 25%;
+        margin: auto;
+        border-radius: $radius;
+        height: auto;
+        background-color: $button-color;
+        color: $textcolor;
+        font-family: $Header-Font;
+        font-size: 1.1rem;
+        padding: 5px 8px;
+    }
+}

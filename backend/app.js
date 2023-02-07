@@ -8,9 +8,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const corsOptions = require ('./config/corsOptions');
 const credentials = require('./middleware/credentials');
-const db = require('./config/dbConn')
-const auth = require('./controllers/auth')
-const authRoutes = require('./routes/auth')
+const db = require('./config/dbConn');
+const auth = require('./controllers/auth');
+
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/userInfo');
 
 
 db()
@@ -23,7 +25,7 @@ app.use(cors(corsOptions));
 app.post('/register', auth.register)
 
 app.use('/auth', authRoutes)
-
+app.use('/user', userRoutes)
 
 app.listen(PORT, () =>{
   console.log(`Listening at http://localhost:${PORT}`)

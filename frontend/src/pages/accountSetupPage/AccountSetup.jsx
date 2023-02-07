@@ -1,13 +1,17 @@
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
 import { useDispatch } from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 import Moment from 'moment';
 import { setLogin } from '../../state';
 import { useSelector } from "react-redux";
 import axios from 'axios';
+import Spinner from '../../components/Spinner'
+import Waves from '../../components/Waves'
 
 
 const AccountSetup = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [date, setDate] = useState([
     {
@@ -16,7 +20,10 @@ const AccountSetup = () => {
       key: 'selection'
     }
   ]);
+  const [isLoading, setLoading] = useState(false)
   const userInfo = useSelector((state) => state.previousPeriod);
+  const email = useSelector((state) => state.email)
+  const token = useSelector((state) => state.token)
   const userData = (date) =>{
     if (date[0].endDate){
       const start = date[0].startDate.getDate()
@@ -45,10 +52,10 @@ const AccountSetup = () => {
       }
     }
   }
-  const setPeriod = () =>{
+  const setPeriod = (dates) =>{
     dispatch(
       setLogin({
-        previousPeriod: [],
+        previousPeriod: dates,
       })
     );
   }
@@ -56,16 +63,22 @@ const AccountSetup = () => {
   useEffect(()=>{
     userData(date)
   },[date]);
-
-  // const accountInfo = async () =>{
-  //   userInfo = useSelector((state) => state.previousPeriod);
-  //   try{
-  //     const result = await axios.post(,{
-  //       userInfo
-  //     }
-  //   }
-  // }
-  const Setup = (
+  const accountInfo = async () =>{
+    setLoading(true)
+    try{
+      await axios.post('http://localhost:8080/user/add',{
+          email,
+          userInfo
+          },{
+            headers: {'Authorization': `Bearer ${token}`},
+          }
+          );
+      navigate('/home')
+    }catch(err){
+      console.log(err)
+    }
+  }
+  const setup = isLoading ? <Spinner /> : (
       <section className='setup-wrapper'>
         <h1>When was your last few periods?</h1>
         <p>Just select them below, and once your done hit next.</p>
@@ -75,10 +88,11 @@ const AccountSetup = () => {
           moveRangeOnFirstSelection={false}
           ranges={date}
         />
-        <button type='submit' className='nextButton'>Next</button>
+        <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+        <Waves />
       </section>
   )
-  return Setup
+  return setup
 }
 
 export default AccountSetup

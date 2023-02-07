@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state';
 import Spinner from '../../components/Spinner';
 import Waves from '../../components/Waves';
+import { useSelector } from "react-redux";
 function Login(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ function Login(){
                   previousPeriod: user.data.user.previousPeriod,
                 })
               );
-        };
+        };      
         navigate('/home')
     }
     const content = loading ? <Spinner /> : (

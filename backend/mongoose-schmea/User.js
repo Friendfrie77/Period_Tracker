@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const bcrypt = require('bcrypt');
-const salt = 15;
+const salt = 13;
 const userSchema = new mongoose.Schema({
     email: {
         type: String,

@@ -1,5 +1,5 @@
 import {Form, Field} from 'react-final-form';
-import {redirect, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios'
 import AccountSetup from '../accountSetupPage/AccountSetup';
@@ -24,7 +24,7 @@ export default function SignUp(){
             })
             const result = await results
             if (result){
-                const login = await await axios.post('http://localhost:8080/auth/login',{
+                const login = await axios.post('http://localhost:8080/auth/login',{
                     email, password
             });
             const user = await login
@@ -32,6 +32,7 @@ export default function SignUp(){
                 dispatch(
                     setLogin({
                       user: user.data.user.username,
+                      email: user.data.user.email,
                       token: user.data.accessToken,
                       cycle: user.data.user.cycle,
                       periodStartDate: user.data.user.periodStartDate,
