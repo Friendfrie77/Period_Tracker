@@ -3,7 +3,7 @@ import { DateRange } from 'react-date-range';
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import Moment from 'moment';
-import { setLogin } from '../../state';
+import {setPeriod, setCycle } from '../../state';
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import Spinner from '../../components/Spinner'
@@ -24,6 +24,8 @@ const AccountSetup = () => {
   const userInfo = useSelector((state) => state.previousPeriod);
   const email = useSelector((state) => state.email)
   const token = useSelector((state) => state.token)
+
+  console.log(email, token)
   const userData = (date) =>{
     if (date[0].endDate){
       const start = date[0].startDate.getDate()
@@ -39,7 +41,7 @@ const AccountSetup = () => {
             count: userInfo.length,
           }
           dates.push(period)
-          setPeriod(dates)
+          setDates(dates)
         }else{
           let period = {
             startDate: startDate,
@@ -47,15 +49,15 @@ const AccountSetup = () => {
             count: 0,
           }
           let dates = [period]
-          setPeriod(dates)
+          setDates(dates)
         }
       }
     }
   }
-  const setPeriod = (dates) =>{
+  const setDates = (dates) =>{
     dispatch(
-      setLogin({
-        previousPeriod: dates,
+      setPeriod({
+        previousPeriod: dates
       })
     );
   }
@@ -66,6 +68,7 @@ const AccountSetup = () => {
   const accountInfo = async () =>{
     setLoading(true)
     try{
+      console.log(token)
       await axios.post('http://localhost:8080/user/add',{
           email,
           userInfo

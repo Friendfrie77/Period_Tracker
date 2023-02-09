@@ -26,6 +26,7 @@ function Login(){
             dispatch(
                 setLogin({
                   user: user.data.user.username,
+                  email: user.data.user.email,
                   token: user.data.accessToken,
                   cycle: user.data.user.cycle,
                   periodStartDate: user.data.user.periodStartDate,
