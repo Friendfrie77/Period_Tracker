@@ -22,10 +22,8 @@ const Home = () => {
     previousPeriod.forEach(date => {
       totalDays = Moment(date.endDate).diff(date.startDate, 'days')
       if(startDate != null){
-        console.log('peg owo')
         totalCycle = Moment(date.startDate).diff(startDate, 'days')
       }else{
-        console.log('test')
         startDate = date.startDate;
       }
     })
@@ -47,7 +45,7 @@ const Home = () => {
         lastPeriod = date.startDate
       }
     })
-    
+
   }
   estimateDate()
   useEffect(()=>{
