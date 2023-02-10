@@ -68,6 +68,7 @@ body {
   position: relative;
   align-self: center;
   flex-direction: column;
+  width: 100%;
 }
 
 .login-wrapper {

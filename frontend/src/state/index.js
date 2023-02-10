@@ -43,11 +43,20 @@ export const authSlice = createSlice({
         },
         setCycle: (state, action) =>{
             state.cycle = action.payload.cycle
+        },
+        setNewPeriod: (state, action) => {
+            state.periodStartDate = action.payload.periodStartDate;
+            state.periodEndDate = action.payload.periodEndDate;
+        },
+        setUserInfo: (state, action) =>{
+            state.periodStartDate = action.payload.periodStartDate;
+            state.periodEndDate = action.payload.periodEndDate;
+            state.previousPeriod = action.payload.previousPeriod
         }
     }
 })
 
-export const {setLogin, setLogout, setPeriod, setCycle} = authSlice.actions;
+export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo} = authSlice.actions;
 
 export const selectCurrentUser = (state) => state.auth.user
 export const selectCurrentEmail = (state) => state.auth.email

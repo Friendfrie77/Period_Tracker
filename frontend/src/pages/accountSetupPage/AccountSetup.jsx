@@ -68,8 +68,7 @@ const AccountSetup = () => {
   const accountInfo = async () =>{
     setLoading(true)
     try{
-      console.log(token)
-      await axios.post('http://localhost:8080/user/add',{
+      await axios.post('http://localhost:8080/user/newuser',{
           email,
           userInfo
           },{

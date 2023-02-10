@@ -40,7 +40,7 @@ export default function SignUp(){
                       previousPeriod: user.data.user.previousPeriod,
                     })
                   );
-                  navigate('/test1')
+                  navigate('/AccountSetup')
                 }
             }
         }catch(err){
