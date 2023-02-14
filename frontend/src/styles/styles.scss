@@ -6,7 +6,7 @@
  $color6: #5CFFC9;
  $button-color:#AF4D98;
  $login-input-background: #4B203F;
- $backgroundgrad: linear-gradient($color2, $color4);
+ $backgroundgrad: linear-gradient($color2, #302867, #7B145F,  $color4);
  $drop-shadow-wrappers: (rgba(0,0,0,.4) 0px 5px 10px);
 $radius: 5px;
 $box-padding: 1rem;
@@ -22,6 +22,9 @@ $box-padding: 1rem;
     }
     @if $size == phone-only{
         @media (max-width: 425px){ @content;}
+    }
+    @if $size == small-phone{
+        @media (max-width: 320px){ @content;}
     }
     @if $size == small-desktop{
         @media (max-width: 1300px){@content;}

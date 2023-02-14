@@ -90,7 +90,6 @@ function Login(){
                 <span>New?</span>
                 <Link to='/signup'>Create an account here</Link>
             </div>
-            <Waves />
         </section>
     )
     return content

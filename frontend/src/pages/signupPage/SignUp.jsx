@@ -2,7 +2,6 @@ import {Form, Field} from 'react-final-form';
 import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import axios from 'axios'
-import AccountSetup from '../accountSetupPage/AccountSetup';
 import { setLogin } from '../../state';
 import { useDispatch } from 'react-redux';
 import Spinner from '../../components/Spinner';
@@ -124,4 +123,4 @@ export default function SignUp(){
         </section>
     )
     return content
-};
+}

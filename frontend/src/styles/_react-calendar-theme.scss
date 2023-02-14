@@ -4,7 +4,7 @@
     background-color: $color5;
     margin: .2rem;
     box-shadow: $drop-shadow-wrappers;
-    height: 65%;
+    height: 75%;
     width: 100%;
     // @include for-size(Desktop){
     //     width: 60% !important;
@@ -48,6 +48,7 @@
     align-items: center;
     height: 60px;
     padding-top: 10px;
+    width: 100%;
   }
   
   .rdrMonthAndYearPickers{
@@ -137,6 +138,11 @@
     padding: 0 0.43em;
     font-size: 1rem;
     color: $color4;
+    @include for-size(small-phone){
+      color: red;
+      font-size: .9rem;
+      padding: 0 0.4em;
+    }
   }
   
   .rdrDay {

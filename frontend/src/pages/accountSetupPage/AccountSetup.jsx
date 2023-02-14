@@ -81,18 +81,20 @@ const AccountSetup = () => {
     }
   }
   const setup = isLoading ? <Spinner /> : (
-      <section className='setup-wrapper'>
-        <h1>When was your last few periods?</h1>
-        <p>Just select them below, and once your done hit next.</p>
-        <DateRange
-          editableDateInputs={true}
-          onChange={item => setDate([item.selection])}
-          moveRangeOnFirstSelection={false}
-          ranges={date}
-        />
-        <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+      <div className='page-wrapper'>
+        <section className='setup-wrapper'>
+          <h1>When was your last few periods?</h1>
+          <p>Just select them below, and once your done hit next</p>
+          <DateRange
+            editableDateInputs={true}
+            onChange={item => setDate([item.selection])}
+            moveRangeOnFirstSelection={false}
+            ranges={date}
+          />
+          <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+        </section>
         <Waves />
-      </section>
+      </div>
   )
   return setup
 }

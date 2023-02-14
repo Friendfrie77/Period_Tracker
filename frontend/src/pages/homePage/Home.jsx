@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setCycle, setNewPeriod, setUserInfo } from '../../state';
-import Nav from '../navbar/Nav'
 import Moment from 'moment';
 import axios from "axios";
 import PeriodNotActive from "./PeriodNotActive";
@@ -20,10 +19,12 @@ const Home = () => {
   const token = useSelector((state) => (state.token))
   const email = useSelector((state) => state.email)
   const [current, setCurrent] = useState(false)
-  const [avgLength, setAvgLength] = useState(null) 
+  const [avgLength, setAvgLength] = useState(null)
+  const [canBleed, setBleed] = useState(false)
   const [isBleeding, setBleeding] = useState(false)
   const periodLogged = previousPeriod.length
   const [daysTillPeriod, setDays ] = useState(null)
+
   let todaysDate = new Date()
   const fetchUserInfo = async () =>{
     const result = axios.post('http://localhost:8080/user/getuserinfo',{
@@ -89,19 +90,16 @@ const Home = () => {
         endDate = Moment(startDate).add(avgLength, 'days')
       }
       if(Moment(startDate).diff(todaysDate, 'day') == 0 && Moment(endDate).diff(todaysDate, 'day') >= 0){
-        setBleeding(true)
-      }else{
-        setBleeding(false)
+        setBleed (true)
       }
       return({startDate, endDate})
     }else if(Moment(periodStartDate).diff(todaysDate, 'day') == 0){
-      setBleeding(true)
+      setBleed(true)
     }
   }
   const sendPeriodInfo = async (dates) =>{
     const startDate = Moment(dates.startDate).format()
     const endDate = Moment(dates.endDate).format()
-    console.log(startDate, endDate)
     axios.post('http://localhost:8080/user/addperiod', {
       email, startDate, endDate
     },{
@@ -116,7 +114,7 @@ const Home = () => {
     }else{
       daysLeft = Moment(periodStartDate).diff(todaysDate, 'days')
     }
-    setDays(daysLeft);
+    setDays(daysLeft)
   }
 
   const periodStarted = async () =>{
@@ -125,7 +123,7 @@ const Home = () => {
     if (!isBleeding){
       startDate = Moment(todaysDate).format()
       endDate = Moment(startDate).add(avgLength,'days')
-      setCurrent(true)
+      daysTill()
     }else{
       startDate = periodStartDate
       endDate = Moment(todaysDate).format()
@@ -142,6 +140,13 @@ const Home = () => {
       headers: {'Authorization': `Bearer ${token}`},
     })
   }
+  
+  const periodEnded = async () =>{
+    let endDate; 
+    const startDate = Moment(todaysDate).format();
+    endDate = Moment(startDate).add(avgLength, 'days')
+
+  }
   const pageLoad = () =>{
     fetchUserInfo()
     avgPeriodLength()
@@ -153,10 +158,21 @@ const Home = () => {
   }
   useEffect(()=>{
     pageLoad()
-  },[])
+  },[daysTillPeriod])
 
-const home = <PeriodNotActive userName = {userName} daysTillPeriod = {daysTillPeriod} onClick = {periodStarted} />
-  return home
+
+
+const home = (isBleeding, daysTillPeriod, canBleed) =>{
+  if (!isBleeding){
+    return <PeriodNotActive cycle = {cycle} userName = {userName} periodEndDate = {periodEndDate} periodStartDate ={periodStartDate} onClick = {periodStarted} />
+  } else if(canBleed){
+    return <PeriodHere userName = {userName} onClick = {periodStarted} />
+  } else{
+    return <PeriodActive userName = {userName} daysTillPeriod = {daysTillPeriod} onClick = {periodEnded} />
+  }
 }
 
+return home(isBleeding, daysTillPeriod,canBleed)
+
+}
 export default Home

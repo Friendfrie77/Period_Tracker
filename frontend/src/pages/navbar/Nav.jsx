@@ -1,11 +1,14 @@
 import {useRef} from 'react';
 import { NavLink } from 'react-router-dom';
-const Nav = () => {
-    const check = useRef(null)
-    const checkChange = () =>{
-        if(check.current.checked){
-            check.current.checked = !check.current.checked
-        }
+import { CiLogout } from 'react-icons/ci'
+import { setLogout } from '../../state';
+import { useDispatch } from 'react-redux';
+const Nav = (props) => {
+    const dispatch = useDispatch();
+    const logout = () =>{
+        dispatch(
+            setLogout()
+        )
     }
 
   return (
@@ -13,11 +16,17 @@ const Nav = () => {
         <div className='logo'>
             placeholder
         </div>
-        <input id='mobile-nav-togggle' type='checkbox' ref={check} />
-        <label className='mobile-nav-container' for='mobile-nav-toggle'>
+        <input id='mobile-nav-toggle' type='checkbox' />
+        <label className='mobile-nav-container' htmlFor='mobile-nav-toggle'>
             <div className='mobile-nav' id = 'mobile-nav'></div>
         </label>
         <ul className='nav-links' id='nav-links'>
+            <li className='stats'>
+                <h3>Information at a Glance</h3>
+                <span>Cycle Lenght: {props.cycle}</span><br/>
+                <span>Average Length: {props.avgLength} </span><br />
+                <span>Periods Logged: {props.previousPeriod}</span>
+            </li>
             <li className='nav-item'>
                 <NavLink to='/'>
                     Home
@@ -30,11 +39,13 @@ const Nav = () => {
             </li>
             <li className='nav-item'>
                 <NavLink to='/'>
-                    Log Period
+                    Period Info
                 </NavLink>
             </li>
             <li className='logout'>
-                Logout
+                <button onClick={logout}>
+                <CiLogout></CiLogout>
+                </button>
             </li>
         </ul>
     </nav>

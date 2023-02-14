@@ -14,7 +14,6 @@ const initialState = {
         endDate: null,
         count: null
     }],
-    isLoading: false
 };
 
 export const authSlice = createSlice({
