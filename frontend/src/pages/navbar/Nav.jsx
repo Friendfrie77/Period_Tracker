@@ -28,23 +28,23 @@ const Nav = (props) => {
                 <span>Periods Logged: {props.previousPeriod}</span>
             </li>
             <li className='nav-item'>
-                <NavLink to='/'>
+                <NavLink to='/home'>
                     Home
                 </NavLink>
             </li>
             <li className='nav-item'>
-                <NavLink to='/'>
+                <NavLink to='/profile'>
                     Profile
                 </NavLink>
             </li>
             <li className='nav-item'>
-                <NavLink to='/'>
+                <NavLink to='/periodinfo'>
                     Period Info
                 </NavLink>
             </li>
             <li className='logout'>
                 <button onClick={logout}>
-                <CiLogout></CiLogout>
+                    <CiLogout></CiLogout>
                 </button>
             </li>
         </ul>

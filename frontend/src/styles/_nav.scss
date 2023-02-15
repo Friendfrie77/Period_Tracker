@@ -5,6 +5,7 @@ nav{
     justify-content: space-between;
     background-color: $login-input-background;
     height: 75px;
+    width: 100%;
     padding: 1rem;
     position: sticky;
     top: 0;
@@ -35,8 +36,12 @@ nav{
         display: block;
         color: $textcolor;
         border-radius: $radius;
+        max-width: 100%;
         h3{
             font-size: 2rem;
+            @include for-size(small-phone){
+                font-size: 1.53em;
+            }
         }
         span{
             font-size: 1.3rem;

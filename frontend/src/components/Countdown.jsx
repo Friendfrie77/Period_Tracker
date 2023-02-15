@@ -17,8 +17,8 @@ const Countdown = (props) => {
       }
       const getTime = (time) => (time / daySeconds) | 0; 
       const daySeconds = 86400
-      const startTime = Moment(props.periodStartDate).unix() 
-      const endTime = (Moment(props.periodEndDate).unix()) 
+      const startTime = Moment(props.startDate).unix()
+      const endTime = (Moment(props.endDate).unix())
       const remainingTime = endTime - startTime
       const days = remainingTime / daySeconds
       const dayDuration = days * daySeconds

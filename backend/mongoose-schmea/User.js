@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     token: String,
     cycle: Number,
+    avgLength: Number, 
     periodStartDate: Date,
     periodEndDate: Date,
     previousPeriod:{

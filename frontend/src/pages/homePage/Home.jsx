@@ -8,6 +8,7 @@ import axios from "axios";
 import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
+import moment from "moment";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,16 +17,16 @@ const Home = () => {
   const previousPeriod = useSelector((state) => state.previousPeriod)
   const periodEndDate = useSelector((state) => state.periodEndDate)
   const periodStartDate = useSelector((state) => state.periodStartDate)
+  const avgLength = useSelector((state) => state.avgLength)
   const token = useSelector((state) => (state.token))
   const email = useSelector((state) => state.email)
-  const [current, setCurrent] = useState(false)
-  const [avgLength, setAvgLength] = useState(null)
   const [canBleed, setBleed] = useState(false)
   const [isBleeding, setBleeding] = useState(false)
   const periodLogged = previousPeriod.length
   const [daysTillPeriod, setDays ] = useState(null)
 
   let todaysDate = new Date()
+  todaysDate = Moment(todaysDate).format()
   const fetchUserInfo = async () =>{
     const result = axios.post('http://localhost:8080/user/getuserinfo',{
       email
@@ -38,13 +39,15 @@ const Home = () => {
       dispatch(
         setUserInfo({
           periodStartDate: user.data.user.periodStartDate,
+          avgLength: user.data.user.avgLength,
+          cycle: user.data.user.cycle,
           periodEndDate: user.data.user.periodEndDate,
           previousPeriod: user.data.user.previousPeriod
         })
       )
     }
   }
-  
+
   const avgPeriodLength = () =>{
     let totalDays = 0
     let startDate = null
@@ -59,14 +62,14 @@ const Home = () => {
       }
     })
     const avgLength =(Math.round(totalDays/periodLogged))
+    const cycle = (Math.round(totalCycle/periodLogged))
     dispatch(
       setCycle({
-        cycle:(Math.round(totalCycle/periodLogged))
+        cycle: cycle,
+        avgLength: avgLength
       })
     )
-    setAvgLength(avgLength)
   }
-
   const estimateDate = () =>{
     let lastPeriod = null
     let startDate;
@@ -81,13 +84,16 @@ const Home = () => {
         }
       })
       const monthDif = Moment(todaysDate).diff(lastPeriod, 'month')
-      if( monthDif > 1){
-        const estimateLastPeriod = Moment(lastPeriod).add((monthDif), 'months')
-        startDate = Moment(estimateLastPeriod).add(cycle, 'days');
-        endDate = Moment(estimateLastPeriod).add(avgLength, 'days')
-      }else{
-        startDate = Moment(lastPeriod).add(cycle, 'days');
-        endDate = Moment(startDate).add(avgLength, 'days')
+      if(cycle && avgLength){
+        if( monthDif > 1){
+          const estimateLastPeriod = Moment(lastPeriod).add((monthDif), 'months')
+          startDate = Moment(estimateLastPeriod).add(cycle, 'days');
+          endDate = Moment(estimateLastPeriod).add(avgLength, 'days')
+        }else{
+          lastPeriod = Moment(lastPeriod).format()
+          startDate = Moment(lastPeriod).add(cycle, 'days');
+          endDate = Moment(startDate).add(avgLength, 'days')
+        }
       }
       if(Moment(startDate).diff(todaysDate, 'day') == 0 && Moment(endDate).diff(todaysDate, 'day') >= 0){
         setBleed (true)
@@ -101,7 +107,7 @@ const Home = () => {
     const startDate = Moment(dates.startDate).format()
     const endDate = Moment(dates.endDate).format()
     axios.post('http://localhost:8080/user/addperiod', {
-      email, startDate, endDate
+      email, startDate, endDate, cycle, avgLength
     },{
       headers: {'Authorization': `Bearer ${token}`},
     })
@@ -148,23 +154,22 @@ const Home = () => {
 
   }
   const pageLoad = () =>{
-    fetchUserInfo()
-    avgPeriodLength()
-    const dates = estimateDate()
-    if (dates){
-      sendPeriodInfo(dates)
+    const userInfo = fetchUserInfo()
+    if(userInfo){
+      avgPeriodLength()
+      const dates = estimateDate()
+      if (dates && cycle && avgLength){
+        sendPeriodInfo(dates)
+      }
+      daysTill()
     }
-    daysTill()
   }
   useEffect(()=>{
     pageLoad()
-  },[daysTillPeriod])
-
-
-
+  },[daysTillPeriod, avgLength])
 const home = (isBleeding, daysTillPeriod, canBleed) =>{
   if (!isBleeding){
-    return <PeriodNotActive cycle = {cycle} userName = {userName} periodEndDate = {periodEndDate} periodStartDate ={periodStartDate} onClick = {periodStarted} />
+    return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {todaysDate} onClick = {periodStarted} />
   } else if(canBleed){
     return <PeriodHere userName = {userName} onClick = {periodStarted} />
   } else{

@@ -3,9 +3,9 @@ import SignupForm from './pages/signupPage/SignUp'
 import { useSelector } from "react-redux";
 import Home from './pages/homePage/Home'
 import Login from './pages/loginPage/Login'
-import Spinner from './components/Spinner';
+import Proflie from "./pages/profilePage/Proflie";
+import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
-import Nav from './pages/navbar/Nav'
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
     const newAccount = useSelector((state) => state.previousPeriod);
@@ -24,7 +24,8 @@ function App() {
                 <Route path='/accountsetup' element={ <AccountSetup/>} />
                 <Route path='/signup' element={<SignupForm />} />
                 <Route path='/' element={<Login />} />
-                <Route path='/test' element={<Nav />} />
+                <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />
+                <Route path='/periodinfo' element={isAuth ? <PeriodInfo /> : <Navigate to='/' />} />
                 <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>
             </Routes>
         </BrowserRouter>

@@ -18,7 +18,7 @@ function Login(){
         setLoading(true)
         let email = values.email
         let password = values.password
-        const loginTry = await axios.post('http://localhost:8080/auth/login',{
+        const loginTry = await axios.post(`http://localhost:8080/auth/login`,{
             email, password
         });
         const user = await loginTry
@@ -29,6 +29,7 @@ function Login(){
                   email: user.data.user.email,
                   token: user.data.accessToken,
                   cycle: user.data.user.cycle,
+                  avgLength: user.data.avgLength,
                   periodStartDate: user.data.user.periodStartDate,
                   periodEndDate: user.data.user.periodEndDate,
                   previousPeriod: user.data.user.previousPeriod,

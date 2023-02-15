@@ -6,6 +6,7 @@ const initialState = {
     email: null,
     token : null,
     cycle: null,
+    avgLength: null,
     periodStartDate: null,
     periodEndDate: null,
     daysTillPeriod: null,
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
             state.email = action.payload.email;
             state.token = action.payload.token;
             state.cycle = action.payload.cycle;
+            state.avgLength = action.payload.avgLength
             state.periodEndDate = action.payload.periodEndDate
             state.daysTillPeriod = action.payload.cycle;
             state.previousPeriod = action.payload.previousPeriod;
@@ -41,7 +43,8 @@ export const authSlice = createSlice({
             state.previousPeriod = action.payload.previousPeriod
         },
         setCycle: (state, action) =>{
-            state.cycle = action.payload.cycle
+            state.cycle = action.payload.cycle;
+            state.avgLength = action.payload.avgLength;
         },
         setNewPeriod: (state, action) => {
             state.periodStartDate = action.payload.periodStartDate;
@@ -49,6 +52,8 @@ export const authSlice = createSlice({
         },
         setUserInfo: (state, action) =>{
             state.periodStartDate = action.payload.periodStartDate;
+            state.cycle = action.payload.cycle;
+            state.avgLength = action.payload.avgLength
             state.periodEndDate = action.payload.periodEndDate;
             state.previousPeriod = action.payload.previousPeriod
         }
