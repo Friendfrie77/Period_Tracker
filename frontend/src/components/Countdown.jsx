@@ -20,7 +20,7 @@ const Countdown = (props) => {
       const startTime = Moment(props.startDate).unix()
       const endTime = (Moment(props.endDate).unix())
       const remainingTime = endTime - startTime
-      const days = remainingTime / daySeconds
+      const days = Math.ceil(remainingTime / daySeconds)
       const dayDuration = days * daySeconds
 
   return (
@@ -29,7 +29,7 @@ const Countdown = (props) => {
               {...timerProps}
               colors='#EAE8FF'
               duration = {dayDuration}
-              initialRemaingTime = {remainingTime}
+              initialRemainingTime = {remainingTime}
             >
             {({elapsedTime, color}) => (
                 <span style={{color}}>

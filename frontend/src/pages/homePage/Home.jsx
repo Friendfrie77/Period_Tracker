@@ -171,9 +171,9 @@ const home = (isBleeding, daysTillPeriod, canBleed) =>{
   if (!isBleeding){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {todaysDate} onClick = {periodStarted} />
   } else if(canBleed){
-    return <PeriodHere userName = {userName} onClick = {periodStarted} />
+    return <PeriodHere userName = {userName} onClick = {periodStarted} endDate = {periodStartDate} startDate = {todaysDate} />
   } else{
-    return <PeriodActive userName = {userName} daysTillPeriod = {daysTillPeriod} onClick = {periodEnded} />
+    return <PeriodActive userName = {userName} daysTillPeriod = {daysTillPeriod} onClick = {periodEnded} endDate = {periodEndDate} startDate = {periodStartDate} />
   }
 }
 

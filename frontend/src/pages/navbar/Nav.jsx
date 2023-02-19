@@ -3,8 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { CiLogout } from 'react-icons/ci'
 import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
-const Nav = (props) => {
+import { useSelector } from "react-redux";
+const Nav = () => {
     const dispatch = useDispatch();
+    const cycle = useSelector((state) => state.cycle);
+    const avgLength = useSelector((state) => state.avgLength)
+    const previousPeriod = useSelector((state) => state.previousPeriod)
+
     const logout = () =>{
         dispatch(
             setLogout()
@@ -23,9 +28,9 @@ const Nav = (props) => {
         <ul className='nav-links' id='nav-links'>
             <li className='stats'>
                 <h3>Information at a Glance</h3>
-                <span>Cycle Lenght: {props.cycle}</span><br/>
-                <span>Average Length: {props.avgLength} </span><br />
-                <span>Periods Logged: {props.previousPeriod}</span>
+                <span>Cycle Lenght: {cycle} days</span><br/>
+                <span>Average Length: {avgLength} days </span><br />
+                <span>Periods Logged: {previousPeriod.length}</span>
             </li>
             <li className='nav-item'>
                 <NavLink to='/home'>

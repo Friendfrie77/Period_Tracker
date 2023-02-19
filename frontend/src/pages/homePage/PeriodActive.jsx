@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from '../navbar/Nav';
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import Countdown from '../../components/Countdown';
 
 const PeriodActive = (props) => {
 
@@ -11,6 +11,7 @@ const PeriodActive = (props) => {
             <div className="placeholder"></div>
             <div className="period-countdown">
                 <h2>Your period should be over in</h2>
+                <Countdown startDate = {props.startDate} endDate = {props.endDate}></Countdown>
             </div>
             <div className="check-period">
                 <label htmlFor = 'check-period'>Has your period ended?</label>

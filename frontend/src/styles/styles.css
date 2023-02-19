@@ -644,6 +644,12 @@ nav {
   max-width: 100%;
   max-height: 500px;
 }
+.countdown-timer svg path:first-child {
+  stroke: #EAE8FF !important;
+}
+.countdown-timer svg path:nth-child(2) {
+  stroke: #5CFFC9;
+}
 
 .countdown-wrapper {
   font-size: 3rem;

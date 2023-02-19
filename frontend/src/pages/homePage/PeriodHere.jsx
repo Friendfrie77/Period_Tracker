@@ -11,6 +11,7 @@ const PeriodHere = (props) => {
             <div className="period-countdown">
                 <h2>Your period might be here</h2>
                 <div className='inner-circle'>
+                    <Countdown startDate = {props.startDate} endDate = {props.endDate}></Countdown>
                 <span>Today</span>
                 </div>
             </div>

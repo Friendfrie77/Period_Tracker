@@ -5,7 +5,7 @@ import Countdown from '../../components/Countdown';
 const PeriodNotActive = (props) => {
   return (
     <section className="home">
-        <Nav cycle ={props.cycle}/>
+        <Nav/>
         <h1>Welcome back, {props.userName}</h1>
         <div className="placeholder"></div>
         <div className="period-countdown">
