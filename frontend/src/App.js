@@ -6,6 +6,7 @@ import Login from './pages/loginPage/Login'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
+import BlankCountdown from './components/BlankCountdown'
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
     const newAccount = useSelector((state) => state.previousPeriod);
@@ -27,6 +28,7 @@ function App() {
                 <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />
                 <Route path='/periodinfo' element={isAuth ? <PeriodInfo /> : <Navigate to='/' />} />
                 <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>
+                <Route path='/Test' element= {<BlankCountdown />} />
             </Routes>
         </BrowserRouter>
 );

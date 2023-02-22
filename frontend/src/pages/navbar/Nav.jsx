@@ -21,9 +21,9 @@ const Nav = () => {
         <div className='logo'>
             placeholder
         </div>
-        <input id='mobile-nav-toggle' type='checkbox' />
+        <input id='mobile-nav-toggle' type='checkbox' /> 
         <label className='mobile-nav-container' htmlFor='mobile-nav-toggle'>
-            <div className='mobile-nav' id = 'mobile-nav'></div>
+            <div className='mobile-nav' id ='mobile-nav'></div>
         </label>
         <ul className='nav-links' id='nav-links'>
             <li className='stats'>

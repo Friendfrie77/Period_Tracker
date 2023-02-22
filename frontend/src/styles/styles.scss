@@ -8,8 +8,9 @@
  $login-input-background: #4B203F;
  $backgroundgrad: linear-gradient($color2, #302867, #7B145F,  $color4);
  $drop-shadow-wrappers: (rgba(0,0,0,.4) 0px 5px 10px);
-$radius: 5px;
-$box-padding: 1rem;
+ $radius: 5px;
+ $box-padding: 1rem;
+ $heading-clamp: clamp(1rem, 2.5rem, 4rem);
 @mixin for-size($size){
     @if $size == tablet-only{
         @media (max-width: 768px){ @content;}

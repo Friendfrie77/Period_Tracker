@@ -8,6 +8,7 @@ import axios from "axios";
 import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
+import NeedInfo from "./NeedInfo";
 import moment from "moment";
 
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
   const [isBleeding, setBleeding] = useState(false)
   const periodLogged = previousPeriod.length
   const [daysTillPeriod, setDays ] = useState(null)
+  const [needInfo, setInfo] = useState(true)
 
   let todaysDate = new Date()
   todaysDate = Moment(todaysDate).format()
@@ -50,19 +52,23 @@ const Home = () => {
 
   const avgPeriodLength = () =>{
     let totalDays = 0
-    let startDate = null
     let totalCycle = 0
+    let oldStartDate = null;
+    let cycleCount = 0
     previousPeriod.forEach(date => {
       totalDays += Moment(date.endDate).diff(date.startDate, 'days')
-      if(startDate != null){
-        const currentStartDate = Moment(date.startDate).format()
-        totalCycle += Moment(currentStartDate).diff(startDate, 'days')
+      if (oldStartDate != null){
+        const monthDif = Moment(oldStartDate).diff(date.startDate, 'month', true);
+        if (Math.abs(monthDif) < 1.5){
+          totalCycle += Math.abs(Moment(date.startDate).diff(oldStartDate, 'days'))
+          cycleCount += 1
+        }
       }else{
-        startDate = Moment(date.startDate).format();
+        oldStartDate = Moment(date.startDate);
       }
     })
     const avgLength =(Math.round(totalDays/periodLogged))
-    const cycle = (Math.round(totalCycle/periodLogged))
+    const cycle = (Math.round(totalCycle/cycleCount))
     dispatch(
       setCycle({
         cycle: cycle,
@@ -162,17 +168,24 @@ const Home = () => {
         sendPeriodInfo(dates)
       }
       daysTill()
+      if (cycle && avgLength){
+        setInfo(false)
+      }
     }
   }
   useEffect(()=>{
     pageLoad()
   },[daysTillPeriod, avgLength])
+  console.log(cycle, avgLength)
+  console.log(periodStartDate, periodEndDate, isBleeding, canBleed, needInfo)
 const home = (isBleeding, daysTillPeriod, canBleed) =>{
-  if (!isBleeding){
+  if (!isBleeding && !needInfo && !canBleed){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {todaysDate} onClick = {periodStarted} />
   } else if(canBleed){
     return <PeriodHere userName = {userName} onClick = {periodStarted} endDate = {periodStartDate} startDate = {todaysDate} />
-  } else{
+  } else if(needInfo){
+    return <NeedInfo userName = {userName} onClick = {periodStarted} message = 'More logs are required' />
+  }else{
     return <PeriodActive userName = {userName} daysTillPeriod = {daysTillPeriod} onClick = {periodEnded} endDate = {periodEndDate} startDate = {periodStartDate} />
   }
 }

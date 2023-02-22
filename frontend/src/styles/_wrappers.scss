@@ -57,7 +57,7 @@
     }
     h1{
         color: $textcolor;
-        font-size: 2.5rem;
+        font-size: $heading-clamp;
         padding-bottom: 1.5rem;
     }
     button{

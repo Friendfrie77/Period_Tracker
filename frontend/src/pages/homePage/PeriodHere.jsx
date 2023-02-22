@@ -1,5 +1,6 @@
 import React from 'react'
 import Nav from '../navbar/Nav'
+import BlankCountdown from '../../components/BlankCountdown';
 
 const PeriodHere = (props) => {
     return (
@@ -11,7 +12,7 @@ const PeriodHere = (props) => {
             <div className="period-countdown">
                 <h2>Your period might be here</h2>
                 <div className='inner-circle'>
-                    <Countdown startDate = {props.startDate} endDate = {props.endDate}></Countdown>
+                    <BlankCountdown startDate = {props.startDate} endDate = {props.endDate}></BlankCountdown>
                 <span>Today</span>
                 </div>
             </div>
