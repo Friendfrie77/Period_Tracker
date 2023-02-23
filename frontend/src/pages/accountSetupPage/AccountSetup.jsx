@@ -15,8 +15,8 @@ const AccountSetup = () => {
   const dispatch = useDispatch();
   const [date, setDate] = useState([
     {
-      startDate: null,
-      endDate: null,
+      startDate: new Date(),
+      endDate: new Date(''),
       key: 'selection'
     }
   ]);
@@ -79,21 +79,22 @@ const AccountSetup = () => {
       console.log(err)
     }
   }
+  console.log(date)
   const setup = isLoading ? <Spinner /> : (
-      <div className='page-wrapper'>
         <section className='setup-wrapper'>
           <h1>When was your last few periods?</h1>
           <p>Just select them below, and once your done hit next. Please try to make them as close as you can.</p>
           <DateRange
             editableDateInputs={true}
+            showMonthAndYearPickers={false}
+            fixedHeight = {true}
             onChange={item => setDate([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={date}
+            // scroll = {{enabled: true}}
           />
           <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
         </section>
-        <Waves />
-      </div>
   )
   return setup
 }

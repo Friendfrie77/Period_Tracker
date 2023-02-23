@@ -10,7 +10,7 @@ nav{
     position: sticky;
     top: 0;
     z-index: 100;
-    opacity: .9;
+    opacity: 1;
     margin-bottom: 15px;
     @include for-size(tablet-only){
         opacity: 1;
@@ -71,6 +71,8 @@ nav{
         opacity: 1;
         transition: cubic-bezier(0.23, 1, 0.32, 1) .35s;
         background-color: $color4;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling:touch;
     }
 }
 

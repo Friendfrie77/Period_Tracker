@@ -17,9 +17,12 @@ function PeriodInfo() {
         <h1>Do you have any more period(s) to log?</h1>
         <DateRange
             editableDateInputs={true}
+            showMonthAndYearPickers={false}
+            fixedHeight = {true}
             onChange={item => setDate([item.selection])}
             moveRangeOnFirstSelection={false}
             ranges={date}
+            // scroll = {{enabled: true}}
           />
           <p>test</p>
       </div>

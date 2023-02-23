@@ -6,9 +6,12 @@
 }
 
 html ,body{
-    min-height: 100vh;
-    width: 100vw;
+    min-height: 100%;
+    width: 100%;
     overscroll-behavior: auto;
+    display: flex;
+    flex-grow: 1;
+    background-color: red;
 }
 body{
     overflow: auto;

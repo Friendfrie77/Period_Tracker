@@ -9,7 +9,6 @@ import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
-import moment from "moment";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -37,6 +36,7 @@ const Home = () => {
       }
     )
     const user = await result
+    console.log(user)
     if (user){
       dispatch(
         setUserInfo({
@@ -101,11 +101,14 @@ const Home = () => {
           endDate = Moment(startDate).add(avgLength, 'days')
         }
       }
-      if(Moment(startDate).diff(todaysDate, 'day') == 0 && Moment(endDate).diff(todaysDate, 'day') >= 0){
+      if(Moment(startDate).diff(todaysDate, 'day') == 0 && Moment(endDate).diff(todaysDate, 'day') >= 0 && startDate){
+        console.log('why')
         setBleed (true)
       }
+      console.log(startDate, endDate)
       return({startDate, endDate})
-    }else if(Moment(periodStartDate).diff(todaysDate, 'day') == 0){
+    }else if(Moment(periodStartDate).diff(todaysDate, 'day') == 0 && startDate){
+      console.log('here')
       setBleed(true)
     }
   }
@@ -168,18 +171,18 @@ const Home = () => {
         sendPeriodInfo(dates)
       }
       daysTill()
-      if (cycle && avgLength){
+      if (cycle && avgLength && periodStartDate){
         setInfo(false)
       }
     }
   }
   useEffect(()=>{
     pageLoad()
-  },[daysTillPeriod, avgLength])
-  console.log(cycle, avgLength)
+  },[daysTillPeriod, avgLength, setInfo])
+  console.log(cycle, avgLength, daysTillPeriod)
   console.log(periodStartDate, periodEndDate, isBleeding, canBleed, needInfo)
 const home = (isBleeding, daysTillPeriod, canBleed) =>{
-  if (!isBleeding && !needInfo && !canBleed){
+  if (!isBleeding && !canBleed){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {todaysDate} onClick = {periodStarted} />
   } else if(canBleed){
     return <PeriodHere userName = {userName} onClick = {periodStarted} endDate = {periodStartDate} startDate = {todaysDate} />

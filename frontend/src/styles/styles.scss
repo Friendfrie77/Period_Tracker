@@ -10,7 +10,7 @@
  $drop-shadow-wrappers: (rgba(0,0,0,.4) 0px 5px 10px);
  $radius: 5px;
  $box-padding: 1rem;
- $heading-clamp: clamp(1rem, 2.5rem, 4rem);
+
 @mixin for-size($size){
     @if $size == tablet-only{
         @media (max-width: 768px){ @content;}
@@ -34,7 +34,15 @@
         @media (min-width: 1300px) {@content;}
     }
 }
-
+:root{
+    --fs-welcome: clamp(1.8rem, 6vw + 1rem, 2.5rem);
+    --fs-header:clamp(2rem, 5vw + .5rem, 4.5rem);
+    --fs-body: 1.5rem;
+    --fs-cal: 1.5rem;
+    @include for-size(large-phone-only){
+        --fs-cal: .9rem
+    }
+ }
 /* Font familys */
 /* bebas-neue-regular - latin */
 @font-face {

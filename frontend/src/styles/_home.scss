@@ -1,18 +1,3 @@
-.inner-circle{
-    height: 300px;
-    width: 300px;
-    background-color: red;
-    border-radius: 50%;
-    position: relative;
-    span{
-        position: absolute;
-        left: 35%;
-        bottom: 50%;
-        color: $textcolor;
-        font-size: 2rem;
-    }
-}
-
 .period-countdown{
     display: flex;
     flex-direction: column;
@@ -21,15 +6,22 @@
     padding: $box-padding;
     h2{
         color: $textcolor;
-        font-size: 3rem;
+        font-size: var(--fs-header);
         padding-bottom: $box-padding;
     }
 }
 .countdown-timer{
     display: flex;
     justify-content: center;
+    div:first-child{
+        max-width: 500px !important;
+        max-height: 500px !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
     svg{
         max-width: 100%;
+        height: auto;
         max-height: 500px;
         path:first-child{
             stroke: $textcolor !important;
@@ -38,9 +30,18 @@
             stroke: $color6;
         }
     }
+    span{
+        display: flex;
+        justify-self: center;
+    }
 }
 .countdown-wrapper{
-    font-size: 3rem;
+    font-size: 3rem
+}
+.days-left{
+    span{
+        font-size: var(--fs-header);
+    }
 }
 .placeholder{
     width: 100%;

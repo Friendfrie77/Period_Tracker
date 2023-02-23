@@ -6,7 +6,7 @@ const Countdown = (props) => {
     const renderTime = (dimension, time) =>{
         return(
             <div className='countdown-wrapper'>
-                <div className='days-left'>{time}&nbsp;{dimension}</div>
+                <div className='days-left'><span>{time}&nbsp;{dimension}</span></div>
             </div>
         )
     }
