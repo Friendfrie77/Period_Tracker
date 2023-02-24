@@ -15,13 +15,17 @@ const Countdown = (props) => {
         size: 500,
         strokeWidth: 10
       }
-      const getTime = (time) => (time / daySeconds) | 0; 
+      const getTime = (time) => (time / daySeconds) | 0;
       const daySeconds = 86400
+      let todaysDate = new Date()
+      todaysDate = Moment(todaysDate).unix()
       const startTime = Moment(props.startDate).unix()
       const endTime = (Moment(props.endDate).unix())
       const remainingTime = endTime - startTime
       const days = Math.ceil(remainingTime / daySeconds)
       const dayDuration = days * daySeconds
+      const test = endTime - todaysDate
+      console.log(startTime, endTime, remainingTime, days, test)
 
   return (
     <div className='countdown-timer'>
@@ -29,7 +33,7 @@ const Countdown = (props) => {
               {...timerProps}
               colors='#EAE8FF'
               duration = {dayDuration}
-              initialRemainingTime = {remainingTime}
+              initialRemainingTime = {test}
             >
             {({elapsedTime, color}) => (
                 <span style={{color}}>

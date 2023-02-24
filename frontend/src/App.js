@@ -28,7 +28,7 @@ function App() {
                 <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />
                 <Route path='/periodinfo' element={isAuth ? <PeriodInfo /> : <Navigate to='/' />} />
                 <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>
-                <Route path='/Test' element= {<BlankCountdown />} />
+                <Route path='/Test1' element= {<Home />} />
             </Routes>
         </BrowserRouter>
 );

@@ -179,11 +179,12 @@ const Home = () => {
   useEffect(()=>{
     pageLoad()
   },[daysTillPeriod, avgLength, setInfo])
-  console.log(cycle, avgLength, daysTillPeriod)
-  console.log(periodStartDate, periodEndDate, isBleeding, canBleed, needInfo)
+  // console.log(cycle, avgLength, daysTillPeriod)
+  // console.log(periodStartDate, periodEndDate, isBleeding, canBleed, needInfo)
+  // console.log(Moment(periodStartDate).subtract(cycle, 'days'))
 const home = (isBleeding, daysTillPeriod, canBleed) =>{
   if (!isBleeding && !canBleed){
-    return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {todaysDate} onClick = {periodStarted} />
+    return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {Moment(periodStartDate).subtract(cycle, 'days')} onClick = {periodStarted} />
   } else if(canBleed){
     return <PeriodHere userName = {userName} onClick = {periodStarted} endDate = {periodStartDate} startDate = {todaysDate} />
   } else if(needInfo){
