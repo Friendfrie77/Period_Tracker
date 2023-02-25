@@ -37,10 +37,12 @@
 :root{
     --fs-welcome: clamp(1.8rem, 6vw + 1rem, 2.5rem);
     --fs-header:clamp(2rem, 5vw + .5rem, 4.5rem);
+    --fs-subheader:clamp(1.6rem, 4vw + .3rem, 3rem);
     --fs-body: 1.5rem;
     --fs-cal: 1.5rem;
     @include for-size(large-phone-only){
-        --fs-cal: .9rem
+        --fs-cal: .9rem;
+        --fs-body: 1.2rem;
     }
  }
 /* Font familys */
@@ -74,7 +76,7 @@
 
 
 
-p, span, button, a{
+p, span, button, a, label, select{
     font-family: $Copy-Font;
 }
 

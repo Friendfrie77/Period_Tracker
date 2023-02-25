@@ -1,12 +1,14 @@
 :root {
   --fs-welcome: clamp(1.8rem, 6vw + 1rem, 2.5rem);
   --fs-header:clamp(2rem, 5vw + .5rem, 4.5rem);
+  --fs-subheader:clamp(1.6rem, 4vw + .3rem, 3rem);
   --fs-body: 1.5rem;
   --fs-cal: 1.5rem;
 }
 @media (max-width: 535px) {
   :root {
-    --fs-cal: .9rem ;
+    --fs-cal: .9rem;
+    --fs-body: 1.2rem;
   }
 }
 
@@ -28,7 +30,7 @@
   src: url("../fonts/Varela_Round/VarelaRound-Regular.ttf");
   src: local("Varela_Round"), url("../fonts/Varela_Round/VarelaRound-Regular.ttf") format("truetype");
 }
-p, span, button, a {
+p, span, button, a, label, select {
   font-family: "Varela_Round", Sans-Serif;
 }
 
@@ -714,6 +716,66 @@ nav {
   height: auto;
   padding: 1rem;
 }
+.logging-period h1 {
+  font-size: var(--fs-header);
+  color: #EAE8FF;
+}
+
+.remove-period {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-content: center;
+  max-width: 1400px;
+  justify-self: center;
+}
+.remove-period h2 {
+  font-size: var(--fs-subheader);
+  color: #EAE8FF;
+  margin-bottom: 1rem;
+}
+.remove-period label {
+  font-size: var(--fs-body);
+  color: #EAE8FF;
+  justify-self: end;
+  margin-right: 16px;
+}
+@media (max-width: 535px) {
+  .remove-period label {
+    margin-right: 12px;
+  }
+}
+.remove-period fieldset {
+  border: none;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+@media (max-width: 768px) {
+  .remove-period fieldset {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.remove-period select {
+  justify-self: start;
+  color: #5CFFC9;
+  background-color: transparent;
+  font-size: var(--fs-body);
+  border-radius: 5px;
+}
+.remove-period button {
+  margin-top: 16px;
+  width: 125px;
+  align-self: center;
+  background-color: #AF4D98;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  height: 35px;
+  font-size: var(--fs-body);
+  color: #EAE8FF;
+}
 
 .rdrCalendarWrapper {
   font-size: var(--fs-cal);
@@ -721,6 +783,7 @@ nav {
   margin: 0.2rem;
   height: 100%;
   width: 100%;
+  max-width: 1400px;
   background: transparent;
 }
 

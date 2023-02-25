@@ -36,7 +36,6 @@ const Home = () => {
       }
     )
     const user = await result
-    console.log(user)
     if (user){
       dispatch(
         setUserInfo({
@@ -102,13 +101,10 @@ const Home = () => {
         }
       }
       if(Moment(startDate).diff(todaysDate, 'day') == 0 && Moment(endDate).diff(todaysDate, 'day') >= 0 && startDate){
-        console.log('why')
         setBleed (true)
       }
-      console.log(startDate, endDate)
       return({startDate, endDate})
     }else if(Moment(periodStartDate).diff(todaysDate, 'day') == 0 && startDate){
-      console.log('here')
       setBleed(true)
     }
   }
@@ -124,10 +120,13 @@ const Home = () => {
   const daysTill = () =>{
     todaysDate = Moment(todaysDate).format()
     let daysLeft;
+    console.log('in days till')
     if (isBleeding){
       daysLeft = Moment(periodEndDate).diff(todaysDate, 'days')
     }else{
+      console.log('else')
       daysLeft = Moment(periodStartDate).diff(todaysDate, 'days')
+      console.log(daysLeft)
     }
     setDays(daysLeft)
   }
@@ -168,20 +167,24 @@ const Home = () => {
       avgPeriodLength()
       const dates = estimateDate()
       if (dates && cycle && avgLength){
+        console.log('sending info')
         sendPeriodInfo(dates)
       }
-      daysTill()
+      console.log('before days till')
+      if (periodStartDate){
+        daysTill()
+      }
       if (cycle && avgLength && periodStartDate){
+        console.log('in set info')
         setInfo(false)
       }
     }
   }
   useEffect(()=>{
     pageLoad()
-  },[daysTillPeriod, avgLength, setInfo])
-  // console.log(cycle, avgLength, daysTillPeriod)
-  // console.log(periodStartDate, periodEndDate, isBleeding, canBleed, needInfo)
-  // console.log(Moment(periodStartDate).subtract(cycle, 'days'))
+  },[periodStartDate])
+  console.log(cycle, avgLength, daysTillPeriod, needInfo)
+  console.log(periodStartDate, periodEndDate)
 const home = (isBleeding, daysTillPeriod, canBleed) =>{
   if (!isBleeding && !canBleed){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {Moment(periodStartDate).subtract(cycle, 'days')} onClick = {periodStarted} />

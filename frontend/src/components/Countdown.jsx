@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Moment from 'moment';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -25,8 +25,7 @@ const Countdown = (props) => {
       const days = Math.ceil(remainingTime / daySeconds)
       const dayDuration = days * daySeconds
       const test = endTime - todaysDate
-      console.log(startTime, endTime, remainingTime, days, test)
-
+      console.log(test)
   return (
     <div className='countdown-timer'>
         <CountdownCircleTimer

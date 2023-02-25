@@ -33,12 +33,14 @@ function PeriodInfo() {
       </div>
       <div className='remove-period'>
         <h2>Or would you like to remove some?</h2>
-        <label htmlFor = 'periods'>Select a period to remove:</label>
-        <select name='periods' className='remove-period'>
-          <option disabled selected>Select a date</option>
-          {previousPeriod.map((date, key) => <option value={key} key={date + key}>{`${Moment(date.startDate).format('MMMM Do YYYY')} - ${Moment(date.endDate).format('MMMM Do YYYY')}`}</option>
-          )}
-        </select>
+        <fieldset>
+          <label htmlFor = 'periods'>Select a period to remove:</label>
+          <select name='periods' className='periods'>
+            <option disabled selected>Select a date</option>
+            {previousPeriod.map((date, key) => <option value={key} key={date + key}>{`${Moment(date.startDate).format('MMMM Do YYYY')} - ${Moment(date.endDate).format('MMMM Do YYYY')}`}</option>
+            )}
+          </select>
+        </fieldset>
         <button onClick={removePeriod}>Remove</button>
       </div>
     </section>

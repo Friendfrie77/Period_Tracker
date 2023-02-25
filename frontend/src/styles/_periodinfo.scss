@@ -7,4 +7,60 @@
     width: 100%;
     height: auto;
     padding: $box-padding;
+    h1{
+        font-size: var(--fs-header);
+        color: $textcolor;
+    }
+}
+
+.remove-period{
+    padding: $box-padding;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-content: center;
+    max-width: 1400px;
+    justify-self: center;
+    h2{
+        font-size: var(--fs-subheader);
+        color: $textcolor;
+        margin-bottom: 1rem;
+    }
+    label{
+        font-size: var(--fs-body);
+        color: $textcolor;
+        justify-self: end;
+        margin-right: 16px;
+        @include for-size(large-phone-only){
+            margin-right: 12px;
+        }
+    }
+    fieldset{
+        border: none;
+        display: grid;
+        grid-template-columns: auto auto;
+        @include for-size(tablet-only){
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    select{
+        justify-self: start;
+        color: $color6;
+        background-color: transparent;
+        font-size: var(--fs-body);
+        border-radius: $radius;
+    }
+    button{
+        margin-top: 16px;
+        width: 125px;
+        align-self: center;
+        background-color: $button-color;
+        border: none;
+        border-radius: $radius;
+        box-shadow: $drop-shadow-wrappers;
+        height: 35px;
+        font-size: var(--fs-body);
+        color: $textcolor;
+    }
 }
