@@ -8,12 +8,10 @@ const addNewUserInfo = async (req, res) => {
         if(user.previousPeriod.length === 0){
             user.previousPeriod = userInfo;
             user.save()
-            console.log('here')
             res.status(200)
         }else{
             user.previousPeriod = userInfo;
             user.save()
-            console.log('here')
             res.status(200).json('test')
         }
     }catch(err){
@@ -28,7 +26,6 @@ const getUserInfo = async (req, res) =>{
     try{
         if(user){
             delete user.password;
-            console.log(user)
             res.status(200).json({user})
         }
     }catch(err){
@@ -44,11 +41,23 @@ const addNewPeriod = async (req, res) => {
         user.avgLength = avgLength;
         user.cycle = cycle;
         user.save()
-        console.log(user)
         res.status(200).json({user})
     }catch(err){
         res.status(500).json({error : err.messege})
     }
 }
 
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo}
+const setPeriodStatus = async (req, res) =>{
+    const {email, isBleeding, canBleed} = req.body;
+    console.log(email, isBleeding, canBleed);
+    const user = await User.findOne({email: email});
+    try{
+        if(canBleed == true){
+            user.canBleed = true;
+            user.save()
+        }
+    }catch(err){
+        res.status(500).json({error : err.messege})
+    }
+}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus}

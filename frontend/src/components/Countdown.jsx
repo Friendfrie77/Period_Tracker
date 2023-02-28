@@ -21,11 +21,6 @@ const Countdown = (props) => {
     const duration = endTime - startTime;
     const remainingTime = endTime - todaysDate;
     const elapsedTime = todaysDate - startDate;
-    console.log(elapsedTime)
-    console.log(`start time: ${startTime}`)
-    console.log(`end time: ${endTime}`)
-    console.log(`duration: ${duration}`);
-    console.log(`remaining Time: ${remainingTime}`)
     const timerProps = {
     isPlaying: true,
     size: 500,
@@ -41,7 +36,6 @@ const Countdown = (props) => {
             >
             {({elapsedTime, color}) => (
                 <span style={{color}}>
-                    {/* {console.log(elapsedTime)} */}
                     {renderTime('days', getTime(duration - elapsedTime) )}
                 </span>
             )}

@@ -17,17 +17,10 @@ async function useFetchUserInfo(email, token){
           avgLength: user.data.user.avgLength,
           cycle: user.data.user.cycle,
           periodEndDate: user.data.user.periodEndDate,
-          previousPeriod: user.data.user.previousPeriod
+          previousPeriod: user.data.user.previousPeriod,
+          canBleed: user.data.canBleed,
+          isBleeding: user.data.isBleeding
         }
-    //   dispatch(
-    //     setUserInfo({
-    //       periodStartDate: user.data.user.periodStartDate,
-    //       avgLength: user.data.user.avgLength,
-    //       cycle: user.data.user.cycle,
-    //       periodEndDate: user.data.user.periodEndDate,
-    //       previousPeriod: user.data.user.previousPeriod
-    //     })
-    //   )
       return(userInfo)
     }
     else{

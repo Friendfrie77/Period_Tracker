@@ -10,8 +10,8 @@ const initialState = {
     periodStartDate: null,
     periodEndDate: null,
     daysTillPeriod: null,
-    canBleed: null,
-    isBleeding: null, 
+    canBleed: false,
+    isBleeding: false, 
     daysleft: null,
     previousPeriod: [{
         startDate: null,
@@ -45,8 +45,8 @@ export const authSlice = createSlice({
             state.periodStartDate = null;
             state.periodEndDate = null;
             state.daysTillPeriod = null;
-            state.canBleed = null;
-            state.isBleeding = null;
+            state.canBleed = false;
+            state.isBleeding = false;
             state.previousPeriod = null;
         },
         setPeriod: (state, action) =>{

@@ -16,7 +16,7 @@ const AccountSetup = () => {
   const [date, setDate] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(''),
+      endDate: new Date(),
       key: 'selection'
     }
   ]);

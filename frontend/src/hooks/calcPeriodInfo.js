@@ -1,14 +1,15 @@
 import Moment from 'moment';
-import { useDispatch } from 'react-redux';
 import { setCycle, setDays, setCanBleed} from '../state';
 
 function useAvgPeriodLength(previousPeriod){
-    const dispatch = useDispatch();
     let totalDays = 0
     let totalCycle = 0
     let oldStartDate = null;
     let cycleCount = 0
     const periodLogged = previousPeriod.length;
+    if (periodLogged === 1){
+        return (false)
+    }
     previousPeriod.forEach(date => {
       totalDays += Moment(date.endDate).diff(date.startDate, 'days')
       if (oldStartDate != null){
