@@ -706,6 +706,18 @@ nav {
   padding: 5px 8px;
 }
 
+.inner-circle {
+  position: relative;
+}
+.inner-circle span {
+  color: #EAE8FF;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--fs-header);
+}
+
 .logging-period {
   display: flex;
   flex-direction: column;

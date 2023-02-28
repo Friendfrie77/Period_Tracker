@@ -10,6 +10,9 @@ const initialState = {
     periodStartDate: null,
     periodEndDate: null,
     daysTillPeriod: null,
+    canBleed: null,
+    isBleeding: null, 
+    daysleft: null,
     previousPeriod: [{
         startDate: null,
         endDate: null,
@@ -27,8 +30,11 @@ export const authSlice = createSlice({
             state.token = action.payload.token;
             state.cycle = action.payload.cycle;
             state.avgLength = action.payload.avgLength
+            state.periodStartDate = action.payload.periodStartDate;
             state.periodEndDate = action.payload.periodEndDate
             state.daysTillPeriod = action.payload.cycle;
+            state.canBleed = action.payload.canBleed;
+            state.isBleeding = action.payload.isBleeding;
             state.previousPeriod = action.payload.previousPeriod;
         },
         setLogout: (state) =>{
@@ -38,6 +44,10 @@ export const authSlice = createSlice({
             state.daysTillPeriod = null;
             state.periodStartDate = null;
             state.periodEndDate = null;
+            state.daysTillPeriod = null;
+            state.canBleed = null;
+            state.isBleeding = null;
+            state.previousPeriod = null;
         },
         setPeriod: (state, action) =>{
             state.previousPeriod = action.payload.previousPeriod
@@ -52,15 +62,26 @@ export const authSlice = createSlice({
         },
         setUserInfo: (state, action) =>{
             state.periodStartDate = action.payload.periodStartDate;
-            state.cycle = action.payload.cycle;
-            state.avgLength = action.payload.avgLength
             state.periodEndDate = action.payload.periodEndDate;
-            state.previousPeriod = action.payload.previousPeriod
+            state.cycle = action.payload.cycle;
+            state.avgLength = action.payload.avgLength;
+            state.canBleed = action.payload.canBleed;
+            state.isBleeding = action.payload.isBleeding;
+            state.previousPeriod = action.payload.previousPeriod;
+        },
+        setCanBleed: (state, action) =>{
+            state.canBleed = action.payload.canBleed;
+        },
+        setIsBleeding: (state, action) =>{
+            state.isBleeding = action.payload.isBleeding;
+        },
+        setDays: (state, action) =>{
+            state.daysleft = action.payload.daysleft;
         }
     }
 })
 
-export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo} = authSlice.actions;
+export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setDays} = authSlice.actions;
 
 export const selectCurrentUser = (state) => state.auth.user
 export const selectCurrentEmail = (state) => state.auth.email

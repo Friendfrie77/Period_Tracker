@@ -6,19 +6,18 @@ import Login from './pages/loginPage/Login'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
-import BlankCountdown from './components/BlankCountdown'
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
     const newAccount = useSelector((state) => state.previousPeriod);
     let isNew;
-    function newAccountCheck(newAccount){
-        if (newAccount.length < 1){
-            isNew = true;
-        }else{
-            isNew = false;
-        }
-    }
-    newAccountCheck(newAccount)
+    // function newAccountCheck(newAccount){
+    //     if (newAccount.length < 1){
+    //         isNew = true;
+    //     }else{
+    //         isNew = false;
+    //     }
+    // }
+    // newAccountCheck(newAccount)
     return (
         <BrowserRouter>
             <Routes>

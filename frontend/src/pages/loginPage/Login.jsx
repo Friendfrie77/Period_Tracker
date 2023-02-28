@@ -33,6 +33,8 @@ function Login(){
                   periodStartDate: user.data.user.periodStartDate,
                   periodEndDate: user.data.user.periodEndDate,
                   previousPeriod: user.data.user.previousPeriod,
+                  isBleeding: user.data.user.isBleeding,
+                  canBleed: user.data.user.canBleed
                 })
               );
         };      

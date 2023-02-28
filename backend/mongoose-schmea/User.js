@@ -16,11 +16,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    token: String,
     cycle: Number,
     avgLength: Number, 
     periodStartDate: Date,
     periodEndDate: Date,
+    canBleed:{
+        type: Boolean,
+        default: false
+    },
+    isBleeding:{
+        type: Boolean,
+        default: false
+    },
     previousPeriod:{
         type: Array,
         default: []

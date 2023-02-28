@@ -6,7 +6,7 @@ const Countdown = (props) => {
     const renderTime = (message) =>{
         return(
             <div className='countdown-wrapper'>
-                <div className='days-left'>{props.message}</div>
+                <div className='days-left'><span>{props.message}</span></div>
             </div>
         )
     }
@@ -24,7 +24,7 @@ const Countdown = (props) => {
             >
             {({color}) => (
                 <span style={{color}}>
-                    {renderTime()}
+                    {renderTime(props.message)}
                 </span>
             )}
             </CountdownCircleTimer>
