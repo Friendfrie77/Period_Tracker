@@ -49,15 +49,43 @@ const addNewPeriod = async (req, res) => {
 
 const setPeriodStatus = async (req, res) =>{
     const {email, isBleeding, canBleed} = req.body;
-    console.log(email, isBleeding, canBleed);
     const user = await User.findOne({email: email});
     try{
-        if(canBleed == true){
-            user.canBleed = true;
-            user.save()
+        if(canBleed != user.canBleed){
+            user.canBleed = canBleed;
         }
+        if(isBleeding != user.isBleeding){
+            user.isBleeding = isBleeding
+        }
+        user.save()
     }catch(err){
         res.status(500).json({error : err.messege})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus}
+
+const updatePeriod = async (req, res) =>{
+    const {email, periodStartDate, periodEndDate} = req.body
+    const user = await User.findOne({email: email});
+    try{
+        if(user.periodStartDate != periodStartDate){
+            user.periodStartDate = periodStartDate
+        }
+        if(user.periodEndDate != periodEndDate){
+            user.periodEndDate = periodEndDate
+        }
+        user.save()
+    }catch(err){
+        res.status(500).json({error: err.messege})
+    }
+}
+
+const addPreviousPeriod = async (req, res) =>{
+    const {email, previousPeriod} = req.body;
+    const user = await User.findOne({email: email});
+    try{
+        user.previousPeriod = previousPeriod;
+    }catch(err){
+        res.status(500).json({error: err.messege})
+    }
+}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod}

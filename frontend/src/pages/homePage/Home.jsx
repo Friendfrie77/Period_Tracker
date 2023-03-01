@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
-import { setCycle, setIsBleeding, setNewPeriod, setUserInfo, setCanBleed} from '../../state';
+import { setCycle, setIsBleeding, setNewPeriod, setUserInfo, setCanBleed, setPeriod} from '../../state';
 import Moment from 'moment';
 import axios from "axios";
 import { useFetchUserInfo } from "../../hooks/fetchUserInfo";
@@ -30,6 +30,7 @@ const Home = () => {
   const user = useFetchUserInfo(email, token)
   const avgLengths = useAvgPeriodLength(previousPeriod)
   const estimateDate = useEstimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avgLength)
+  const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
   const setUser = async (user, avgLengths, estimateDate) =>{
     const userInfo = await user;
     dispatch(
@@ -41,7 +42,6 @@ const Home = () => {
         previousPeriod: userInfo.previousPeriod,
       })
     )
-    console.log(canBleed, isBleeding)
     if (avgLengths){
       const cycle = avgLengths.cycle;
       const avgLength = avgLengths.avgLength
@@ -51,8 +51,6 @@ const Home = () => {
           avgLength: avgLength
         })
       )
-    } else{
-      return (false)
     }
     if (estimateDate){
       const startDate = Moment(estimateDate.startDate).format('YYYY-MM-DD');
@@ -75,10 +73,6 @@ const Home = () => {
     }
   }
 
-  useEffect(()=>{
-    setUser(user,avgLengths, estimateDate)
-  },[cycle, periodStartDate, isBleeding, canBleed])
-
   const sendPeriodInfo = async (startDate, endDate) =>{
     axios.post('http://localhost:8080/user/addperiod', {
       email, startDate, endDate, cycle, avgLength
@@ -94,13 +88,32 @@ const Home = () => {
       headers: {'Authorization': `Bearer ${token}`},
     })
   }
-const periodStarted = () =>{
+
+  const sendPreviousPeriod = async () => {
+    axios.post('http://localhost:8080/user/addpreviousperiod', {
+      email, previousPeriod
+    },{
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+  }
+
+  const sendUpdatedPeriod = async (periodStartDate, periodEndDate) => {
+    axios.post('http://localhost:8080/user/updateperiod', {
+      email, periodStartDate, periodEndDate
+    },{
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+  }
+const periodStarted = async () =>{
+  console.log('clicked')
   if (periodStartDate != todaysDate){
     const newEndDate = Moment(todaysDate).add('days', avgLength).format('YYYY-MM-DD')
+    sendUpdatedPeriod(todaysDate, newEndDate)
+  }
+  if (canBleed){
     dispatch(
-      setNewPeriod({
-        periodStartDate: todaysDate,
-        periodEndDate: newEndDate
+      setCanBleed({
+        canBleed: false
       })
     )
   }
@@ -109,26 +122,59 @@ const periodStarted = () =>{
       isBleeding: true
     })
   )
-  if (canBleed){
+}
+
+const periodEnded = async () =>{
+  if (periodEndDate != todaysDate){
+    const newEndDate = Moment(todaysDate).add('days', avgLength).format('YYYY-MM-DD')
     dispatch(
-      setCanBleed({
-        canBleed: false
+      setPeriod({
+        previousPeriod: [...previousPeriod,
+          {startDate: periodStartDate, endDate: newEndDate}
+        ]
+      })
+    )
+    dispatch(
+      setIsBleeding({
+        isBleeding: false
+      })
+    )
+  }else{
+    dispatch(
+      setPeriod({
+        previousPeriod: [...previousPeriod,
+          {startDate: periodStartDate, endDate: periodEndDate}
+        ]
+      })
+    )
+    dispatch(
+      setIsBleeding({
+        isBleeding: false
       })
     )
   }
-  sendPeriodStatus()
-  console.log('clicked')
 }
-const aa = Moment(periodStartDate).subtract(cycle, 'days')
+useEffect(()=>{
+  setUser(user,avgLengths, estimateDate)
+},[cycle, periodStartDate, periodEndDate])
+
+useEffect(() =>{
+  sendPeriodStatus()
+},[isBleeding, canBleed])
+
+useEffect(() => {
+  sendPreviousPeriod()
+},[isBleeding])
+console.log(previousPeriod)
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
-    return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {aa} onClick = {periodStarted} />
+    return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {cycleStartDate} onClick = {periodStarted} />
   } else if(canBleed){
     return <PeriodHere userName = {userName} onClick = {periodStarted} endDate = {periodStartDate} startDate = {todaysDate} />
   } else if(needInfo){
     return <NeedInfo userName = {userName} onClick = {null} message = 'More logs are required' />
   }else{
-    return <PeriodActive userName = {userName} onClick = {null} endDate = {periodEndDate} startDate = {periodStartDate} />
+    return <PeriodActive userName = {userName} onClick = {periodEnded} endDate = {periodEndDate} startDate = {periodStartDate} />
   }
 }
 

@@ -20,7 +20,6 @@ const Countdown = (props) => {
     const endTime = new Date(endDate).getTime() / 1000;
     const duration = endTime - startTime;
     const remainingTime = endTime - todaysDate;
-    const elapsedTime = todaysDate - startDate;
     const timerProps = {
     isPlaying: true,
     size: 500,

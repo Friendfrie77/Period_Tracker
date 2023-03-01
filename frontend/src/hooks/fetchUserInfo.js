@@ -18,8 +18,8 @@ async function useFetchUserInfo(email, token){
           cycle: user.data.user.cycle,
           periodEndDate: user.data.user.periodEndDate,
           previousPeriod: user.data.user.previousPeriod,
-          canBleed: user.data.canBleed,
-          isBleeding: user.data.isBleeding
+          canBleed: user.data.user.canBleed,
+          isBleeding: user.data.user.isBleeding
         }
       return(userInfo)
     }
