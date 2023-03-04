@@ -18,7 +18,7 @@ function Login(){
         setLoading(true)
         let email = values.email
         let password = values.password
-        const loginTry = await axios.post(`http://localhost:8080/auth/login`,{
+        const loginTry = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
             email, password
         });
         const user = await loginTry
@@ -40,6 +40,7 @@ function Login(){
         };      
         navigate('/home')
     }
+    console.log(`${process.env.REACT_APP_APIURL}/auth/login`)
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <h1>Sign In</h1>
