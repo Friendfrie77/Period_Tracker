@@ -76,7 +76,7 @@
 
 
 
-p, span, button, a, label, select{
+p, span, button, a, label, select, ul, li{
     font-family: $Copy-Font;
 }
 
@@ -84,6 +84,11 @@ h1, h2, h3, h4{
     font-family: $Header-Font;
 }
 
+.welcome-text{
+    color: $textcolor;
+    font-size: var(--fs-header);
+    padding-bottom: 1.5rem;
+}
 @import './reset';
 @import './wrappers';
 @import './nav';
@@ -91,6 +96,7 @@ h1, h2, h3, h4{
 @import './react-calendar';
 @import './home';
 @import './periodinfo';
+@import './profile';
 @import './react-calendar-theme';
 @import './animations';
 @import './waves';

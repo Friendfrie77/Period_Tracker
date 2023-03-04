@@ -15,11 +15,13 @@ const Countdown = (props) => {
     const endDate = Moment(props.endDate).format('YYYY-MM-DD')
     const getTime = (time) =>(time / daySeconds) | 0;
     const daySeconds = 86400
+    const fiveDays = 432000
     let todaysDate = Date.now() / 1000;
     const startTime = new Date(startDate).getTime() / 1000;
     const endTime = new Date(endDate).getTime() / 1000;
     const duration = endTime - startTime;
     const remainingTime = endTime - todaysDate;
+    console.log(remainingTime)
     const timerProps = {
     isPlaying: true,
     size: 500,
@@ -29,7 +31,8 @@ const Countdown = (props) => {
     <div className='countdown-timer'>
         <CountdownCircleTimer
               {...timerProps}
-              colors='#EAE8FF'
+              colors={['#EAE8FF', '#FF6947', '#FA2C00']}
+              colorsTime={[startTime , fiveDays, 0]}
               duration={duration}
               initialRemainingTime= {remainingTime}
             >

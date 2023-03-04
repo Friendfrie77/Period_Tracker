@@ -7,7 +7,7 @@ const PeriodActive = (props) => {
   return (
         <section className="home">
             <Nav />
-            <h1>Welcome back, {props.userName}</h1>
+            <h1 className='welcome-text'>Welcome back, {props.userName}</h1>
             <div className="placeholder"></div>
             <div className="period-countdown">
                 <h2>Your period should be over in</h2>

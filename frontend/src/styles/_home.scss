@@ -26,9 +26,9 @@
         path:first-child{
             stroke: $textcolor !important;
         }
-        path:nth-child(2){
-            stroke: $color6;
-        }
+        // path:nth-child(2){
+        //     stroke: red;
+        // }
     }
     span{
         display: flex;
@@ -41,6 +41,7 @@
 .days-left{
     span{
         font-size: var(--fs-header);
+        color: $textcolor !important;
     }
 }
 .placeholder{
