@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 async function useFetchUserInfo(email, token){
     const dispatch = useDispatch();
-    const result = axios.post('http://localhost:8080/user/getuserinfo',{
+    const result = axios.post(`${process.env.REACT_APP_APIURL}/user/getuserinfo`,{
       email
       },{
         headers: {'Authorization': `Bearer ${token}`},

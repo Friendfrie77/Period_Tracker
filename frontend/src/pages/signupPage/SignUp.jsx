@@ -18,12 +18,12 @@ export default function SignUp(){
         let password = values.password
         setLoading(true)
         try{
-            const results = await axios.post('http://localhost:8080/register',{
+            const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
                 email, username, password
             })
             const result = await results
             if (result){
-                const login = await axios.post('http://localhost:8080/auth/login',{
+                const login = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
                     email, password
             });
             const user = await login

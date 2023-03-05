@@ -40,7 +40,6 @@ function Login(){
         };      
         navigate('/home')
     }
-    console.log(`${process.env.REACT_APP_APIURL}/auth/login`)
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <h1>Sign In</h1>
