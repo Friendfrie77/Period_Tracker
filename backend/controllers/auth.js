@@ -57,6 +57,18 @@ const login = async (req, res) => {
     }
 }
 
+const deleteAccount = async (req, res) =>{
+    const {email} = req.body;
+    const user = await User.findOne({email:email});
+    if (user){
+        User.deleteOne({_id: user._id}).exec();
+        res.status(200).json({messege: 'Account Deleted'})
+    } else{
+        res.status(401).json({
+            error:'No account found'
+        })
+    }
+}
 
 
-module.exports = {register, login }
+module.exports = {register, login, deleteAccount }

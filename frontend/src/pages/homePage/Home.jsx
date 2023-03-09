@@ -53,6 +53,7 @@ const Home = () => {
       )
     }
     if (estimateDate){
+      console.log(estimateDate)
       const startDate = Moment(estimateDate.startDate).format('YYYY-MM-DD');
       const endDate = Moment(estimateDate.endDate).format('YYYY-MM-DD');
       dispatch(
@@ -61,10 +62,11 @@ const Home = () => {
           periodEndDate: endDate
         })
       )
+      console.log(periodStartDate, periodEndDate)
       sendPeriodInfo(startDate, endDate)
     }
     setInfo(false)
-    if (periodStartDate == todaysDate || periodStartDate < todaysDate){
+    if (Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate || Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate){
       dispatch(
         setCanBleed({
           canBleed: true
@@ -74,6 +76,7 @@ const Home = () => {
   }
 
   const sendPeriodInfo = async (startDate, endDate) =>{
+    console.log('uwu')
     axios.post('http://localhost:8080/user/addperiod', {
       email, startDate, endDate, cycle, avgLength
     },{
@@ -98,11 +101,12 @@ const Home = () => {
   }
 
   const sendUpdatedPeriod = async (periodStartDate, periodEndDate) => {
-    axios.post('http://localhost:8080/user/updateperiod', {
+    const test =axios.post('http://localhost:8080/user/updateperiod', {
       email, periodStartDate, periodEndDate
     },{
       headers: {'Authorization': `Bearer ${token}`},
     })
+    console.log(test)
   }
 const periodStarted = async () =>{
   console.log('clicked')
@@ -165,7 +169,8 @@ useEffect(() =>{
 useEffect(() => {
   sendPreviousPeriod()
 },[isBleeding])
-console.log(previousPeriod)
+// console.log(canBleed, isBleeding, periodStartDate, todaysDate)
+// console.log(Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate)
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {cycleStartDate} onClick = {periodStarted} />

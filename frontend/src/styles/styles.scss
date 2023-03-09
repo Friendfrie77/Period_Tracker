@@ -89,6 +89,55 @@ h1, h2, h3, h4{
     font-size: var(--fs-header);
     padding-bottom: 1.5rem;
 }
+.page-fade{
+    background-color: rgba(0,0,0,.5);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+.warning-box{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: $box-padding;
+    top: 50%;
+    left: 50%;
+    background-color: $color4;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 30%;
+    border-radius: $radius;
+    color: $textcolor;
+    align-items: center;
+    @include for-size(large-phone-only){
+        width: 95%;
+    }
+    h1{
+        font-size: var(--fs-body);
+
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        margin: auto;
+    }
+    button{
+        box-shadow: $drop-shadow-wrappers;
+        width: 25%;
+        margin: auto;
+        border-radius: $radius;
+        height: auto;
+        background-color: $button-color;
+        color: $textcolor;
+        font-family: $Header-Font;
+        font-size: 1.1rem;
+        padding: 5px 8px;
+    }
+}
 @import './reset';
 @import './wrappers';
 @import './nav';
@@ -102,3 +151,4 @@ h1, h2, h3, h4{
 @import './waves';
 @import './loading';
 @import './nav';
+@import './footer';

@@ -34,10 +34,11 @@ const getUserInfo = async (req, res) =>{
 }
 const addNewPeriod = async (req, res) => {
     const {email, startDate, endDate, cycle, avgLength} = req.body;
+    console.log(email, startDate, endDate, cycle, avgLength)
     const user = await User.findOne({email: email});
     try{
-        user.periodStartDate = moment(startDate).format();
-        user.periodEndDate = moment(endDate).format();
+        user.periodStartDate = moment(startDate).format('YYYY-MM-DD');
+        user.periodEndDate = moment(endDate).format('YYYY-MM-DD');
         user.avgLength = avgLength;
         user.cycle = cycle;
         user.save()
@@ -45,12 +46,13 @@ const addNewPeriod = async (req, res) => {
     }catch(err){
         res.status(500).json({error : err.messege})
     }
+    res.status(200)
 }
 
 const setPeriodStatus = async (req, res) =>{
     const {email, isBleeding, canBleed} = req.body;
     const user = await User.findOne({email: email});
-    try{
+    if(user){
         if(canBleed != user.canBleed){
             user.canBleed = canBleed;
         }
@@ -58,22 +60,29 @@ const setPeriodStatus = async (req, res) =>{
             user.isBleeding = isBleeding
         }
         user.save()
-    }catch(err){
-        res.status(500).json({error : err.messege})
+        res.status(200)
+    }else{
+        res.status(500).json({messege: 'Internal Server Error'})
     }
 }
 
 const updatePeriod = async (req, res) =>{
     const {email, periodStartDate, periodEndDate} = req.body
+    console.log(email)
     const user = await User.findOne({email: email});
+    console.log(periodStartDate, periodEndDate)
     try{
         if(user.periodStartDate != periodStartDate){
-            user.periodStartDate = periodStartDate
+            User.findOneAndUpdate({_id:user._id}, {periodStartDate:periodStartDate}).exec()
+            console.log('peg')
         }
         if(user.periodEndDate != periodEndDate){
             user.periodEndDate = periodEndDate
+            console.log('me')
         }
         user.save()
+        console.log(user.periodStartDate, user.periodEndDate, 'test')
+        res.status(200).json(user)
     }catch(err){
         res.status(500).json({error: err.messege})
     }

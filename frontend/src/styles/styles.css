@@ -44,6 +44,58 @@ h1, h2, h3, h4 {
   padding-bottom: 1.5rem;
 }
 
+.page-fade {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+
+.warning-box {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 1rem;
+  top: 50%;
+  left: 50%;
+  background-color: #5C0F47;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 30%;
+  border-radius: 5px;
+  color: #EAE8FF;
+  align-items: center;
+}
+@media (max-width: 535px) {
+  .warning-box {
+    width: 95%;
+  }
+}
+.warning-box h1 {
+  font-size: var(--fs-body);
+}
+.warning-box form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin: auto;
+}
+.warning-box button {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  width: 25%;
+  margin: auto;
+  border-radius: 5px;
+  height: auto;
+  background-color: #AF4D98;
+  color: #EAE8FF;
+  font-family: "Varela_Round", Sans-Serif;
+  font-size: 1.1rem;
+  padding: 5px 8px;
+}
+
 /* page setup */
 * {
   margin: 0px;
@@ -52,8 +104,8 @@ h1, h2, h3, h4 {
 }
 
 html, body {
-  min-height: 100%;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
   overscroll-behavior: auto;
   display: flex;
   flex-grow: 1;
@@ -220,6 +272,7 @@ body {
   align-content: center;
   width: 100%;
   max-width: 1400px;
+  padding: 1rem;
 }
 
 nav {
@@ -806,19 +859,73 @@ nav {
   display: flex;
   flex-direction: column;
   align-self: center;
+  align-content: center;
   color: #EAE8FF;
   font-size: var(--fs-body);
   background-color: #241E4E;
   border-radius: 5px;
-  width: 100%;
+  width: 55%;
   padding: 1rem;
 }
-.account-settings span {
-  text-align: center;
+@media (max-width: 535px) {
+  .account-settings {
+    width: 100%;
+  }
 }
-.account-settings ul li {
-  text-align: left;
-  list-style: none;
+.account-settings button {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  width: 95%;
+  height: 2rem;
+  margin: 2rem auto;
+  font-size: var(--fs-body);
+  background-color: #AF4D98;
+  border-radius: 5px;
+  border: none;
+  color: #EAE8FF;
+}
+
+.inner-account-settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.setting-option {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.setting-option button {
+  width: 50%;
+}
+
+.password-change {
+  padding: 1rem;
+  border: #8FDDC3 solid 1px;
+  border-radius: 5px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 50%;
+}
+.password-change .password-input {
+  margin: 1rem auto;
+}
+.password-change button {
+  width: 125px;
+}
+
+.delete-account .email-input {
+  margin-bottom: 1rem !important;
+  width: 40%;
+}
+.delete-account button {
+  margin-bottom: 1rem;
+  width: 25%;
+  min-width: 125px;
 }
 
 .rdrCalendarWrapper {
@@ -1492,4 +1599,16 @@ nav {
 #mobile-nav-toggle:checked + .mobile-nav-container .mobile-nav::after {
   margin-top: 0px;
   transform: rotate(-405deg);
+}
+
+footer {
+  background-color: #4B203F;
+  color: #EAE8FF;
+  text-align: center;
+  padding: 1rem;
+  font-size: var(--fs-cal);
+}
+footer a {
+  text-decoration: none;
+  color: #EAE8FF;
 }/*# sourceMappingURL=styles.css.map */

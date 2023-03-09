@@ -1,0 +1,11 @@
+footer{
+    background-color: $login-input-background;
+    color: $textcolor;
+    text-align: center;
+    padding: $box-padding;
+    font-size: var(--fs-cal);
+    a{
+        text-decoration: none;
+        color: $textcolor;
+    }
+}

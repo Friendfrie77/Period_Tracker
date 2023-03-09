@@ -1,5 +1,6 @@
 import React from 'react'
 import Nav from '../navbar/Nav'
+import Footer from '../footer/Footer';
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
 import { useSelector } from "react-redux";
@@ -17,7 +18,7 @@ function PeriodInfo() {
     
   }
   const content =
-    <section className='page-wrapper'>
+    <div className='page-wrapper'>
       <Nav />
       <div className='logging-period'>
         <h1>Do you have any more period(s) to log?</h1>
@@ -43,7 +44,8 @@ function PeriodInfo() {
         </fieldset>
         <button onClick={removePeriod}>Remove</button>
       </div>
-    </section>
+      <Footer />
+    </div>
 
   return content;
 }
