@@ -37,12 +37,15 @@ const addNewPeriod = async (req, res) => {
     console.log(email, startDate, endDate, cycle, avgLength)
     const user = await User.findOne({email: email});
     try{
-        user.periodStartDate = moment(startDate).format('YYYY-MM-DD');
-        user.periodEndDate = moment(endDate).format('YYYY-MM-DD');
-        user.avgLength = avgLength;
-        user.cycle = cycle;
-        user.save()
-        res.status(200).json({user})
+        if(user){
+            console.log(user)
+            user.periodStartDate = moment(startDate).format('YYYY-MM-DD');
+            user.periodEndDate = moment(endDate).format('YYYY-MM-DD');
+            user.avgLength = avgLength;
+            user.cycle = cycle;
+            user.save()
+            res.status(200).json({user})
+        }
     }catch(err){
         res.status(500).json({error : err.messege})
     }
@@ -54,10 +57,10 @@ const setPeriodStatus = async (req, res) =>{
     const user = await User.findOne({email: email});
     if(user){
         if(canBleed != user.canBleed){
-            user.canBleed = canBleed;
+            User.findOneAndUpdate({_id:user._id}, {canBleed:canBleed}).exec();
         }
         if(isBleeding != user.isBleeding){
-            user.isBleeding = isBleeding
+            User.findOneAndUpdate({_id:user._id}, {isBleeding:isBleeding}).exec();
         }
         user.save()
         res.status(200)
@@ -73,15 +76,13 @@ const updatePeriod = async (req, res) =>{
     console.log(periodStartDate, periodEndDate)
     try{
         if(user.periodStartDate != periodStartDate){
-            User.findOneAndUpdate({_id:user._id}, {periodStartDate:periodStartDate}).exec()
-            console.log('peg')
+            User.findOneAndUpdate({_id:user._id}, {periodStartDate:periodStartDate}).exec();
         }
         if(user.periodEndDate != periodEndDate){
-            user.periodEndDate = periodEndDate
-            console.log('me')
+            User.findOneAndUpdate({_id:user._id}, {periodEndDate:periodEndDate}).exec();
         }
-        user.save()
-        console.log(user.periodStartDate, user.periodEndDate, 'test')
+        User.findByIdAndUpdate({_id:user._id},{isBleeding:true}).exec();
+        User.findByIdAndUpdate({_id:user._id},{canBleed:false}).exec();
         res.status(200).json(user)
     }catch(err){
         res.status(500).json({error: err.messege})

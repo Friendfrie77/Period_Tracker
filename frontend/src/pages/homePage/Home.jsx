@@ -66,7 +66,7 @@ const Home = () => {
       sendPeriodInfo(startDate, endDate)
     }
     setInfo(false)
-    if (Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate || Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate){
+    if (Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate || Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate && !isBleeding){
       dispatch(
         setCanBleed({
           canBleed: true
@@ -76,7 +76,6 @@ const Home = () => {
   }
 
   const sendPeriodInfo = async (startDate, endDate) =>{
-    console.log('uwu')
     axios.post('http://localhost:8080/user/addperiod', {
       email, startDate, endDate, cycle, avgLength
     },{
@@ -106,26 +105,40 @@ const Home = () => {
     },{
       headers: {'Authorization': `Bearer ${token}`},
     })
-    console.log(test)
+    return test
   }
 const periodStarted = async () =>{
-  console.log('clicked')
-  if (periodStartDate != todaysDate){
+  if (Moment(periodStartDate).format('YYYY-MM-DD') != todaysDate){
     const newEndDate = Moment(todaysDate).add('days', avgLength).format('YYYY-MM-DD')
-    sendUpdatedPeriod(todaysDate, newEndDate)
-  }
-  if (canBleed){
+    const update = sendUpdatedPeriod(todaysDate, newEndDate)
+    console.log(update)
+    const bloodGod = await update
+    console.log(bloodGod.data.isBleeding)
     dispatch(
       setCanBleed({
-        canBleed: false
+        canBleed: bloodGod.data.canBleed
+      })
+    )
+    dispatch(
+      setIsBleeding({
+        isBleeding: bloodGod.data.isBleeding
+      })
+    )
+  }else{
+    const update = sendUpdatedPeriod(periodStartDate, periodEndDate)
+    const bloodGod = await update
+    console.log(bloodGod.data.isBleeding)
+    dispatch(
+      setCanBleed({
+        canBleed: bloodGod.data.canBleed
+      })
+    )
+    dispatch(
+      setIsBleeding({
+        isBleeding: bloodGod.data.isBleeding
       })
     )
   }
-  dispatch(
-    setIsBleeding({
-      isBleeding: true
-    })
-  )
 }
 
 const periodEnded = async () =>{
@@ -160,16 +173,16 @@ const periodEnded = async () =>{
 }
 useEffect(()=>{
   setUser(user,avgLengths, estimateDate)
-},[cycle, periodStartDate, periodEndDate])
+},[])
 
-useEffect(() =>{
-  sendPeriodStatus()
-},[isBleeding, canBleed])
+// useEffect(() =>{
+//   sendPeriodStatus()
+// },[periodStarted])
 
-useEffect(() => {
-  sendPreviousPeriod()
-},[isBleeding])
-// console.log(canBleed, isBleeding, periodStartDate, todaysDate)
+// useEffect(() => {
+//   sendPreviousPeriod()
+// },[isBleeding])
+console.log(canBleed, isBleeding)
 // console.log(Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate)
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
