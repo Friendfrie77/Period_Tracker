@@ -92,7 +92,7 @@ const Home = () => {
   }
 
   const sendPreviousPeriod = async () => {
-    axios.post('http://localhost:8080/user/addpreviousperiod', {
+    axios.post(`${process.env.REACT_APP_APIURL}user/addpreviousperiod`, {
       email, previousPeriod
     },{
       headers: {'Authorization': `Bearer ${token}`},
@@ -113,7 +113,6 @@ const periodStarted = async () =>{
     const update = sendUpdatedPeriod(todaysDate, newEndDate)
     console.log(update)
     const bloodGod = await update
-    console.log(bloodGod.data.isBleeding)
     dispatch(
       setCanBleed({
         canBleed: bloodGod.data.canBleed
@@ -127,7 +126,6 @@ const periodStarted = async () =>{
   }else{
     const update = sendUpdatedPeriod(periodStartDate, periodEndDate)
     const bloodGod = await update
-    console.log(bloodGod.data.isBleeding)
     dispatch(
       setCanBleed({
         canBleed: bloodGod.data.canBleed
