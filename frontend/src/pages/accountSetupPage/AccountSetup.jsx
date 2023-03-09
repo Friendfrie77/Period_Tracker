@@ -67,14 +67,16 @@ const AccountSetup = () => {
   const accountInfo = async () =>{
     setLoading(true)
     try{
-      await axios.post(`${process.env.REACT_APP_APIURL}user/newuser`,{
+      const dates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
           email,
           userInfo
           },{
             headers: {'Authorization': `Bearer ${token}`},
           }
           );
-      navigate('/home')
+          if (dates){
+            navigate('/Home')
+          }
     }catch(err){
       console.log(err)
     }

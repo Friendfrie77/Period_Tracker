@@ -76,7 +76,7 @@ const Home = () => {
   }
 
   const sendPeriodInfo = async (startDate, endDate) =>{
-    axios.post('http://localhost:8080/user/addperiod', {
+    axios.post(`${process.env.REACT_APP_APIURL}/user/addperiod`, {
       email, startDate, endDate, cycle, avgLength
     },{
       headers: {'Authorization': `Bearer ${token}`},
@@ -84,7 +84,7 @@ const Home = () => {
   }
   
   const sendPeriodStatus = async () => {
-    axios.post('http://localhost:8080/user/setperiodinfo',{
+    axios.post(`${process.env.REACT_APP_APIURL}/user/setperiodinfo`,{
       email, isBleeding, canBleed
     },{
       headers: {'Authorization': `Bearer ${token}`},
@@ -100,7 +100,7 @@ const Home = () => {
   }
 
   const sendUpdatedPeriod = async (periodStartDate, periodEndDate) => {
-    const test =axios.post('http://localhost:8080/user/updateperiod', {
+    const test =axios.post(`${process.env.REACT_APP_APIURL}/user/updateperiod`, {
       email, periodStartDate, periodEndDate
     },{
       headers: {'Authorization': `Bearer ${token}`},

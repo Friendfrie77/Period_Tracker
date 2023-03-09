@@ -34,8 +34,8 @@ const Proflie = () => {
   }
   const [date, setDate] = useState([
     {
-      startDate: new Date(Moment(periodStartDate).format('YYYY-MM-DD')),
-      endDate: new Date(Moment(periodEndDate).format('YYYY-MM-DD')),
+      startDate: new Date(Moment(periodStartDate).format('MM-DD-YYYY')),
+      endDate: new Date(Moment(periodEndDate).format('MM-DD-YYYY')),
     }
   ])
   const emailChange = (email) => {
@@ -77,6 +77,7 @@ const Proflie = () => {
   // useEffect(() =>{
   //   checkUserInfo(user)
   // }, [])
+
   const content = (
     <div className='page-wrapper'>
       <Nav />
