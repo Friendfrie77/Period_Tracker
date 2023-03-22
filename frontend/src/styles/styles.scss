@@ -34,6 +34,9 @@
         @media (min-width: 1300px) {@content;}
     }
 }
+
+@import './reset';
+
 :root{
     --fs-welcome: clamp(1.8rem, calc(6vw + 1rem), 2.5rem);
     --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
@@ -85,6 +88,18 @@ h1, h2, h3, h4{
     font-family: $Header-Font;
 }
 
+.button{
+    margin-top: 16px;
+    width: 125px;
+    align-self: center;
+    background-color: $button-color;
+    border: none;
+    border-radius: $radius;
+    box-shadow: $drop-shadow-wrappers;
+    height: 35px;
+    font-size: var(--fs-body);
+    color: $textcolor;
+}
 .message{
     text-align: center;
     color: $textcolor;
@@ -144,9 +159,14 @@ h1, h2, h3, h4{
         padding: 5px 8px;
     }
 }
-@import './reset';
+
+// .home{
+//     background-color: pink
+// }
+// .wrapper{
+//     background: $backgroundgrad;
+// }
 @import './wrappers';
-@import './nav';
 @import './login';
 @import './react-calendar';
 @import './home';

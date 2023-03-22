@@ -1,3 +1,87 @@
+/* CSS Reset */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role=list],
+ol[role=list] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+html {
+  height: 100%;
+  min-height: 100vh;
+  background-color: red;
+}
+
+body {
+  min-height: 100%;
+  min-width: 100%;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 :root {
   --fs-welcome: clamp(1.8rem, calc(6vw + 1rem), 2.5rem);
   --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
@@ -37,6 +121,19 @@ p, span, button, a, label, select, ul, li {
 
 h1, h2, h3, h4 {
   font-family: "Varela_Round", Sans-Serif;
+}
+
+.button {
+  margin-top: 16px;
+  width: 125px;
+  align-self: center;
+  background-color: #AF4D98;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  height: 35px;
+  font-size: var(--fs-body);
+  color: #EAE8FF;
 }
 
 .message {
@@ -103,32 +200,14 @@ h1, h2, h3, h4 {
   padding: 5px 8px;
 }
 
-/* page setup */
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-}
-
-html, body {
-  min-height: 100%;
-  height: 100%;
-  width: 100vw;
-}
-
-body {
-  overflow: auto;
-}
-
 .wrapper {
-  height: auto;
   display: flex;
   flex-direction: column;
   background: linear-gradient(#241E4E, #302867, #7B145F, #5C0F47);
   animation: gradient 25s ease infinite;
   background-size: 400% 400%;
   background-attachment: fixed;
-  overflow: auto;
+  flex-grow: 1;
 }
 
 @keyframes gradient {
@@ -143,13 +222,18 @@ body {
   }
 }
 .page-wrapper {
-  display: flex;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   position: relative;
   align-self: center;
-  flex-direction: column;
+  grid-template-areas: "nav" "content" "footer";
   width: 100%;
-  min-height: 100%;
   position: relative;
+  flex-grow: 1;
+}
+
+.content {
+  grid-area: "content";
 }
 
 .login-wrapper {
@@ -252,11 +336,33 @@ body {
   align-self: center;
   align-content: center;
   width: 100%;
+  height: 100%;
+  position: relative;
 }
 .home h1 {
   color: #EAE8FF;
   font-size: var(--fs-welcome);
   padding-left: 1rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-grow: 1;
 }
 
 .periodInfo-wrapper {
@@ -276,174 +382,6 @@ body {
   width: 100%;
   max-width: 1400px;
   padding: 1rem;
-}
-
-nav {
-  display: flex;
-  flex-direction: row;
-  align-items: right;
-  justify-content: space-between;
-  background-color: #4B203F;
-  height: 75px;
-  width: 100%;
-  padding: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  opacity: 1;
-  margin-bottom: 15px;
-}
-@media (max-width: 768px) {
-  nav {
-    opacity: 1;
-  }
-}
-
-.logout {
-  text-align: center;
-}
-.logout button {
-  border: none;
-  background-color: transparent;
-  text-align: center;
-}
-.logout svg {
-  font-size: 2rem;
-  color: #EAE8FF;
-}
-
-.stats {
-  display: none;
-}
-@media (max-width: 768px) {
-  .stats {
-    background-color: #241E4E;
-    padding: 1rem;
-    display: block;
-    color: #EAE8FF;
-    border-radius: 5px;
-    max-width: 100%;
-  }
-  .stats h3 {
-    font-size: 2rem;
-  }
-}
-@media (max-width: 768px) and (max-width: 320px) {
-  .stats h3 {
-    font-size: 1.53em;
-  }
-}
-@media (max-width: 768px) {
-  .stats span {
-    font-size: 1.3rem;
-  }
-}
-
-.nav-links {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  list-style-type: none;
-  margin: 0;
-  padding: 5px;
-  width: auto;
-  justify-content: space-evenly;
-}
-@media (max-width: 768px) {
-  .nav-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    translate: -100%;
-    position: fixed;
-    top: 26px;
-    left: 0px;
-    z-index: 100;
-    height: 100%;
-    width: 100%;
-    margin-top: 50px;
-    opacity: 1;
-    transition: cubic-bezier(0.23, 1, 0.32, 1) 0.35s;
-    background-color: #5C0F47;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-.nav-item {
-  text-decoration: none;
-  font-size: 1.4rem;
-}
-.nav-item a {
-  text-decoration: none;
-  color: #EAE8FF;
-}
-
-.mobile-nav-container {
-  display: none;
-  height: 100%;
-  width: 30px;
-  padding-right: 20px;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-@media (max-width: 768px) {
-  .mobile-nav-container {
-    display: flex;
-  }
-}
-
-#mobile-nav-toggle {
-  display: none;
-}
-
-#mobile-nav-toggle:checked ~ .nav-links {
-  translate: 0% !important;
-  transition: cubic-bezier(0.23, 1, 0.32, 1) 0.35s;
-}
-
-.mobile-nav,
-.mobile-nav::before,
-.mobile-nav::after {
-  display: block;
-  background-color: #8FDDC3;
-  position: absolute;
-  height: 4px;
-  width: 30px;
-  transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
-  border-radius: 2px;
-}
-@media (max-width: 768px) {
-  .mobile-nav,
-  .mobile-nav::before,
-  .mobile-nav::after {
-    display: flex;
-  }
-}
-
-.mobile-nav::before {
-  content: "";
-  margin-top: -8px;
-}
-
-.mobile-nav::after {
-  content: "";
-  margin-top: 8px;
-}
-
-#mobile-nav-toggle:checked + .mobile-nav-container .mobile-nav {
-  background: transparent;
-}
-
-#mobile-nav-toggle:checked + .mobile-nav-container .mobile-nav::before {
-  margin-top: 0px;
-  transform: rotate(405deg);
-}
-
-#mobile-nav-toggle:checked + .mobile-nav-container .mobile-nav::after {
-  margin-top: 0px;
-  transform: rotate(-405deg);
 }
 
 .username-input, .password-input, .email-input {
@@ -841,17 +779,10 @@ nav {
   font-size: var(--fs-body);
   border-radius: 5px;
 }
-.remove-period button {
-  margin-top: 16px;
-  width: 125px;
-  align-self: center;
-  background-color: #AF4D98;
-  border: none;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
-  height: 35px;
-  font-size: var(--fs-body);
-  color: #EAE8FF;
+@media (max-width: 768px) {
+  .remove-period select {
+    width: 100%;
+  }
 }
 
 .account-settings {
@@ -1601,11 +1532,11 @@ footer {
   background-color: #4B203F;
   color: #EAE8FF;
   text-align: center;
-  padding: 1rem;
   font-size: var(--fs-cal);
   position: relative;
-  bottom: 0;
   width: 100%;
+  margin-top: 1rem;
+  grid-area: "footer";
 }
 footer a {
   text-decoration: none;

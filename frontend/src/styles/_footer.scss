@@ -2,12 +2,12 @@ footer{
     background-color: $login-input-background;
     color: $textcolor;
     text-align: center;
-    padding: $box-padding;
+    // padding: $box-padding;
     font-size: var(--fs-cal);
     position: relative;
-    bottom: 0;
-    
     width: 100%;
+    margin-top: 1rem;
+    grid-area: 'footer';
     a{
         text-decoration: none;
         color: $textcolor;

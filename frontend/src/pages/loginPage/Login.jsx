@@ -12,7 +12,7 @@ function Login(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-
+    const [errormsg, setError] = useState()
     const [regError, setRegError] = useState("");
     async function onSubmit(values){
         setLoading(true)
@@ -20,6 +20,12 @@ function Login(){
         let password = values.password
         const loginTry = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
             email, password
+        }).catch(function (error){
+            if(error.response){
+                setError(error.response.data.error)
+                console.log(error.response.data.error)
+            }
+            setLoading(false)
         });
         const user = await loginTry
         if (user){
@@ -37,12 +43,13 @@ function Login(){
                   canBleed: user.data.user.canBleed
                 })
               );
-        };      
-        navigate('/home')
+              navigate('/home')
+        };
     }
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <h1>Sign In</h1>
+            <span className='message'>{errormsg}</span>
             <Form
                 onSubmit={onSubmit}
                 validate = {values => {

@@ -30,13 +30,12 @@ const Proflie = () => {
   const checkUserInfo = async (user) => {
     if (!periodStartDate && !periodEndDate){
       const userInfo = await(user)
-      console.log('test')
     }
   }
   const [date, setDate] = useState([
     {
-      startDate: new Date(Moment(periodStartDate).format('MM-DD-YYYY')),
-      endDate: new Date(Moment(periodEndDate).format('MM-DD-YYYY')),
+      startDate: new Date(),
+      endDate: new Date(),
     }
   ])
   const emailChange = (email) => {
@@ -89,9 +88,9 @@ const Proflie = () => {
   // }, [])
 
   const content = (
-    <div>
+    <div className='page-wrapper'>
       <Nav />
-      <section className='page-wrapper'>
+      <section className='profile content'>
         <h1 className='welcome-text'>Hello {userName},</h1>
         <h2>here is how you month looks</h2>
         <DateRange
@@ -155,8 +154,8 @@ const Proflie = () => {
           </div>
         </div>
         }
-        <Footer />
       </section>
+      <Footer />
     </div>
   )
   return content

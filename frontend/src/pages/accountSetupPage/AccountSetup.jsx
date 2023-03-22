@@ -3,7 +3,7 @@ import { DateRange } from 'react-date-range';
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import Moment from 'moment';
-import {setPeriod, setCycle } from '../../state';
+import {setPeriod} from '../../state';
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import Spinner from '../../components/Spinner'
@@ -81,7 +81,6 @@ const AccountSetup = () => {
       console.log(err)
     }
   }
-  console.log(date)
   const setup = isLoading ? <Spinner /> : (
         <section className='setup-wrapper'>
           <h1>When was your last few periods?</h1>

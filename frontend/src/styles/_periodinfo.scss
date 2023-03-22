@@ -50,17 +50,8 @@
         background-color: transparent;
         font-size: var(--fs-body);
         border-radius: $radius;
-    }
-    button{
-        margin-top: 16px;
-        width: 125px;
-        align-self: center;
-        background-color: $button-color;
-        border: none;
-        border-radius: $radius;
-        box-shadow: $drop-shadow-wrappers;
-        height: 35px;
-        font-size: var(--fs-body);
-        color: $textcolor;
+        @include for-size(tablet-only){
+            width: 100%;
+        }
     }
 }

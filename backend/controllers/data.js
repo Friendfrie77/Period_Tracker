@@ -8,11 +8,11 @@ const addNewUserInfo = async (req, res) => {
         if(user.previousPeriod.length === 0){
             user.previousPeriod = userInfo;
             user.save()
-            res.status(200).json('Status: Ok')
+            res.status(200).json({message: 'Added Periods'})
         }else{
             user.previousPeriod = userInfo;
             user.save()
-            res.status(200).json('Status: Ok')
+            res.status(200).json({message: 'Added Periods'})
         }
     }catch(err){
         res.status(500).json({

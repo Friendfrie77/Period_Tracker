@@ -178,7 +178,7 @@ useEffect(()=>{
 // useEffect(() => {
 //   sendPreviousPeriod()
 // },[isBleeding])
-console.log(canBleed, isBleeding, periodStartDate, periodEndDate, cycle)
+// console.log(canBleed, isBleeding, periodStartDate, periodEndDate, cycle)
 // console.log(Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate)
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
