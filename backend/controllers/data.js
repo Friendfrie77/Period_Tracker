@@ -71,9 +71,7 @@ const setPeriodStatus = async (req, res) =>{
 
 const updatePeriod = async (req, res) =>{
     const {email, periodStartDate, periodEndDate} = req.body
-    console.log(email)
     const user = await User.findOne({email: email});
-    console.log(periodStartDate, periodEndDate)
     try{
         if(user.periodStartDate != periodStartDate){
             User.findOneAndUpdate({_id:user._id}, {periodStartDate:periodStartDate}).exec();
@@ -98,4 +96,17 @@ const addPreviousPeriod = async (req, res) =>{
         res.status(500).json({error: err.messege})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod}
+
+const removePeriod = async (req, res) =>{
+    const {email, removeDate} = req.body;
+    const user = await User.findOne({email:email})
+    try{
+        user.previousPeriod.splice(removeDate, 1)
+        User.findByIdAndUpdate({_id:user._id}, {previousPeriod:user.previousPeriod}).exec()
+        const previousPeriod = user.previousPeriod
+        res.status(201).json({message:'Successfully Removed Date', previousPeriod})
+    }catch(err){
+        res.status(500).json({error:err.message})
+    }
+}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod}

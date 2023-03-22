@@ -70,5 +70,27 @@ const deleteAccount = async (req, res) =>{
     }
 }
 
-
-module.exports = {register, login, deleteAccount }
+const changePassword = async (req, res) =>{
+    const {email, oldPassword, newPassword} = req.body;
+    console.log(email)
+    const user = await User.findOne(({email: email}))
+    if (user){
+        const isSame = user.authPassword(oldPassword, function(err, same){
+            if(err){
+                res.status(500).json({
+                    error: 'Internal error please try again later'
+                });
+            } else if (!same){
+                console.log('not same')
+                res.status(200).json({
+                    error: 'Incorrect password'
+                });
+            }else{
+                user.password = newPassword
+                user.save()
+                res.status(200).json({messege: 'Password Updated'})
+            }
+        })
+    }
+}
+module.exports = {register, login, deleteAccount, changePassword}

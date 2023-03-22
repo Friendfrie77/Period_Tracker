@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from '../navbar/Nav'
 import BlankCountdown from '../../components/BlankCountdown';
+import Datestrip from '../../components/Datestrip';
 
 const PeriodHere = (props) => {
     return (
@@ -8,7 +9,10 @@ const PeriodHere = (props) => {
             <Nav />
             <section className="home">
             <h1>Welcome back, {props.userName}</h1>
-            <div className="placeholder"></div>
+            <Datestrip
+                startValue = {props.periodStartDate}
+                endValue = {props.periodEndDate}
+            />
             <div className="period-countdown">
                 <h2>Your period might be here</h2>
                 <div className='inner-circle'>

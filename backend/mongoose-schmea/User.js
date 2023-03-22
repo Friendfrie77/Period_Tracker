@@ -60,5 +60,11 @@ userSchema.methods.authPassword = function(password, callback){
     });
 }
 
+userSchema.methods.hashNewPass = function(password){
+    const newPassword = bcrypt.hash(password, salt);
+    console.log(newPassword)
+    return(newPassword)
+}
+
 
 module.exports = mongoose.model("Users", userSchema)

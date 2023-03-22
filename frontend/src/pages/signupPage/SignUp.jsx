@@ -49,7 +49,7 @@ export default function SignUp(){
     }
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
-            <h1>SignUp In</h1>
+            <h1>Sign Up</h1>
             <Form
              onSubmit={onSubmit}
              validate = {values => {

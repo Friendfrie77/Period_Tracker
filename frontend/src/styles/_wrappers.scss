@@ -7,15 +7,14 @@
     
 // }
 .wrapper{
-    height: 100%;
-    min-height: 100%;
+    height: auto;
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     background: $backgroundgrad;
     animation: gradient 25s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
+    overflow: auto;
 }
 
 @keyframes gradient {

@@ -7,6 +7,7 @@
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/resource": "^6.1.4",
     "@fullcalendar/resource-timeline": "^6.1.4",
+    "@meinefinsternis/react-horizontal-date-picker": "^1.0.1",
     "@reduxjs/toolkit": "^1.9.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

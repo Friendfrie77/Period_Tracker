@@ -38,6 +38,7 @@
     --fs-welcome: clamp(1.8rem, calc(6vw + 1rem), 2.5rem);
     --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
     --fs-subheader:clamp(1.6rem, calc(4vw + .3rem), 3rem);
+    --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
     --fs-body: 1.5rem;
     --fs-cal: 1.5rem;
     @include for-size(large-phone-only){
@@ -84,6 +85,11 @@ h1, h2, h3, h4{
     font-family: $Header-Font;
 }
 
+.message{
+    text-align: center;
+    color: $textcolor;
+    font-size: var(--fs-subheader);
+}
 .welcome-text{
     color: $textcolor;
     font-size: var(--fs-header);
@@ -152,3 +158,4 @@ h1, h2, h3, h4{
 @import './loading';
 @import './nav';
 @import './footer';
+@import './horizontal-date-picker';

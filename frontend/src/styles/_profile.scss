@@ -7,7 +7,9 @@
     font-size: var(--fs-body);
     background-color: $color2;
     border-radius: $radius;
-    width: 55%;
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
     padding: $box-padding;
     @include for-size(large-phone-only){
         width: 100%;

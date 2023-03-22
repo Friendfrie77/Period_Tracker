@@ -25,6 +25,7 @@ const Proflie = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmPassword] = useState('');
+  const [erroMsg, setErrorMsg] = useState('');
 
   const checkUserInfo = async (user) => {
     if (!periodStartDate && !periodEndDate){
@@ -41,14 +42,14 @@ const Proflie = () => {
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
   }
-  const oldPasswordChange = (e) =>{
-    setOldPassword(e)
+  const oldPasswordChange = (password) =>{
+    setOldPassword(password.target.value)
   }
   const newPasswordChange = (password) =>{
-    setNewPassword(password)
+    setNewPassword(password.target.value)
   }
   const confirmPassword = (password) =>{
-    setConfirmPassword(password)
+    setConfirmPassword(password.target.value)
   }
   const settingToggle = () =>{
     setOpen(!open)
@@ -61,7 +62,6 @@ const Proflie = () => {
   }
   const deleteAccount = () =>{
     if (deletedEmail === email){
-      console.log('test')
       axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`, {
         email
       },{
@@ -73,15 +73,25 @@ const Proflie = () => {
       navigate('/')
     }
   }
-
+  const changePassword = () =>{
+    if (newPassword == confirmNewPassword){
+      axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+        email, oldPassword, newPassword
+      },{
+        headers: {'Authorization': `Bearer ${token}`},
+      })
+    }else(
+      setErrorMsg('New passwords do not match')
+    )
+  }
   // useEffect(() =>{
   //   checkUserInfo(user)
   // }, [])
 
   const content = (
-    <div className='page-wrapper'>
+    <div>
       <Nav />
-      <section className='profile'>
+      <section className='page-wrapper'>
         <h1 className='welcome-text'>Hello {userName},</h1>
         <h2>here is how you month looks</h2>
         <DateRange
@@ -99,7 +109,7 @@ const Proflie = () => {
             <div className='setting-option'>
               <button onClick={openPasswordChange}>Password Change</button>
               {showPasswordChange &&
-                <form className='password-change'>
+                <form className='password-change' onSubmit={changePassword}>
                   <div className='password-input'>
                     <input type = 'password' value={oldPassword} onChange={oldPasswordChange}></input>
                     <label htmlFor='password' className='login-lable'>
@@ -107,15 +117,15 @@ const Proflie = () => {
                     </label>
                   </div>
                   <div className='password-input'>
-                    <input type = 'password' value={newPassword} onChange={oldPasswordChange}></input>
+                    <input type = 'password' value={newPassword} onChange={newPasswordChange}></input>
                     <label htmlFor='password' className='login-lable'>
-                        <span className='login-span'>Old Password<small>*</small></span>
+                        <span className='login-span'>New Password<small>*</small></span>
                     </label>
                   </div>
                   <div className='password-input'>
-                    <input type = 'password' value={confirmNewPassword} onChange={oldPasswordChange}></input>
+                    <input type = 'password' value={confirmNewPassword} onChange={confirmPassword}></input>
                     <label htmlFor='password' className='login-lable'>
-                        <span className='login-span'>Old Password<small>*</small></span>
+                        <span className='login-span'>Confirm Password<small>*</small></span>
                     </label>
                   </div>
                   <button type='submit'>Submit</button>
@@ -145,8 +155,8 @@ const Proflie = () => {
           </div>
         </div>
         }
+        <Footer />
       </section>
-      <Footer />
     </div>
   )
   return content

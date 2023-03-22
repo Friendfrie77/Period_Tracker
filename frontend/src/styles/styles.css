@@ -2,6 +2,7 @@
   --fs-welcome: clamp(1.8rem, calc(6vw + 1rem), 2.5rem);
   --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
   --fs-subheader:clamp(1.6rem, calc(4vw + .3rem), 3rem);
+  --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
   --fs-body: 1.5rem;
   --fs-cal: 1.5rem;
 }
@@ -36,6 +37,12 @@ p, span, button, a, label, select, ul, li {
 
 h1, h2, h3, h4 {
   font-family: "Varela_Round", Sans-Serif;
+}
+
+.message {
+  text-align: center;
+  color: #EAE8FF;
+  font-size: var(--fs-subheader);
 }
 
 .welcome-text {
@@ -104,12 +111,9 @@ h1, h2, h3, h4 {
 }
 
 html, body {
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100%;
   width: 100vw;
-  overscroll-behavior: auto;
-  display: flex;
-  flex-grow: 1;
-  background-color: red;
 }
 
 body {
@@ -117,15 +121,14 @@ body {
 }
 
 .wrapper {
-  height: 100%;
-  min-height: 100%;
+  height: auto;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   background: linear-gradient(#241E4E, #302867, #7B145F, #5C0F47);
   animation: gradient 25s ease infinite;
   background-size: 400% 400%;
   background-attachment: fixed;
+  overflow: auto;
 }
 
 @keyframes gradient {
@@ -597,10 +600,6 @@ nav {
   flex-direction: row;
 }
 
-.rdrMonth {
-  width: 27.667em;
-}
-
 .rdrWeekDays {
   display: flex;
 }
@@ -864,7 +863,9 @@ nav {
   font-size: var(--fs-body);
   background-color: #241E4E;
   border-radius: 5px;
-  width: 55%;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
   padding: 1rem;
 }
 @media (max-width: 535px) {
@@ -931,7 +932,6 @@ nav {
 .rdrCalendarWrapper {
   font-size: var(--fs-cal);
   border-radius: 5px;
-  margin: 0.2rem;
   height: 100%;
   width: 100%;
   max-width: 1400px;
@@ -940,10 +940,6 @@ nav {
 
 .rdrDateDisplayWrapper {
   display: none;
-}
-
-.rdrDateDisplay {
-  margin: 0.833em;
 }
 
 .rdrDateDisplayItem {
@@ -1607,8 +1603,68 @@ footer {
   text-align: center;
   padding: 1rem;
   font-size: var(--fs-cal);
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 footer a {
   text-decoration: none;
   color: #EAE8FF;
+}
+
+.horizontal-date-picker {
+  height: auto;
+  padding: 0 1rem;
+}
+
+.horizontal-date-picker * {
+  padding: 0 !important;
+  padding: 0 !important;
+}
+
+.dM, .Kq, .Ez, .jb, .dr, .Er, .Tx, ._3n, .Lx, ._1g, .FC, .or {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.dM {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 1rem 0 !important;
+}
+
+.Kq, .Ez, .jb {
+  display: none !important;
+}
+
+.dr, .Er {
+  width: 100% !important;
+}
+
+.Tx {
+  justify-content: space-evenly;
+  width: 100% !important;
+}
+
+._3n, .Lx {
+  all: unset !important;
+  display: flex !important;
+  flex-direction: column !important;
+  font-size: var(--fs-horizontal-cal) !important;
+}
+
+.Lx, ._1g {
+  color: #EAE8FF !important;
+  text-align: center !important;
+}
+
+.FC ._1g {
+  background-color: red !important;
+  border-radius: 5px !important;
+}
+
+.FC, .or {
+  background-color: red !important;
+  border-radius: 5px !important;
+  padding: 0 1.25rem !important;
 }/*# sourceMappingURL=styles.css.map */

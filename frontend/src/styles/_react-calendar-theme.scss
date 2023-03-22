@@ -1,7 +1,7 @@
 .rdrCalendarWrapper{
     font-size: var(--fs-cal);
     border-radius: $radius;
-    margin: .2rem;
+    // margin: .2rem;
     // box-shadow: $drop-shadow-wrappers;
     height: 100%;
     width: 100%;
@@ -11,10 +11,6 @@
   
   .rdrDateDisplayWrapper{
     display: none;
-  }
-  
-  .rdrDateDisplay{
-    margin: 0.833em;
   }
   
   .rdrDateDisplayItem{

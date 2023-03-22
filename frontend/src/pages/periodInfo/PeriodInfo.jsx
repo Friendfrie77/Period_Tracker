@@ -3,9 +3,19 @@ import Nav from '../navbar/Nav'
 import Footer from '../footer/Footer';
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Moment from 'moment';
+import axios from 'axios';
+import { setPeriod } from '../../state';
+
+
 function PeriodInfo() {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token)
+  const email = useSelector((state) => state.email)
+  const previousPeriod = useSelector((state) => state.previousPeriod)
+  const [removeDate, setRemove] = useState()
+  const [message, setMessage] = useState()
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -13,14 +23,30 @@ function PeriodInfo() {
       key: 'selection'
     }
   ]);
-  const previousPeriod = useSelector((state) => state.previousPeriod)
-  const removePeriod = () =>{
-    
+
+  const optionChange = (event) =>{
+    setRemove(event.target.value)
   }
+  const removePeriod = async () =>{
+    const res =  await axios.post(`${process.env.REACT_APP_APIURL}/user/removePeriod`,{
+      email, removeDate},{
+        headers: {'Authorization': `Bearer ${token}`},
+      })
+      if (res.status === 201){
+        console.log(res.data)
+        dispatch(
+          setPeriod({
+            previousPeriod: res.data.previousPeriod
+          })
+        )
+        setMessage(res.data.message)
+      }
+    }
   const content =
     <div className='page-wrapper'>
       <Nav />
       <div className='logging-period'>
+        <h1>{message}</h1>
         <h1>Do you have any more period(s) to log?</h1>
         <DateRange
             editableDateInputs={true}
@@ -33,10 +59,11 @@ function PeriodInfo() {
           />
       </div>
       <div className='remove-period'>
+        <span className='message'>{message}</span>
         <h2>Or would you like to remove some?</h2>
         <fieldset>
           <label htmlFor = 'periods'>Select a period to remove:</label>
-          <select name='periods' className='periods'>
+          <select name='periods' className='periods' onChange={optionChange}>
             <option disabled selected>Select a date</option>
             {previousPeriod.map((date, key) => <option value={key} key={date + key}>{`${Moment(date.startDate).format('MMMM Do YYYY')} - ${Moment(date.endDate).format('MMMM Do YYYY')}`}</option>
             )}
