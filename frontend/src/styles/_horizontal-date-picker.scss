@@ -1,0 +1,52 @@
+.horizontal-date-picker{
+    height: auto;
+    padding: 0 $box-padding;
+}
+.horizontal-date-picker *{
+    padding: 0 !important;
+    padding: 0 !important;
+}
+.dM, .Kq, .Ez, .jb, .dr, .Er, .Tx, ._3n, .Lx, ._1g, .FC, .or{
+    margin: 0 !important;
+    padding: 0!important;
+}
+.dM{
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 1rem 0 !important;
+}
+.Kq, .Ez, .jb{
+    display: none !important;
+}
+
+.dr, .Er{
+    width: 100% !important;
+}
+
+.Tx{
+    justify-content: space-evenly;
+    width: 100% !important;
+}
+
+._3n, .Lx{
+    all: unset !important;
+    display: flex !important;
+    flex-direction: column !important;
+    font-size: var(--fs-horizontal-cal) !important;
+
+}
+
+.Lx, ._1g{
+    color: $textcolor !important;
+    text-align: center !important;
+}
+
+.FC ._1g{
+    background-color: red !important;
+    border-radius: $radius !important;
+}
+.FC, .or{
+    background-color: red !important;
+    border-radius: $radius !important;
+    padding: 0 1.25rem !important;
+}
