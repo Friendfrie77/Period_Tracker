@@ -38,7 +38,7 @@
 @import './reset';
 
 :root{
-    --fs-welcome: clamp(1.8rem, calc(6vw + 1rem), 2.5rem);
+    --fs-welcome: clamp(2.5rem, calc(6vw + 1rem), 4.5rem);
     --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
     --fs-subheader:clamp(1.6rem, calc(4vw + .3rem), 3rem);
     --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
@@ -107,7 +107,7 @@ h1, h2, h3, h4{
 }
 .welcome-text{
     color: $textcolor;
-    font-size: var(--fs-header);
+    font-size: var(--fs-welcome);
     padding-bottom: 1.5rem;
 }
 .page-fade{
@@ -160,12 +160,7 @@ h1, h2, h3, h4{
     }
 }
 
-// .home{
-//     background-color: pink
-// }
-// .wrapper{
-//     background: $backgroundgrad;
-// }
+
 @import './wrappers';
 @import './login';
 @import './react-calendar';
@@ -179,3 +174,4 @@ h1, h2, h3, h4{
 @import './nav';
 @import './footer';
 @import './horizontal-date-picker';
+@import './big-cal/big-cal-styles';

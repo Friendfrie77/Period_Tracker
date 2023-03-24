@@ -7,7 +7,6 @@ const NeedInfo = (props) => {
         <Nav />
           <section className="home content">
           <h1>Welcome back, {props.userName}</h1>
-          <div className="placeholder"></div>
           <div className="period-countdown">
               <h2>Error</h2>
               <BlankCountdown message = {props.message}></BlankCountdown>

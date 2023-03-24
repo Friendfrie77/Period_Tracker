@@ -9,6 +9,8 @@ import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
 import { useFetchUserInfo } from '../../hooks/fetchUserInfo';
 import Footer from '../footer/Footer';
+import ProfileCal from '../../components/ProfileCal';
+import {Events } from '../../classes/events';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const Proflie = () => {
   const periodStartDate = useSelector((state) => state.periodStartDate)
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
-  // const user = useFetchUserInfo(email, token)
+  const user = useFetchUserInfo(email, token)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false)
@@ -26,18 +28,18 @@ const Proflie = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmPassword] = useState('');
   const [erroMsg, setErrorMsg] = useState('');
-
+  let periodEvent = new Events()
+  const [pEvents, setEvents] = useState(periodEvent.allEvents)
   const checkUserInfo = async (user) => {
-    if (!periodStartDate && !periodEndDate){
-      const userInfo = await(user)
+    if (periodStartDate && periodEndDate){
+      let start = Moment(periodStartDate).format('YYYY/M/D')
+      let startSplit = start.split('/')
+      let end = Moment(periodEndDate).format('YYYY/M/D')
+      let endSplit = end.split('/')
+      periodEvent.newEvent('Period Active',new Date(startSplit[0], startSplit[1], startSplit[2]), new Date(endSplit[0], endSplit[1], endSplit[2]))
     }
   }
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-    }
-  ])
+checkUserInfo()
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
   }
@@ -83,9 +85,9 @@ const Proflie = () => {
       setErrorMsg('New passwords do not match')
     )
   }
-  // useEffect(() =>{
-  //   checkUserInfo(user)
-  // }, [])
+  useEffect(() =>{
+    checkUserInfo(user)
+  }, [])
 
   const content = (
     <div className='page-wrapper'>
@@ -93,20 +95,15 @@ const Proflie = () => {
       <section className='profile content'>
         <h1 className='welcome-text'>Hello {userName},</h1>
         <h2>here is how you month looks</h2>
-        <DateRange
-          editableDateInputs = {false}
-          showMonthAndYearPickers = {false}
-          ranges = {date}
+        <ProfileCal
+          event= {pEvents}
         />
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
           {open && 
           <div className='inner-account-settings'>
-            <div className='setting-option'>
-              <button>Email Notifications</button>
-            </div>
-            <div className='setting-option'>
-              <button onClick={openPasswordChange}>Password Change</button>
+                 <div className='setting-option'>
+         <button onClick={openPasswordChange}>Password Change</button>
               {showPasswordChange &&
                 <form className='password-change' onSubmit={changePassword}>
                   <div className='password-input'>
@@ -148,8 +145,8 @@ const Proflie = () => {
                   <span className='login-span'>Email</span>
                 </label>
               </div>
-              <button type='submit'>Delete</button>
-              <button onClick={openDeleteBox}>Cancel</button>
+              <button className='button' type='submit'>Delete</button>
+              <button className='button' onClick={openDeleteBox}>Cancel</button>
             </form>
           </div>
         </div>

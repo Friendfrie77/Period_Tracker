@@ -8,7 +8,7 @@
     background-color: $color2;
     border-radius: $radius;
     width: 100%;
-    max-width: 1400px;
+    max-width: 600px;
     margin: auto;
     padding: $box-padding;
     @include for-size(large-phone-only){
@@ -16,8 +16,8 @@
     }
     button{
         box-shadow: $drop-shadow-wrappers;
-        width: 95%;
-        height: 2rem;
+        width: 50%;
+        height: 2.2rem;
         margin: 2rem auto;
         font-size: var(--fs-body);
         background-color: $button-color;
@@ -67,4 +67,10 @@
         width: 25%;
         min-width: 125px;
     }
+}
+
+.profile-cal{
+    height: 60%;
+    position: relative;
+    padding: $box-padding;
 }

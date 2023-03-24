@@ -161,6 +161,8 @@
     height: 100%;
     position: relative;
     flex-grow: 1;
+    padding: $box-padding;
+    overflow: hidden;
 }
 .periodInfo-wrapper{
     display: flex;
@@ -169,14 +171,4 @@
     align-content: center;
     width: 100%;
     height: 100%;
-}
-
-.profile{
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    align-content: center;
-    width: 100%;
-    max-width: 1400px;
-    padding: $box-padding;
 }
