@@ -20,7 +20,7 @@
 .rbc-show-more {
   @extend .rbc-ellipsis;
   background-color: rgba(255, 255, 255, 0.3);
-  z-index: $event-zindex;
+  z-index: 1;
   font-weight: bold;
   font-size: 1rem;
   height: auto;
@@ -34,41 +34,47 @@
 
 .rbc-month-view {
   position: relative;
-  border: 1px solid $calendar-border;
+  // border: 1px solid $calendar-border;
   display: flex;
   flex-direction: column;
-  // flex: 1 0 0;
+  flex: 1 0 0;
   width: 100%;
   user-select: none;
   -webkit-user-select: none;
-  background-color: pink;
+  // background-color: $color4;
   height: 100%; // ie-fix
+  border-radius: $radius;
+  // box-shadow: $drop-shadow-wrappers;
 }
 
 .rbc-month-header {
   display: flex;
   flex-direction: row;
+  margin-bottom: 1rem;
 }
 
 .rbc-month-row {
   display: flex;
   position: relative;
   flex-direction: column;
+  height: 3em;
   flex: 1 0 0; // postcss will remove the 0px here hence the duplication below
   flex-basis: 0px;
   overflow: hidden;
-  height: 50%; // ie-fix
+  // height: 50%; // ie-fix
 
-  & + & {
-    border-top: 1px solid $cell-border;
-  }
+  // & + & {
+  //   // border-top: 1px solid $cell-border;
+  // }
 }
 
 .rbc-date-cell {
   flex: 1 1 0;
   min-width: 0;
   padding-right: 5px;
-  text-align: right;
+  text-align: center;
+  font-size: var(--fs-cal);
+  color: $textcolor;
 
   &.rbc-now {
     font-weight: bold;
@@ -90,25 +96,26 @@
   flex-direction: row;
   flex: 1 0 0;
   overflow: hidden;
+  height: 3em;
 }
 
 .rbc-day-bg {
   flex: 1 0 0%;
 
   & + & {
-    border-left: 1px solid $cell-border;
+    // border-left: 1px solid $cell-border;
   }
 
   .rbc-rtl & + & {
     border-left-width: 0;
-    border-right: 1px solid $cell-border;
+    // border-right: 1px solid $cell-border;
   }
 }
 
 .rbc-overlay {
   position: absolute;
-  z-index: $event-zindex + 1;
-  border: 1px solid #e5e5e5;
+  z-index: 1;
+  // border: 1px solid #e5e5e5;
   background-color: #fff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
   padding: 10px;
@@ -119,7 +126,7 @@
 }
 
 .rbc-overlay-header {
-  border-bottom: 1px solid #e5e5e5;
+  // border-bottom: 1px solid #e5e5e5;
   margin: -10px -10px 5px -10px;
   padding: 2px 10px;
 }

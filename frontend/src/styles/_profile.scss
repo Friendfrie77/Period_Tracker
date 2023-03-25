@@ -68,9 +68,22 @@
         min-width: 125px;
     }
 }
-
+.calander{
+    height: 100%;
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    flex-direction: column;
+    align-self: center;
+}
 .profile-cal{
-    height: 60%;
+    // max-height: 1000px;
+    height: 100%;
     position: relative;
     padding: $box-padding;
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+   align-self: center;
+   z-index: 0;
 }

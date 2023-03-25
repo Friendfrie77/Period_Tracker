@@ -31,14 +31,16 @@ const Proflie = () => {
   let periodEvent = new Events()
   const [pEvents, setEvents] = useState(periodEvent.allEvents)
   const checkUserInfo = async (user) => {
-    if (periodStartDate && periodEndDate){
-      let start = Moment(periodStartDate).format('YYYY/M/D')
-      let startSplit = start.split('/')
-      let end = Moment(periodEndDate).format('YYYY/M/D')
-      let endSplit = end.split('/')
-      periodEvent.newEvent('Period Active',new Date(startSplit[0], startSplit[1], startSplit[2]), new Date(endSplit[0], endSplit[1], endSplit[2]))
+    if ((periodStartDate && periodEndDate) && (pEvents.length == 0)){
+      let start = Moment(periodStartDate)
+      let end = Moment(periodEndDate)
+      periodEvent.newEvent('Period Active', start, end, true)
     }
   }
+  console.log(periodStartDate)
+  // console.log(periodEndDate)
+  // console.log(periodEvent.allEvents)
+  // console.log(pEvents.length)
 checkUserInfo()
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
@@ -94,10 +96,12 @@ checkUserInfo()
       <Nav />
       <section className='profile content'>
         <h1 className='welcome-text'>Hello {userName},</h1>
-        <h2>here is how you month looks</h2>
-        <ProfileCal
-          event= {pEvents}
-        />
+        <div className='calander'>
+          <h2>Here is how you month looks</h2>
+          <ProfileCal
+            event= {pEvents}
+          />
+        </div>
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
           {open && 

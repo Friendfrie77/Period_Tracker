@@ -14,7 +14,7 @@
   }
   
   .rdrDateDisplayItem{
-    border-radius: 4px;
+    border-radius: $radius;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 1px 2px 0 rgba(35, 57, 66, 0.21);
     border: 1px solid transparent;
@@ -57,7 +57,7 @@
       border: 0;
       background: transparent;
       padding: 10px 30px 10px 10px;
-      border-radius: 4px;
+      border-radius: $radius;
       outline: 0;
       color: $textcolor;
       font-size: var(--fs-cal);
@@ -82,7 +82,7 @@
     margin: 0 0.833em;
     padding: 0;
     border: 0;
-    border-radius: 5px;
+    border-radius: $radius;
     background: $button-color;
   }
   
@@ -183,7 +183,7 @@
       transform: translate(-50%, 0);
       width: 18px;
       height: 2px;
-      border-radius: 2px;
+      border-radius: $radius;
       background: #3d91ff;
     }
   
@@ -211,48 +211,48 @@
   
   .rdrInRange{
     color: pink !important;
-    border-radius: 1.042em;
+    border-radius: $radius;
   }
   
   .rdrStartEdge{
-    border-radius: 1.042em;
+    border-radius: $radius;
     left: 2px;
     color: pink !important;
   }
   
   .rdrEndEdge{
-    border-radius: 1.042em;
+    border-radius: $radius;
     right: 2px;
     color: pink !important;
   }
   
   .rdrSelected{
-    border-radius: 1.042em;
+    border-radius: $radius;
   }
   
   .rdrDayStartOfMonth .rdrInRange, .rdrDayStartOfMonth .rdrEndEdge, .rdrDayStartOfWeek .rdrInRange, .rdrDayStartOfWeek .rdrEndEdge{
-      border-top-left-radius: 1.042em;
-      border-bottom-left-radius: 1.042em;
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
       left: 2px;
     }
   
   .rdrDayEndOfMonth .rdrInRange,  .rdrDayEndOfMonth .rdrStartEdge,  .rdrDayEndOfWeek .rdrInRange,  .rdrDayEndOfWeek .rdrStartEdge{
-      border-top-right-radius: 1.042em;
-      border-bottom-right-radius: 1.042em;
-      border-radius: 1.042em;
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+      border-radius: $radius;
       right: 2px;
     }
   
   .rdrDayStartOfMonth .rdrDayInPreview, .rdrDayStartOfMonth .rdrDayEndPreview, .rdrDayStartOfWeek .rdrDayInPreview, .rdrDayStartOfWeek .rdrDayEndPreview{
-      border-top-left-radius: 1.333em;
-      border-bottom-left-radius: 1.333em;
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
       border-left-width: 1px;
       left: 0px;
     }
   
   .rdrDayEndOfMonth .rdrDayInPreview, .rdrDayEndOfMonth .rdrDayStartPreview, .rdrDayEndOfWeek .rdrDayInPreview, .rdrDayEndOfWeek .rdrDayStartPreview{
-     border-top-right-radius: 1.333em;
-     border-bottom-right-radius: 1.333em;
+     border-top-right-radius: $radius;
+     border-bottom-right-radius: $radius;
      border-right-width: 1px;
      right: 0px;
    }

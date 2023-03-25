@@ -155,14 +155,16 @@
 .profile{
     display: flex;
     flex-direction: column;
-    align-self: center;
-    align-content: center;
     width: 100%;
     height: 100%;
     position: relative;
     flex-grow: 1;
     padding: $box-padding;
     overflow: hidden;
+    h2{
+        color: $textcolor;
+        font-size: var(--fs-subheader);
+    }
 }
 .periodInfo-wrapper{
     display: flex;

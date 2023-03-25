@@ -1,6 +1,5 @@
 .horizontal-date-picker{
     height: auto;
-    padding: 0 $box-padding;
 }
 .horizontal-date-picker *{
     padding: 0 !important;
@@ -10,22 +9,30 @@
     margin: 0 !important;
     padding: 0!important;
 }
+
 .dM{
     width: 100% !important;
     padding: 0 !important;
-    margin: 1rem 0 !important;
 }
 .Kq, .Ez, .jb{
     display: none !important;
 }
 
-.dr, .Er{
-    width: 100% !important;
+.dr{
+    padding: $box-padding !important;
+    justify-content: center !important;
 }
-
+.dr .Er:first-of-type{
+    flex: 1;
+    background-color: red;
+}
+.Er{
+    flex: 1;
+}
 .Tx{
-    justify-content: space-evenly;
     width: 100% !important;
+    justify-content: space-evenly;
+    align-items: flex-start;
 }
 
 ._3n, .Lx{
@@ -48,5 +55,5 @@
 .FC, .or{
     background-color: red !important;
     border-radius: $radius !important;
-    padding: 0 1.25rem !important;
+    padding: 0 .25rem !important;
 }

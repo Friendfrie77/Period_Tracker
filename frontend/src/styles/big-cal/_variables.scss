@@ -1,5 +1,5 @@
 $out-of-range-color: lighten(#333, 40%) !default;
-$out-of-range-bg-color: lighten(#333, 70%) !default;
+$out-of-range-bg-color: transparent !default;
 
 $calendar-border: #ddd !default;
 $cell-border: #ddd !default;
@@ -13,7 +13,7 @@ $time-selection-color: white !default;
 $time-selection-bg-color: rgba(0, 0, 0, 0.5) !default;
 $date-selection-bg-color: rgba(0, 0, 0, 0.1) !default;
 
-$event-bg: #3174ad !default;
+$event-bg: #8FDDC3 !default;
 $event-border: darken(#3174ad, 10%) !default;
 $event-outline: #3b99fc !default;
 $event-color: #fff !default;
@@ -29,4 +29,4 @@ $current-time-color: #74ad31 !default;
 
 $rbc-css-prefix: rbc-i !default;
 
-$today-highlight-bg: #eaf6ff !default;
+$today-highlight-bg: pink !default;

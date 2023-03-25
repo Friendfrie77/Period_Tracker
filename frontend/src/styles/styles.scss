@@ -36,6 +36,7 @@
 }
 
 @import './reset';
+@import './big-cal/big-cal-styles';
 
 :root{
     --fs-welcome: clamp(2.5rem, calc(6vw + 1rem), 4.5rem);
@@ -132,6 +133,7 @@ h1, h2, h3, h4{
     border-radius: $radius;
     color: $textcolor;
     align-items: center;
+    z-index: 2;
     @include for-size(large-phone-only){
         width: 95%;
     }
@@ -174,4 +176,3 @@ h1, h2, h3, h4{
 @import './nav';
 @import './footer';
 @import './horizontal-date-picker';
-@import './big-cal/big-cal-styles';
