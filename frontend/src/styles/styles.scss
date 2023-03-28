@@ -45,9 +45,11 @@
     --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
     --fs-body: 1.5rem;
     --fs-cal: 1.5rem;
+    --fs-signup: 1.15rem;
     @include for-size(large-phone-only){
         --fs-cal: .9rem;
         --fs-body: 1.2rem;
+        --fs-signup: 1rem;
     }
  }
 /* Font familys */
@@ -164,6 +166,7 @@ h1, h2, h3, h4{
 
 
 @import './wrappers';
+@import './index';
 @import './login';
 @import './react-calendar';
 @import './home';

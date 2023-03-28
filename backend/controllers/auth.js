@@ -22,6 +22,7 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
+    console.log('test')
     try{
         const {email, password } =req.body
         User.findOne({email:email}, function(err, user){

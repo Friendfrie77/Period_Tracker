@@ -5,13 +5,13 @@ import axios from 'axios'
 import { setLogin } from '../../state';
 import { useDispatch } from 'react-redux';
 import Spinner from '../../components/Spinner';
+import {AiOutlineClose} from 'react-icons/ai';
 
-export default function SignUp(){
+export default function SignUp(props){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [err, setErrMsg] = useState();
     const [loading, setLoading] = useState(false);
-
     const onSubmit = async (values) =>{
         let email = values.email
         let username = values.username
@@ -49,7 +49,7 @@ export default function SignUp(){
     }
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
-            <h1>Sign Up</h1>
+            <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
              onSubmit={onSubmit}
              validate = {values => {
@@ -72,6 +72,7 @@ export default function SignUp(){
              }}
              render = {({handleSubmit, form, submitting, pristine, values}) =>(
                 <form onSubmit={handleSubmit}>
+                    <h1>Sign Up</h1>
                     <Field name='email' >
                         {({input, meta}) => (
                         <div className='email-input'>

@@ -50,8 +50,10 @@
 }
 
 .remember-me{
+    width: 100%;
+    text-align: center;
     label{
-        padding-left: 10%;
+        padding-left: 2%;
         color: $textcolor;
         font-size: 1.2rem;
     }
@@ -84,4 +86,13 @@
 .reg-error{
     color: $textcolor;
     font-size: 1.4rem;
+}
+
+.exit-button{
+    color: $textcolor;
+    font-size: 2.5rem;
+    grid-area:1/7/1/7;
+    &:hover{
+        color: $color5;
+    }
 }

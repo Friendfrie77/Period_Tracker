@@ -6,9 +6,9 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state';
 import Spinner from '../../components/Spinner';
-import Waves from '../../components/Waves';
 import { useSelector } from "react-redux";
-function Login(){
+import {AiOutlineClose} from 'react-icons/ai'
+function Login(props){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -48,8 +48,7 @@ function Login(){
     }
     const content = loading ? <Spinner /> : (
         <section className='login-wrapper'>
-            <h1>Sign In</h1>
-            <span className='message'>{errormsg}</span>
+            <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
                 onSubmit={onSubmit}
                 validate = {values => {
@@ -64,6 +63,8 @@ function Login(){
                 }}
                 render = {({handleSubmit, form, submitting, pristine, values}) =>(
                     <form onSubmit={handleSubmit}>
+                        <h1>Sign In</h1>
+                        <span className='message'>{errormsg}</span>
                         <Field name='email'>
                             {({input, meta})=> (
                             <div className='email-input'>
@@ -94,12 +95,6 @@ function Login(){
                     </form>
                 )}
             />
-            {/* <Link className='recover'>Forgot your username or password?</Link> */}
-            <hr></hr>
-            <div className='sign-up'>
-                <span>New?</span>
-                <Link to='/signup'>Create an account here</Link>
-            </div>
         </section>
     )
     return content

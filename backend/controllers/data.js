@@ -1,6 +1,14 @@
 const User = require('../mongoose-schmea/User');
 const moment = require('moment')
 
+async function checkTextStatus(){
+    const users = await User.find({notification: true})
+    console.log(users)
+    for (let user in users){
+        console.log('aa')
+        console.log(users[user].email)
+    }
+}
 const addNewUserInfo = async (req, res) => {
     const {email, userInfo} = req.body;
     const user = await User.findOne({email: email});
@@ -109,4 +117,4 @@ const removePeriod = async (req, res) =>{
         res.status(500).json({error:err.message})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, checkTextStatus}

@@ -1,59 +1,64 @@
 .horizontal-date-picker{
     height: auto;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1400px;
 }
-.horizontal-date-picker *{
-    padding: 0 !important;
-    padding: 0 !important;
-}
-.dM, .Kq, .Ez, .jb, .dr, .Er, .Tx, ._3n, .Lx, ._1g, .FC, .or{
-    margin: 0 !important;
-    padding: 0!important;
+.dr{
+    width: 100% !important;
 }
 
-.dM{
-    width: 100% !important;
-    padding: 0 !important;
-}
 .Kq, .Ez, .jb{
     display: none !important;
 }
-
-.dr{
-    padding: $box-padding !important;
-    justify-content: center !important;
-}
-.dr .Er:first-of-type{
-    flex: 1;
-    background-color: red;
-}
 .Er{
-    flex: 1;
+    flex-grow: 1;
+    &:first-of-type{
+        background-color: red !important;
+        flex-shrink: 1;
+    }
 }
-.Tx{
-    width: 100% !important;
-    justify-content: space-evenly;
-    align-items: flex-start;
+.LX, ._1g{
+    all: unset !important;
+    color: #fff !important;
 }
-
-._3n, .Lx{
+ .Tx{
     all: unset !important;
     display: flex !important;
-    flex-direction: column !important;
-    font-size: var(--fs-horizontal-cal) !important;
-
-}
-
-.Lx, ._1g{
-    color: $textcolor !important;
-    text-align: center !important;
-}
-
-.FC ._1g{
+    flex-direction: row !important;
+ }
+ .Tx:first-of-type{
     background-color: red !important;
-    border-radius: $radius !important;
-}
-.FC, .or{
-    background-color: red !important;
-    border-radius: $radius !important;
-    padding: 0 .25rem !important;
-}
+ }
+ ._3n{
+    all:unset !important;
+    display: flex;
+    flex-direction: column;
+    width: 50px !important;
+    background-color: blue !important;
+ }
+// .dM{
+//     flex-grow: 1 !important;
+//     width: 100% !important;
+//     background-color: red !important;
+// }
+
+// .dr{
+//     flex-grow: 1 !important;
+//     background-color: pink;
+// }
+// .Tx{
+//     gap: 0%;
+// }
+// ._3n{
+//     width: auto;
+// }
+// .Lx, ._1g{
+//     color: white !important;
+//     font-size: 3rem !important;
+//     height: 100%;
+// }
+
+// .Lx{
+//     font-size: 3rem !important;
+// }

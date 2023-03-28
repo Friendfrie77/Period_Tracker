@@ -1,0 +1,11 @@
+.login-button-container{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.login-button-container .signup{
+    font-size: var(--fs-signup);
+    button{
+        font-size: inherit;
+    }
+}
