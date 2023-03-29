@@ -1,14 +1,15 @@
-import { Calendar } from '@fullcalendar/core'
-import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
-import { DateRange } from 'react-date-range';
+import Datestrip from './Datestrip';
+import { useDispatch,useSelector } from 'react-redux';
 
 const Test = () => {    
+  const periodEndDate = useSelector((state) => state.periodEndDate)
+  const periodStartDate = useSelector((state) => state.periodStartDate)
     const calendar = (
-      <div>
-        <DateRange
-        editableDateInputs = {false}
-        showMonthAndYearPickers = {false}
-        />
+      <div className='page-wrapper'>
+            <Datestrip
+                startValue = {periodStartDate}
+                endValue = {periodEndDate}
+            />
       </div>
     )
     return calendar

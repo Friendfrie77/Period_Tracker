@@ -1,9 +1,6 @@
-import {setUserInfo } from '../state';
 import axios from "axios";
-import { useDispatch } from 'react-redux';
 
-async function useFetchUserInfo(email, token){
-    const dispatch = useDispatch();
+async function fetchUserInfo(email, token){
     const result = axios.post(`${process.env.REACT_APP_APIURL}/user/getuserinfo`,{
       email
       },{
@@ -28,5 +25,4 @@ async function useFetchUserInfo(email, token){
     }
 }
 
-
-export{useFetchUserInfo}
+export {fetchUserInfo}

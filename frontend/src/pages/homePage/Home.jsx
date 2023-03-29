@@ -3,12 +3,14 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setCycle, setIsBleeding, setNewPeriod, setUserInfo, setCanBleed, setPeriod} from '../../state';
 import Moment from 'moment';
 import axios from "axios";
-import { useFetchUserInfo } from "../../hooks/fetchUserInfo";
-import { useAvgPeriodLength, useEstimateDate} from "../../hooks/calcPeriodInfo"
+import { fetchUserInfo } from '../../utils/fetchUserInfo'
+import { avgPeriodLength, estimateDate} from "../../utils/calcPeriodInfo";
+import { countdownCalc } from "../../utils/countdowncalc";
 import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
+import Countdown from "../../components/BlankCountdown";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -26,12 +28,9 @@ const Home = () => {
 
   let todaysDate = new Date()
   todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
-  const user = useFetchUserInfo(email, token)
-  const avgLengths = useAvgPeriodLength(previousPeriod)
-  const estimateDate = useEstimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avgLength)
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
-  const setUser = async (user, avgLengths, estimateDate) =>{
-    const userInfo = await user;
+  const setUser = async () =>{
+    const userInfo = await fetchUserInfo(email, token)
     dispatch(
       setUserInfo({
         periodStartDate: userInfo.periodStartDate,
@@ -41,6 +40,7 @@ const Home = () => {
         previousPeriod: userInfo.previousPeriod,
       })
     )
+    const avgLengths = await avgPeriodLength(previousPeriod)
     if (avgLengths){
       const cycle = avgLengths.cycle;
       const avgLength = avgLengths.avgLength
@@ -51,9 +51,10 @@ const Home = () => {
         })
       )
     }
-    if (estimateDate){
-      const startDate = Moment(estimateDate.startDate).format('YYYY-MM-DD');
-      const endDate = Moment(estimateDate.endDate).format('YYYY-MM-DD');
+    const estimateDates = estimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avgLength)
+    if (estimateDates){
+      const startDate = estimateDates.startDate
+      const endDate = estimateDates.endDate
       dispatch(
         setNewPeriod({
           periodStartDate: startDate,
@@ -71,7 +72,6 @@ const Home = () => {
       )
     }
   }
-
   const sendPeriodInfo = async (startDate, endDate) =>{
     axios.post(`${process.env.REACT_APP_APIURL}/user/addperiod`, {
       email, startDate, endDate, cycle, avgLength
@@ -108,7 +108,6 @@ const periodStarted = async () =>{
   if (Moment(periodStartDate).format('YYYY-MM-DD') != todaysDate){
     const newEndDate = Moment(todaysDate).add('days', avgLength).format('YYYY-MM-DD')
     const update = sendUpdatedPeriod(todaysDate, newEndDate)
-    console.log(update)
     const bloodGod = await update
     dispatch(
       setCanBleed({
@@ -137,7 +136,6 @@ const periodStarted = async () =>{
 }
 
 const periodEnded = async () =>{
-  console.log('test')
   if (periodEndDate != todaysDate){
     const newEndDate = Moment(todaysDate).add('days', avgLength).format('YYYY-MM-DD')
     dispatch(
@@ -167,10 +165,12 @@ const periodEnded = async () =>{
     )
   }
 }
-useEffect(()=>{
-  setUser(user,avgLengths, estimateDate)
-},[cycle, periodStartDate, periodEndDate])
 
+useEffect(()=>{
+  setUser()
+},[periodStartDate , periodEndDate, needInfo])  
+
+// setUser(user,avgLengths, estimateDate)
 // useEffect(() =>{
 //   sendPeriodStatus()
 // },[periodStarted])
@@ -178,8 +178,7 @@ useEffect(()=>{
 // useEffect(() => {
 //   sendPreviousPeriod()
 // },[isBleeding])
-// console.log(canBleed, isBleeding, periodStartDate, periodEndDate, cycle)
-// console.log(Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate)
+
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {cycleStartDate} onClick = {periodStarted} periodStartDate={periodStartDate} periodEndDate = {periodEndDate}/>

@@ -1,15 +1,16 @@
 import { Datepicker, DatepickerEvent} from "@meinefinsternis/react-horizontal-date-picker";
+import { useState } from "react";
 function Datestrip(props) {
-  let endDate = new Date()
-  const className = 'horizontal-date'
+  const [date, setDate] = useState({
+    startValue: Date.parse(props.startValue),
+    endValue: new Date(props.endValue),
+    rangeDates: [],
+  });
   return (
     <div className="horizontal-date-picker">
       <Datepicker
-        startValue={new Date(props.startValue)}
-        endValue = {new Date(props.endValue)}
-        startDate = {Date.now()}
-        endDate = {endDate.setDate(endDate.getDate() + 7)}
-        className = {className}
+        startValue={date.startValue}
+        endValue = {date.endValue}
       />
     </div>
   )

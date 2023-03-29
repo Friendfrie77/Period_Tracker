@@ -7,7 +7,7 @@ import Nav from '../navbar/Nav'
 import {useNavigate} from 'react-router-dom';
 import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
-import { useFetchUserInfo } from '../../hooks/fetchUserInfo';
+import {fetchUserInfo} from '../../utils/fetchUserInfo'
 import Footer from '../footer/Footer';
 import ProfileCal from '../../components/ProfileCal';
 import {Events } from '../../classes/events';
@@ -19,7 +19,8 @@ const Proflie = () => {
   const periodStartDate = useSelector((state) => state.periodStartDate)
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
-  const user = useFetchUserInfo(email, token)
+  const previousPeriod = useSelector((state) => state.previousPeriod)
+  const user = fetchUserInfo(email, token)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false)
@@ -31,17 +32,19 @@ const Proflie = () => {
   let periodEvent = new Events()
   const [pEvents, setEvents] = useState(periodEvent.allEvents)
   const checkUserInfo = async (user) => {
-    if ((periodStartDate && periodEndDate) && (pEvents.length == 0)){
-      let start = Moment(periodStartDate)
-      let end = Moment(periodEndDate)
-      periodEvent.newEvent('Period Active', start, end, true)
+    if (pEvents.length == 0){
+      for(const periods in previousPeriod){
+        let start = Moment(previousPeriod[periods].startDate)
+        let end = Moment(previousPeriod[periods].endDate)
+        periodEvent.newEvent('Period Active', start, end, true)
+      }
+      if (periodStartDate && periodEndDate){
+        let start = Moment(periodStartDate)
+        let end = Moment(periodEndDate)
+        periodEvent.newEvent('Period Active', start, end, true)
+      }
     }
   }
-  console.log(periodStartDate)
-  // console.log(periodEndDate)
-  // console.log(periodEvent.allEvents)
-  // console.log(pEvents.length)
-checkUserInfo()
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
   }

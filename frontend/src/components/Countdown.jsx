@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Moment from 'moment';
 import { CountdownCircleTimer} from "react-countdown-circle-timer";
 
@@ -26,6 +26,7 @@ const Countdown = (props) => {
     size: 500,
     strokeWidth: 10,
     };
+    console.log(startDate, endDate)
   return (
     <div className='countdown-timer'>
         <CountdownCircleTimer

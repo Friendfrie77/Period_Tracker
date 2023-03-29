@@ -1,7 +1,6 @@
 import Moment from 'moment';
-import { setCycle, setDays, setCanBleed} from '../state';
 
-function useAvgPeriodLength(previousPeriod){
+function avgPeriodLength(previousPeriod){
     let totalDays = 0
     let totalCycle = 0
     let oldStartDate = null;
@@ -27,7 +26,7 @@ function useAvgPeriodLength(previousPeriod){
     return{avgLength, cycle}
 }
 
-function useEstimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avgLength){
+function estimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avgLength){
     let lastPeriod = null
     let startDate;
     let endDate;
@@ -59,21 +58,4 @@ function useEstimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, 
       }
     }
 
-    // const daysTill = (isBleeding) =>{
-    //     let todaysDate = new Date()
-    //     todaysDate = Moment(todaysDate).format()
-    //     const dispatch = useDispatch();
-    //     let daysLeft;
-    //     if (isBleeding){
-    //       daysLeft = Moment(periodEndDate).diff(todaysDate, 'days')
-    //     }else{
-    //       daysLeft = Moment(periodStartDate).diff(todaysDate, 'days')
-    //     }
-    //     dispatch(
-    //         setDays({
-    //             daysLeft: daysLeft
-    //         })
-    //     )
-    //   }
-
-export {useAvgPeriodLength, useEstimateDate}
+export {avgPeriodLength, estimateDate}
