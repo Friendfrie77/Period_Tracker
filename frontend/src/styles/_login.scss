@@ -96,3 +96,31 @@
         color: $color5;
     }
 }
+
+.login-lable{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    pointer-events: none;
+    border-bottom: 1px solid $textcolor;
+    color: $textcolor;
+    transform: all 0.3s ease;
+    &:after{
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        border-bottom: 3px solid $color6;
+        left: 0px;
+        bottom: -1;
+        transform: translateX(-100%);
+        transform: all .3s ease;
+    }
+}
+
+.login-span{
+        position: absolute;
+        bottom: 0px;
+        left: 4px;
+}

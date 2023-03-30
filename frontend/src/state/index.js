@@ -18,6 +18,7 @@ const initialState = {
         endDate: null,
         count: null
     }],
+    notification: false,
 };
 
 export const authSlice = createSlice({
@@ -36,6 +37,7 @@ export const authSlice = createSlice({
             state.canBleed = action.payload.canBleed;
             state.isBleeding = action.payload.isBleeding;
             state.previousPeriod = action.payload.previousPeriod;
+            state.notification = action.payload.notification;
         },
         setLogout: (state) =>{
             state.user = null;
@@ -48,6 +50,7 @@ export const authSlice = createSlice({
             state.canBleed = false;
             state.isBleeding = false;
             state.previousPeriod = null;
+            state.notification = false;
         },
         setPeriod: (state, action) =>{
             state.previousPeriod = action.payload.previousPeriod

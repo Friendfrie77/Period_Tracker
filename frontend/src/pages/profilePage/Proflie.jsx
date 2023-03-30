@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import Moment from 'moment';
-import { DateRange } from 'react-date-range';
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import Nav from '../navbar/Nav'
@@ -11,6 +10,10 @@ import {fetchUserInfo} from '../../utils/fetchUserInfo'
 import Footer from '../footer/Footer';
 import ProfileCal from '../../components/ProfileCal';
 import {Events } from '../../classes/events';
+import PageFade from '../../components/PageFade'
+import DeleteAccout from './DeleteAccout';
+import ChangePassword from './ChangePassword';
+import Notication from './Notication';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,7 +26,8 @@ const Proflie = () => {
   const user = fetchUserInfo(email, token)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
-  const [showPasswordChange, setPasswordChange] = useState(false)
+  const [showPasswordChange, setPasswordChange] = useState(false);
+  const [openNoticationBox, setNotication] = useState(false);
   const [deletedEmail, setDeletedEmail] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -47,6 +51,7 @@ const Proflie = () => {
   }
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
+    console.log(email.target.value)
   }
   const oldPasswordChange = (password) =>{
     setOldPassword(password.target.value)
@@ -59,6 +64,9 @@ const Proflie = () => {
   }
   const settingToggle = () =>{
     setOpen(!open)
+  }
+  const noticationBox = () => {
+    setNotication(!openNoticationBox)
   }
   const openDeleteBox = () =>{
     setDelete(!deleteBox)
@@ -92,7 +100,7 @@ const Proflie = () => {
   }
   useEffect(() =>{
     checkUserInfo(user)
-  }, [])
+  }, [user])
 
   const content = (
     <div className='page-wrapper'>
@@ -108,55 +116,27 @@ const Proflie = () => {
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
           {open && 
-          <div className='inner-account-settings'>
-                 <div className='setting-option'>
-         <button onClick={openPasswordChange}>Password Change</button>
-              {showPasswordChange &&
-                <form className='password-change' onSubmit={changePassword}>
-                  <div className='password-input'>
-                    <input type = 'password' value={oldPassword} onChange={oldPasswordChange}></input>
-                    <label htmlFor='password' className='login-lable'>
-                        <span className='login-span'>Old Password<small>*</small></span>
-                    </label>
-                  </div>
-                  <div className='password-input'>
-                    <input type = 'password' value={newPassword} onChange={newPasswordChange}></input>
-                    <label htmlFor='password' className='login-lable'>
-                        <span className='login-span'>New Password<small>*</small></span>
-                    </label>
-                  </div>
-                  <div className='password-input'>
-                    <input type = 'password' value={confirmNewPassword} onChange={confirmPassword}></input>
-                    <label htmlFor='password' className='login-lable'>
-                        <span className='login-span'>Confirm Password<small>*</small></span>
-                    </label>
-                  </div>
-                  <button type='submit'>Submit</button>
-                </form>
-              }
+            <div className='inner-account-settings'>
+              <div className='setting-option'>
+                <button onClick={openPasswordChange}>Password Change</button>
+              </div>
+              <div className='setting-option'>
+                <button onClick ={noticationBox}>Toggle Notication</button>
+              </div>
+              <div className='setting-option'>
+                <button onClick={openDeleteBox}>Delete Account</button>
+              </div>
             </div>
-            <div className='setting-option'>
-              <button onClick={openDeleteBox}>Delete Account</button>
-            </div>
-          </div>
           }
         </div>
         {deleteBox &&
-        <div className='page-fade'>
-          <div className='warning-box'>
-            <h1>Please enter your email adress to delete your account.</h1>
-            <form onSubmit={deleteAccount} className='delete-account'>
-              <div className='email-input'>
-                <input type='email' value={deletedEmail} onChange={emailChange}></input>
-                <label htmlFor='email' className='login-lable'>
-                  <span className='login-span'>Email</span>
-                </label>
-              </div>
-              <button className='button' type='submit'>Delete</button>
-              <button className='button' onClick={openDeleteBox}>Cancel</button>
-            </form>
-          </div>
-        </div>
+        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccount} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox}/>} />
+        }
+        {openNoticationBox &&
+         <PageFade content= {<Notication close ={noticationBox} />} />
+        }
+        {showPasswordChange &&
+          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword}/>} />
         }
       </section>
       <Footer />

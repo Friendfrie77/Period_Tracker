@@ -40,7 +40,8 @@ function Login(props){
                   periodEndDate: user.data.user.periodEndDate,
                   previousPeriod: user.data.user.previousPeriod,
                   isBleeding: user.data.user.isBleeding,
-                  canBleed: user.data.user.canBleed
+                  canBleed: user.data.user.canBleed,
+                  notification: user.data.user.notification
                 })
               );
               navigate('/home')

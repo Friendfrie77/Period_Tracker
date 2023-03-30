@@ -30,20 +30,23 @@ export default function SignUp(props){
             if (user){
                 dispatch(
                     setLogin({
-                      user: user.data.user.username,
-                      email: user.data.user.email,
-                      token: user.data.accessToken,
-                      cycle: user.data.user.cycle,
-                      periodStartDate: user.data.user.periodStartDate,
-                      periodEndDate: user.data.user.periodEndDate,
-                      previousPeriod: user.data.user.previousPeriod,
+                        user: user.data.user.username,
+                        email: user.data.user.email,
+                        token: user.data.accessToken,
+                        cycle: user.data.user.cycle,
+                        avgLength: user.data.avgLength,
+                        periodStartDate: user.data.user.periodStartDate,
+                        periodEndDate: user.data.user.periodEndDate,
+                        previousPeriod: user.data.user.previousPeriod,
+                        isBleeding: user.data.user.isBleeding,
+                        canBleed: user.data.user.canBleed,
+                        notification: user.data.user.notification
                     })
                   );
                   navigate('/AccountSetup')
                 }
             }
         }catch(err){
-            console.log(err)
             setErrMsg(err)
         }
     }

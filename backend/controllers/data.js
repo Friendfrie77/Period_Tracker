@@ -9,6 +9,11 @@ async function checkTextStatus(){
         console.log(users[user].email)
     }
 }
+
+async function setNotificationStatus (){
+    const {email} = req.body;
+    console.log(email)
+}
 const addNewUserInfo = async (req, res) => {
     const {email, userInfo} = req.body;
     const user = await User.findOne({email: email});
@@ -117,4 +122,4 @@ const removePeriod = async (req, res) =>{
         res.status(500).json({error:err.message})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, checkTextStatus}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, checkTextStatus, setNotificationStatus}

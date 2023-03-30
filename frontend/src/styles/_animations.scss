@@ -24,3 +24,12 @@
 .email-input input:focus + .login-lable:after, .email-input input:valid + .login-lable:after{
     translate: 100%;
 }
+
+.toggle-on input:focus + .login-lable .login-span, .toggle-on input:valid + .login-lable .login-span{
+    translate: 0% -100%;
+    font-size: .65rem;
+    opacity: .2;
+}
+.toggle-on input:focus + .login-lable:after, .toggle-on input:valid + .login-lable:after{
+    translate: 100%;
+}

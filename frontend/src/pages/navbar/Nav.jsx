@@ -4,6 +4,8 @@ import { CiLogout } from 'react-icons/ci'
 import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
+import logo from '../../images/logo.svg'
+import logo2 from '../../images/logo2.svg'
 const Nav = () => {
     const dispatch = useDispatch();
     const cycle = useSelector((state) => state.cycle);
@@ -19,7 +21,7 @@ const Nav = () => {
   return (
     <nav className='nav'>
         <div className='logo'>
-            placeholder
+            <img src={logo2} height='50px' width='50px'></img>
         </div>
         <input id='mobile-nav-toggle' type='checkbox' /> 
         <label className='mobile-nav-container' htmlFor='mobile-nav-toggle'>

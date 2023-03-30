@@ -864,6 +864,12 @@ h1, h2, h3, h4 {
   font-size: 1.1rem;
   padding: 5px 8px;
 }
+.warning-box .text-button {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  color: #8FDDC3;
+}
 
 .wrapper {
   display: flex;
@@ -1205,6 +1211,34 @@ h1, h2, h3, h4 {
 }
 .exit-button:hover {
   color: #8FDDC3;
+}
+
+.login-lable {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  pointer-events: none;
+  border-bottom: 1px solid #EAE8FF;
+  color: #EAE8FF;
+  transform: all 0.3s ease;
+}
+.login-lable:after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-bottom: 3px solid #5CFFC9;
+  left: 0px;
+  bottom: -1;
+  transform: translateX(-100%);
+  transform: all 0.3s ease;
+}
+
+.login-span {
+  position: absolute;
+  bottom: 0px;
+  left: 4px;
 }
 
 .rdrCalendarWrapper {
@@ -1615,6 +1649,52 @@ h1, h2, h3, h4 {
   display: flex;
   align-self: center;
   z-index: 0;
+}
+
+.notification {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.notification h1 {
+  font-size: var(--fs-body);
+}
+
+.button-container {
+  margin-top: 2rem;
+  display: flex;
+  width: 100%;
+}
+.button-container:nth-of-type(1) {
+  flex-direction: column;
+}
+.button-container form {
+  margin-bottom: 1rem;
+}
+
+.toggle-on {
+  width: 95%;
+  position: relative;
+  height: 2.5rem;
+  overflow: hidden;
+  margin: 1rem;
+}
+.toggle-on input {
+  background-color: #4B203F;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  color: #EAE8FF;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.text-button {
+  background-color: transparent;
+  border: none;
 }
 
 .rdrCalendarWrapper {
@@ -2044,6 +2124,16 @@ h1, h2, h3, h4 {
   translate: 100%;
 }
 
+.toggle-on input:focus + .login-lable .login-span, .toggle-on input:valid + .login-lable .login-span {
+  translate: 0% -100%;
+  font-size: 0.65rem;
+  opacity: 0.2;
+}
+
+.toggle-on input:focus + .login-lable:after, .toggle-on input:valid + .login-lable:after {
+  translate: 100%;
+}
+
 .waves {
   height: 40px; /* change the height of the waves here */
   width: 100%;
@@ -2283,6 +2373,10 @@ nav {
 #mobile-nav-toggle:checked + .mobile-nav-container .mobile-nav::after {
   margin-top: 0px;
   transform: rotate(-405deg);
+}
+
+.logo img {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
 }
 
 footer {

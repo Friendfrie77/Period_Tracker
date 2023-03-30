@@ -22,7 +22,6 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    console.log('test')
     try{
         const {email, password } =req.body
         User.findOne({email:email}, function(err, user){
@@ -48,6 +47,7 @@ const login = async (req, res) => {
                         user.accessToken = accessToken
                         user.save();
                         delete user.password;
+                        console.log(user)
                         res.status(200).json({accessToken, user});
                     }
                 })
