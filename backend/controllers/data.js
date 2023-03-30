@@ -1,18 +1,24 @@
 const User = require('../mongoose-schmea/User');
 const moment = require('moment')
 
-async function checkTextStatus(){
-    const users = await User.find({notification: true})
-    console.log(users)
-    for (let user in users){
-        console.log('aa')
-        console.log(users[user].email)
+async function setNotificationStatus (req, res){
+    const {email, status, number} = req.body;
+    const user = await User.findOne({email: email})
+    if (user){
+        user.number = number;
+        user.notification = status;
+        user.save();
+        const notification = user.notification
+        if(status){
+            res.status(200).json({message: 'You will now get notfications before your period starts', notification})
+        }else{
+            res.status(200).json({message: 'You will no longer get notfications', notification})
+        }
+    }else{
+        res.status(500).json({
+            error: 'Internal error please try again'
+        })
     }
-}
-
-async function setNotificationStatus (){
-    const {email} = req.body;
-    console.log(email)
 }
 const addNewUserInfo = async (req, res) => {
     const {email, userInfo} = req.body;
@@ -122,4 +128,4 @@ const removePeriod = async (req, res) =>{
         res.status(500).json({error:err.message})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, checkTextStatus, setNotificationStatus}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, setNotificationStatus}

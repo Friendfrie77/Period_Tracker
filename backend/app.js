@@ -11,7 +11,7 @@ const credentials = require('./middleware/credentials');
 const db = require('./config/dbConn');
 const auth = require('./controllers/auth');
 const data = require('./controllers/data')
-
+const utils = require('./utils/twilio')
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/userInfo');
 
@@ -29,7 +29,7 @@ app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 
 // data.checkTextStatus()
-
+utils.checkTextStatus()
 
 app.listen(PORT, () =>{
   console.log(`Listening at http://localhost:${PORT}`)

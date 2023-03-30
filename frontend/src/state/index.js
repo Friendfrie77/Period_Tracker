@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
     user: null,
     email: null,
@@ -80,14 +79,13 @@ export const authSlice = createSlice({
         },
         setDays: (state, action) =>{
             state.daysleft = action.payload.daysleft;
+        },
+        setNotificationStatus: (state, action) =>{
+            state.notification = action.payload.notification
         }
     }
 })
 
-export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setDays} = authSlice.actions;
-
-export const selectCurrentUser = (state) => state.auth.user
-export const selectCurrentEmail = (state) => state.auth.email
-export const selectCurrentToken = (state) => state.auth.token
+export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setDays, setNotificationStatus} = authSlice.actions;
 
 export default authSlice.reducer;

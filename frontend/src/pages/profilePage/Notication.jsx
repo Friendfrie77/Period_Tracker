@@ -1,16 +1,48 @@
 import {useState} from 'react';
-import { useSelector } from "react-redux";
-import { Axios } from 'axios';
+import { useSelector, useDispatch } from "react-redux";
+import axios, { Axios } from 'axios';
+import { setNotificationStatus } from '../../state';
 function Notication(props) {
+    const dispatch = useDispatch();
     const notification = useSelector((state) => state.notification);
     const email = useSelector((state) => state.email);
     const token = useSelector((state) => state.token);
+    const [message, setmMessage] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    
+    const close = props.close
     const numberChange = (number) =>{
         setPhoneNumber(number.target.value)
     }
     const submit = async () =>{
+        if (notification){
+            const status = false
+            const number = null
+            const res = await axios.post(`${process.env.REACT_APP_APIURL}/user/setnotificationstatus`,{
+                email, status, number
+            },{
+                headers: {'Authorization': `Bearer ${token}`},
+            })
+            dispatch(
+                setNotificationStatus({
+                    notification: res.data.notification
+                })
+            )
+            close()
+        }else if(!notification){
+            const status = true;
+            const number = phoneNumber
+            const res = await axios.post(`${process.env.REACT_APP_APIURL}/user/setnotificationstatus`,{
+                email, status, number
+            },{
+                headers: {'Authorization': `Bearer ${token}`},
+            })
+            dispatch(
+                setNotificationStatus({
+                    notification: res.data.notification
+                })
+            )
+            close()
+        }
 
     }
   return (
@@ -19,7 +51,7 @@ function Notication(props) {
             <div className='notification'>
                 <h1>Would you like to stop notifications?</h1>
                 <div className='button-container'> 
-                    <button className='button'>Yes</button>
+                    <button className='button' onClick={submit}>Yes</button>
                     <button className='button' onClick={props.close}>No</button>
                 </div>
             </div>
@@ -29,15 +61,13 @@ function Notication(props) {
             <div className='notification'>
                 <h1>Would you like to receive text notification</h1>
                 <div className='button-container'>
-                    <form>
-                        <div className='toggle-on'>
-                            <input typeof='tel' id='tel-number' onChange={numberChange} required></input>
-                            <label htmlFor='tel-number' className='login-lable'>
-                                <span className='login-span'>(xxx)-xxx-xxxx</span>
-                            </label>
-                        </div>
-                        <button className='button'>Submit</button>
-                    </form>
+                    <div className='toggle-on'>
+                        <input typeof='tel' id='tel-number' onChange={numberChange} required></input>
+                        <label htmlFor='tel-number' className='login-lable'>
+                            <span className='login-span'>(xxx)-xxx-xxxx</span>
+                        </label>
+                    </div>
+                    <button className='button' type='submit' onClick={submit}>Submit</button>
                     <button className='text-button' onClick={props.close}>Go Back</button>
                 </div>
             </div>

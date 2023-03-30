@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import Moment from 'moment';
 import { useSelector } from "react-redux";
+
 import axios from 'axios';
 import Nav from '../navbar/Nav'
 import {useNavigate} from 'react-router-dom';
@@ -23,7 +24,7 @@ const Proflie = () => {
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
   const previousPeriod = useSelector((state) => state.previousPeriod)
-  const user = fetchUserInfo(email, token)
+  // const user = fetchUserInfo(email, token)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false);
@@ -33,9 +34,11 @@ const Proflie = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmPassword] = useState('');
   const [erroMsg, setErrorMsg] = useState('');
+  const notification = useSelector((state) => state.notification);
+  console.log(notification)
   let periodEvent = new Events()
   const [pEvents, setEvents] = useState(periodEvent.allEvents)
-  const checkUserInfo = async (user) => {
+  const checkUserInfo = async () => {
     if (pEvents.length == 0){
       for(const periods in previousPeriod){
         let start = Moment(previousPeriod[periods].startDate)
@@ -99,8 +102,8 @@ const Proflie = () => {
     )
   }
   useEffect(() =>{
-    checkUserInfo(user)
-  }, [user])
+    checkUserInfo()
+  },[])
 
   const content = (
     <div className='page-wrapper'>

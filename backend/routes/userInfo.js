@@ -11,4 +11,5 @@ router.post('/setperiodinfo', auth, data.setPeriodStatus)
 router.post('/addpreviousperiod', auth, data.addPreviousPeriod)
 router.post('/updateperiod', auth, data.updatePeriod)
 router.post('/removeperiod', auth, data.removePeriod)
+router.post('/setnotificationstatus', auth, data.setNotificationStatus)
 module.exports = router;
