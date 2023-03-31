@@ -1,0 +1,32 @@
+.react-tel-input{
+    display: flex !important;
+    width: auto !important;
+    font-size: var(--fs-body) !important;
+    font-family: $Copy-Font !important;
+    max-width: 100%;
+  }
+.react-tel-input .form-control{
+    border: none !important;
+    border-bottom: $color5 1px solid !important;
+    color: $textcolor;
+    background-color: $login-input-background !important;
+    box-shadow: $drop-shadow-wrappers;
+    height: 40px !important;
+}
+.react-tel-input .flag-dropdown {
+    display: flex !important;
+    border: none !important;
+    background-color: $login-input-background !important;
+    border-bottom: $color5 1px solid !important;
+  }
+  
+.react-tel-input .selected-flag .arrow {
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+    border-top: 6px solid $color5 !important;
+  }
+
+.react-tel-input .form-control{
+    font-size: var(--fs-body) !important;
+    font-family: $Copy-Font !important;
+}

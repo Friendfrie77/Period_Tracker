@@ -1,7 +1,10 @@
-import {useState} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import axios, { Axios } from 'axios';
 import { setNotificationStatus } from '../../state';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/high-res.css'
+// import flags from '../../images/flags.png'
 function Notication(props) {
     const dispatch = useDispatch();
     const notification = useSelector((state) => state.notification);
@@ -10,8 +13,13 @@ function Notication(props) {
     const [message, setmMessage] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const close = props.close
+    const teleElement = useRef()
+    useEffect(() =>{
+        teleElement.current = phoneNumber
+    },[phoneNumber])
     const numberChange = (number) =>{
-        setPhoneNumber(number.target.value)
+        setPhoneNumber(number)
+        console.log(phoneNumber)
     }
     const submit = async () =>{
         if (notification){
@@ -43,14 +51,16 @@ function Notication(props) {
             )
             close()
         }
-
+    }
+    const test = () =>{
+        console.log(phoneNumber)
     }
   return (
     <div className='warning-box'>
         {notification &&
             <div className='notification'>
                 <h1>Would you like to stop notifications?</h1>
-                <div className='button-container'> 
+                <div className='button-container'>
                     <button className='button' onClick={submit}>Yes</button>
                     <button className='button' onClick={props.close}>No</button>
                 </div>
@@ -59,13 +69,14 @@ function Notication(props) {
         }
         {!notification &&
             <div className='notification'>
-                <h1>Would you like to receive text notification</h1>
+                <h1>Would you like to receive text notification?</h1>
                 <div className='button-container'>
                     <div className='toggle-on'>
-                        <input typeof='tel' id='tel-number' onChange={numberChange} required></input>
-                        <label htmlFor='tel-number' className='login-lable'>
-                            <span className='login-span'>(xxx)-xxx-xxxx</span>
-                        </label>
+                        <PhoneInput
+                            onChange={numberChange}
+                            country={'us'}
+                            value = {phoneNumber}
+                        />
                     </div>
                     <button className='button' type='submit' onClick={submit}>Submit</button>
                     <button className='text-button' onClick={props.close}>Go Back</button>

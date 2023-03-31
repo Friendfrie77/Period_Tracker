@@ -831,15 +831,18 @@ h1, h2, h3, h4 {
   background-color: #5C0F47;
   transform: translate(-50%, -50%);
   width: 50%;
-  height: 30%;
+  height: 40%;
+  max-height: 300px;
+  max-width: 500px;
   border-radius: 5px;
   color: #EAE8FF;
   align-items: center;
   z-index: 2;
 }
-@media (max-width: 535px) {
+@media (max-width: 768px) {
   .warning-box {
-    width: 100%;
+    width: 95%;
+    height: 50%;
   }
 }
 .warning-box h1 {
@@ -852,10 +855,10 @@ h1, h2, h3, h4 {
   align-items: center;
   margin: auto;
 }
-.warning-box button {
+.warning-box .button {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
   width: 25%;
-  margin: auto;
+  margin: 1rem;
   border-radius: 5px;
   height: auto;
   background-color: #AF4D98;
@@ -1657,6 +1660,7 @@ h1, h2, h3, h4 {
   flex-direction: column;
   align-items: center;
   height: 100%;
+  width: 100%;
 }
 .notification h1 {
   font-size: var(--fs-body);
@@ -1669,10 +1673,6 @@ h1, h2, h3, h4 {
 }
 .button-container:nth-of-type(1) {
   flex-direction: column;
-}
-.button-container button {
-  margin-bottom: 1rem;
-  width: 50%;
 }
 @media (max-width: 535px) {
   .button-container .button {
@@ -1687,19 +1687,9 @@ h1, h2, h3, h4 {
   width: 95%;
   position: relative;
   height: 2.5rem;
-  overflow: hidden;
-  margin: 1rem;
-}
-.toggle-on input {
-  background-color: #4B203F;
-  width: 100%;
-  height: 100%;
-  border: none;
-  outline: none;
-  font-size: 1.2rem;
-  color: #EAE8FF;
-  border-radius: 5px;
-  padding: 5px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
 }
 
 .text-button {
@@ -2459,4 +2449,39 @@ footer a {
 }
 .or .Lx, .or ._1g {
   color: #ED2939 !important;
+}
+
+.react-tel-input {
+  display: flex !important;
+  width: auto !important;
+  font-size: var(--fs-body) !important;
+  font-family: "Varela_Round", Sans-Serif !important;
+  max-width: 100%;
+}
+
+.react-tel-input .form-control {
+  border: none !important;
+  border-bottom: #8FDDC3 1px solid !important;
+  color: #EAE8FF;
+  background-color: #4B203F !important;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px;
+  height: 40px !important;
+}
+
+.react-tel-input .flag-dropdown {
+  display: flex !important;
+  border: none !important;
+  background-color: #4B203F !important;
+  border-bottom: #8FDDC3 1px solid !important;
+}
+
+.react-tel-input .selected-flag .arrow {
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+  border-top: 6px solid #8FDDC3 !important;
+}
+
+.react-tel-input .form-control {
+  font-size: var(--fs-body) !important;
+  font-family: "Varela_Round", Sans-Serif !important;
 }/*# sourceMappingURL=styles.css.map */

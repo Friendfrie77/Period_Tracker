@@ -131,13 +131,16 @@ h1, h2, h3, h4{
     background-color: $color4;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: 30%;
+    height: 40%;
+    max-height: 300px;
+    max-width: 500px;
     border-radius: $radius;
     color: $textcolor;
     align-items: center;
     z-index: 2;
-    @include for-size(large-phone-only){
-        width: 100%;
+    @include for-size(tablet-only){
+        width: 95%;
+        height: 50%;
     }
     h1{
         font-size: var(--fs-body);
@@ -150,10 +153,10 @@ h1, h2, h3, h4{
         align-items: center;
         margin: auto;
     }
-    button{
+    .button{
         box-shadow: $drop-shadow-wrappers;
         width: 25%;
-        margin: auto;
+        margin: 1rem;
         border-radius: $radius;
         height: auto;
         background-color: $button-color;
@@ -185,3 +188,4 @@ h1, h2, h3, h4{
 @import './nav';
 @import './footer';
 @import './horizontal-date-picker';
+@import './reactTelephoneInput';
