@@ -1,7 +1,6 @@
 import {useState, useEffect} from 'react';
 import Moment from 'moment';
 import { useSelector } from "react-redux";
-
 import axios from 'axios';
 import Nav from '../navbar/Nav'
 import {useNavigate} from 'react-router-dom';
@@ -15,6 +14,7 @@ import PageFade from '../../components/PageFade'
 import DeleteAccout from './DeleteAccout';
 import ChangePassword from './ChangePassword';
 import Notication from './Notication';
+import Settings from './Settings';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -118,18 +118,8 @@ const Proflie = () => {
         </div>
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
-          {open && 
-            <div className='inner-account-settings'>
-              <div className='setting-option'>
-                <button onClick={openPasswordChange}>Password Change</button>
-              </div>
-              <div className='setting-option'>
-                <button onClick ={noticationBox}>Toggle Notication</button>
-              </div>
-              <div className='setting-option'>
-                <button onClick={openDeleteBox}>Delete Account</button>
-              </div>
-            </div>
+          {open &&
+            <PageFade content = {<Settings openPassword = {openPasswordChange} openNotication = {noticationBox} openDeleteBox= {openDeleteBox} close={settingToggle} />} />
           }
         </div>
         {deleteBox &&
@@ -139,7 +129,7 @@ const Proflie = () => {
          <PageFade content= {<Notication close ={noticationBox} />} />
         }
         {showPasswordChange &&
-          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword}/>} />
+          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange}/> } />
         }
       </section>
       <Footer />

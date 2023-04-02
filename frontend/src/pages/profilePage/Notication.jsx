@@ -4,7 +4,6 @@ import axios, { Axios } from 'axios';
 import { setNotificationStatus } from '../../state';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/high-res.css'
-// import flags from '../../images/flags.png'
 function Notication(props) {
     const dispatch = useDispatch();
     const notification = useSelector((state) => state.notification);

@@ -120,6 +120,7 @@ h1, h2, h3, h4{
     right: 0;
     bottom: 0;
     top: 0;
+    animation: pagefade .2s ease-in;
 }
 .warning-box{
     display: flex;
@@ -131,8 +132,8 @@ h1, h2, h3, h4{
     background-color: $color4;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: 40%;
-    max-height: 300px;
+    height: auto;
+    max-height: 500px;
     max-width: 500px;
     border-radius: $radius;
     color: $textcolor;

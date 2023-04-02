@@ -43,7 +43,6 @@
 }
 .password-change{
     padding: $box-padding;
-    border: $color5 solid 1px;
     border-radius: $radius;
     margin: auto;
     display: flex;
@@ -58,6 +57,7 @@
     }
 }
 .delete-account{
+
     .email-input{
         margin-bottom: $box-padding !important;
         width: 40%;

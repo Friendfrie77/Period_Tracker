@@ -819,6 +819,7 @@ h1, h2, h3, h4 {
   right: 0;
   bottom: 0;
   top: 0;
+  animation: pagefade 0.2s ease-in;
 }
 
 .warning-box {
@@ -831,8 +832,8 @@ h1, h2, h3, h4 {
   background-color: #5C0F47;
   transform: translate(-50%, -50%);
   width: 50%;
-  height: 40%;
-  max-height: 300px;
+  height: auto;
+  max-height: 500px;
   max-width: 500px;
   border-radius: 5px;
   color: #EAE8FF;
@@ -1607,7 +1608,6 @@ h1, h2, h3, h4 {
 
 .password-change {
   padding: 1rem;
-  border: #8FDDC3 solid 1px;
   border-radius: 5px;
   margin: auto;
   display: flex;
@@ -2124,16 +2124,14 @@ h1, h2, h3, h4 {
   translate: 100%;
 }
 
-.toggle-on input:focus + .login-lable .login-span, .toggle-on input:valid + .login-lable .login-span {
-  translate: 0% -100%;
-  font-size: 0.65rem;
-  opacity: 0.2;
+@keyframes pagefade {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
-
-.toggle-on input:focus + .login-lable:after, .toggle-on input:valid + .login-lable:after {
-  translate: 100%;
-}
-
 .waves {
   height: 40px; /* change the height of the waves here */
   width: 100%;

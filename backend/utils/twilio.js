@@ -8,8 +8,6 @@ async function checkTextStatus(){
     const todaysDate = new Date()
     for (let user in users){
         let dateTillBleed = new Date(users[user].periodStartDate)
-        console.log(users[user].number)
-        console.log(moment(dateTillBleed).diff(todaysDate, 'day'))
         if(moment(dateTillBleed).diff(todaysDate,'day') <= 3){
             client.messages.create({
                 body: `Your period is in ${moment(dateTillBleed).diff(todaysDate,'day')} days`,
