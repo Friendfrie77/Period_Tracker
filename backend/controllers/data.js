@@ -53,27 +53,19 @@ const getUserInfo = async (req, res) =>{
 }
 const addNewPeriod = async (req, res) => {
     const {email, startDate, endDate, cycle, avgLength} = req.body;
-    console.log(email, startDate, endDate, cycle, avgLength)
     const user = await User.findOne({email: email});
     try{
-        if(user){
-            console.log(user)
-            user.periodStartDate = moment(startDate).format('YYYY-MM-DD');
-            user.periodEndDate = moment(endDate).format('YYYY-MM-DD');
-            user.avgLength = avgLength;
-            user.cycle = cycle;
-            user.save()
-            res.status(200).json({user})
-        }
+        User.findOneAndUpdate({email:email}, {periodStartDate: moment(startDate).format('YYYY-MM-DD'), periodEndDate: moment(endDate).format('YYYY-MM-DD'), avgLength: avgLength, cycle:cycle}).exec()
+        res.status(200)
     }catch(err){
         res.status(500).json({error : err.messege})
     }
-    res.status(200)
 }
 
 const setPeriodStatus = async (req, res) =>{
     const {email, isBleeding, canBleed} = req.body;
     const user = await User.findOne({email: email});
+    console.log(isBleeding, canBleed)
     if(user){
         if(canBleed != user.canBleed){
             User.findOneAndUpdate({_id:user._id}, {canBleed:canBleed}).exec();
@@ -82,7 +74,7 @@ const setPeriodStatus = async (req, res) =>{
             User.findOneAndUpdate({_id:user._id}, {isBleeding:isBleeding}).exec();
         }
         user.save()
-        res.status(200)
+        res.status(200).json(user)
     }else{
         res.status(500).json({messege: 'Internal Server Error'})
     }
@@ -108,9 +100,10 @@ const updatePeriod = async (req, res) =>{
 
 const addPreviousPeriod = async (req, res) =>{
     const {email, previousPeriod} = req.body;
-    const user = await User.findOne({email: email});
+    console.log(previousPeriod)
     try{
-        user.previousPeriod = previousPeriod;
+        const user = await User.findOneAndUpdate({email: email}, {previousPeriod:previousPeriod}).exec();
+        res.status(200)
     }catch(err){
         res.status(500).json({error: err.messege})
     }
@@ -128,4 +121,14 @@ const removePeriod = async (req, res) =>{
         res.status(500).json({error:err.message})
     }
 }
-module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, setNotificationStatus}
+
+const nullPeriodDates = async (req, res) =>{
+    const {email} = req.body;
+    try{
+        const user = await User.findOneAndUpdate({email:email}, {periodStartDate:null, periodEndDate:null}).exec()
+        console.log(user)
+    }catch(err){
+        res.status(500).json({error:err.message})
+    }
+}
+module.exports = {addNewUserInfo, addNewPeriod,getUserInfo, setPeriodStatus, addPreviousPeriod, updatePeriod, removePeriod, setNotificationStatus, nullPeriodDates}

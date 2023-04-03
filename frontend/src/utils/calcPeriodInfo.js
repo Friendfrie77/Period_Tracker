@@ -32,7 +32,7 @@ function estimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avg
     let endDate;
     let todaysDate = new Date()
     todaysDate = Moment(todaysDate).format()
-    if(!periodStartDate || !periodEndDate){
+    if((!periodStartDate || !periodEndDate) && previousPeriod && cycle && avgLength){
         previousPeriod.forEach(date => {
           if (lastPeriod === null){
             lastPeriod = date.startDate
@@ -58,4 +58,37 @@ function estimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avg
       }
     }
 
-export {avgPeriodLength, estimateDate}
+    function countdownToPeriod(isBleeding, cycle ,startDate, endDate){
+      const daySeconds = 86400;
+      const fiveDays = 432000;
+      let todaysDate = Date.now();
+      if(!isBleeding){
+        const cycleStart = Moment(startDate).subtract(cycle, 'days');
+        const startDay = Moment(startDate).format('YYYY-MM-DD')
+        const endDay = Moment(endDate).format('YYYY-MM-DD')
+        const startTime = new Date(startDay).getTime() / 1000;
+        const endTime = new Date(endDay).getTime() / 1000;
+        const duration = endTime - startTime;
+        const remainingTime = endTime - (todaysDate/1000);
+        return {duration, remainingTime}
+      }else{
+        return false
+      }
+    }
+// function countdownCalc(startDate, endDate){
+//   const daySeconds = 86400;
+//   const fiveDays = 432000;
+//   let todaysDate = Date.now() / 1000;
+//   if(startDate && endDate){
+    // const startDay = Moment(startDate).format('YYYY-MM-DD')
+    // const endDay = Moment(endDate).format('YYYY-MM-DD')
+    // const startTime = new Date(startDay).getTime() / 1000;
+    // const endTime = new Date(endDay).getTime() / 1000;
+    // const duration = endTime - startTime;
+    // const remainingTime = endTime - todaysDate;
+    // return {duration, remainingTime}
+//   }else{
+//     return false
+//   }
+// }
+export {avgPeriodLength, estimateDate, countdownToPeriod}

@@ -15,12 +15,12 @@ const PeriodNotActive = (props) => {
                   endValue = {props.periodEndDate}
             />
           <div className="period-countdown">
-              <h2>Your next period is in</h2>
+              <h2>Your next period is in </h2>
               <Countdown startDate = {props.startDate} endDate = {props.endDate} color1='#40bf32' color2= '#e0e20c' color3= '#FA2C00' ></Countdown>
           </div>
           <div className="check-period">
               <label htmlFor = 'check-period'>Has your period started?</label>
-              <button name='check-period' type='button' onClick={props.onClick}>Yes</button>
+              <button name='check-period' className='button' onClick={props.onClick}>Yes</button>
           </div>
       </section>
       <Footer />
