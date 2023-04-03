@@ -58,22 +58,17 @@ function estimateDate(periodStartDate, periodEndDate, previousPeriod, cycle, avg
       }
     }
 
-    function countdownToPeriod(isBleeding, cycle ,startDate, endDate){
-      const daySeconds = 86400;
-      const fiveDays = 432000;
-      let todaysDate = Date.now();
-      if(!isBleeding){
-        const cycleStart = Moment(startDate).subtract(cycle, 'days');
-        const startDay = Moment(startDate).format('YYYY-MM-DD')
-        const endDay = Moment(endDate).format('YYYY-MM-DD')
-        const startTime = new Date(startDay).getTime() / 1000;
-        const endTime = new Date(endDay).getTime() / 1000;
-        const duration = endTime - startTime;
-        const remainingTime = endTime - (todaysDate/1000);
-        return {duration, remainingTime}
-      }else{
-        return false
-      }
+    function countdownToPeriod(startDate, endDate){
+      // const daySeconds = 86400
+      // const fiveDays = 432000
+      let todaysDate = Date.now() / 1000;
+      const startDay = Moment(startDate).format('YYYY-MM-DD')
+      const endDay = Moment(endDate).format('YYYY-MM-DD')
+      const startTime = new Date(startDay).getTime() / 1000;
+      const endTime = new Date(endDay).getTime() / 1000;
+      const duration = endTime - startTime;
+      const remainingTime = endTime - todaysDate;
+      return{startTime, duration, remainingTime}
     }
 // function countdownCalc(startDate, endDate){
 //   const daySeconds = 86400;

@@ -33,4 +33,12 @@ const removeCurrentDates = async(email, token) =>{
     })
     return user
 }
-  export{sendPeriodStatus, sendUpdatedPeriod, sendPreviousPeriod, removeCurrentDates}
+
+const sendPeriodInfo = async (email, startDate, endDate, cycle, avgLength, token) =>{
+    axios.post(`${process.env.REACT_APP_APIURL}/user/addperiod`, {
+      email, startDate, endDate, cycle, avgLength
+    },{
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+  }
+  export{sendPeriodStatus, sendUpdatedPeriod, sendPreviousPeriod, removeCurrentDates, sendPeriodInfo}

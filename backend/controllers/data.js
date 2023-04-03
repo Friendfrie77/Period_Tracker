@@ -56,7 +56,7 @@ const addNewPeriod = async (req, res) => {
     const user = await User.findOne({email: email});
     try{
         User.findOneAndUpdate({email:email}, {periodStartDate: moment(startDate).format('YYYY-MM-DD'), periodEndDate: moment(endDate).format('YYYY-MM-DD'), avgLength: avgLength, cycle:cycle}).exec()
-        res.status(200)
+        res.status(200).json(user)
     }catch(err){
         res.status(500).json({error : err.messege})
     }
@@ -100,7 +100,6 @@ const updatePeriod = async (req, res) =>{
 
 const addPreviousPeriod = async (req, res) =>{
     const {email, previousPeriod} = req.body;
-    console.log(previousPeriod)
     try{
         const user = await User.findOneAndUpdate({email: email}, {previousPeriod:previousPeriod}).exec();
         res.status(200)
