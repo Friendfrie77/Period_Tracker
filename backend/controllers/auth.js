@@ -6,13 +6,13 @@ const register = async (req, res) => {
     const results = await User.exists({email: email})
     try{
         if (!results){
-            const newUser = new User({email, username ,password, refreshToken: '', cycle: '', 
+            const user = new User({email, username ,password, refreshToken: '', cycle: '', 
             periodStartDate: '', periodEndDate: '', previousPeriod: []});
-            newUser.save(function(err){
+            user.save(function(err){
                 if (err){
                     console.log(err)
                 } else {
-                    delete newUser.password
+                    const newUser = user.sendUserInfo(user)
                     res.status(201).json({newUser})
                 }
             })} 
@@ -24,15 +24,15 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try{
         const {email, password } =req.body
-        User.findOne({email:email}, function(err, user){
+        User.findOne({email:email}, function(err, username){
             if (err){
                 res.status(500).json({error : err.messege})
-            }else if (!user){
+            }else if (!username){
                 res.status(401).json({
                     error: 'Incorrect email or password'
                   });
             }else{
-                user.authPassword(password, function(err, same){
+                username.authPassword(password, function(err, same){
                     if(err){
                         res.status(500).json({
                             error: 'Internal error please try again later'
@@ -42,12 +42,10 @@ const login = async (req, res) => {
                             error: 'Incorrect email or password'
                         });
                     } else{
-                        const userId = {id: user._id};
+                        const userId = {id: username._id};
                         const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
-                        user.accessToken = accessToken
-                        user.save();
-                        delete user.password;
-                        console.log(user)
+                        username.accessToken = accessToken
+                        const user = username.sendUserInfo(username)
                         res.status(200).json({accessToken, user});
                     }
                 })
@@ -82,7 +80,6 @@ const changePassword = async (req, res) =>{
                     error: 'Internal error please try again later'
                 });
             } else if (!same){
-                console.log('not same')
                 res.status(200).json({
                     error: 'Incorrect password'
                 });

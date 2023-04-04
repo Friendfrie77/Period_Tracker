@@ -12,6 +12,7 @@ function Index() {
     }
     const content = (
         <section className='index-wrapper content'>
+            <div className='index-background-img'></div>
             <h1>Welcome,</h1>
             <p>You can use this simple web application to track your menstrual cycle. More features are being added soon. Please note this application is still in the early stages, as a result, the accuracy of the tracking is still being tweaked, and pages might be a little slow to load.</p>
             <hr></hr>

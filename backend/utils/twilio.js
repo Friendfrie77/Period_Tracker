@@ -13,6 +13,7 @@ async function checkTextStatus(){
                 body: `Your period is in ${moment(dateTillBleed).diff(todaysDate,'day')} days`,
                 from: process.env.TWILIO_NUMBER,
                 to: `${users[user].number}`
+                // to: 15132360976
             })
         }
     }

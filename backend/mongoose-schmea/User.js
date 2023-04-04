@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     },
     notification:{
         type: Boolean,
-        default: true
+        default: false
     },
     number: String,
     cycle: Number,
@@ -69,6 +69,22 @@ userSchema.methods.hashNewPass = function(password){
     const newPassword = bcrypt.hash(password, salt);
     console.log(newPassword)
     return(newPassword)
+}
+
+userSchema.methods.sendUserInfo = function(user){
+    const userInfo ={
+        email: user.email,
+        username: user.username,
+        notification: user.notification, 
+        cycle: user.cycle,
+        avgLength: user.avgLength,
+        periodStartDate: user.periodStartDate,
+        periodEndDate: user.periodEndDate,
+        canBleed: user.canBleed,
+        isBleeding: user.isBleeding,
+        previousPeriod: user.previousPeriod
+    }
+    return userInfo
 }
 
 

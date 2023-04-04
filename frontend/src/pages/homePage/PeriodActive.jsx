@@ -8,7 +8,6 @@ const PeriodActive = (props) => {
   const [update, forceUpdate] = useReducer(x => x + 1, 0);
   useEffect(() =>{
     forceUpdate()
-    console.log('active rerender')
   }, [props.startDate, props.endDate, props.periodStartDate, props.periodEndDate])
   // console.log(props.startDate, props.endDate, props.periodStartDate, props.periodEndDate)
   return (

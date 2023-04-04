@@ -41,10 +41,10 @@ const addNewUserInfo = async (req, res) => {
 }
 const getUserInfo = async (req, res) =>{
     const {email} = req.body;
-    const user = await User.findOne({email: email});
+    const userInfo = await User.findOne({email: email});
     try{
-        if(user){
-            delete user.password;
+        if(userInfo){
+            const user = userInfo.sendUserInfo(userInfo)
             res.status(200).json({user})
         }
     }catch(err){
@@ -53,9 +53,10 @@ const getUserInfo = async (req, res) =>{
 }
 const addNewPeriod = async (req, res) => {
     const {email, startDate, endDate, cycle, avgLength} = req.body;
-    const user = await User.findOne({email: email});
     try{
         User.findOneAndUpdate({email:email}, {periodStartDate: moment(startDate).format('YYYY-MM-DD'), periodEndDate: moment(endDate).format('YYYY-MM-DD'), avgLength: avgLength, cycle:cycle}).exec()
+        const userInfo = await User.findOne({email: email});
+        const user = userInfo.sendUserInfo(userInfo)
         res.status(200).json(user)
     }catch(err){
         res.status(500).json({error : err.messege})
@@ -64,16 +65,18 @@ const addNewPeriod = async (req, res) => {
 
 const setPeriodStatus = async (req, res) =>{
     const {email, isBleeding, canBleed} = req.body;
-    const user = await User.findOne({email: email});
-    console.log(isBleeding, canBleed)
-    if(user){
-        if(canBleed != user.canBleed){
-            User.findOneAndUpdate({_id:user._id}, {canBleed:canBleed}).exec();
+    const userInfo = await User.findOne({email: email});
+    if(userInfo){
+        if(canBleed != userInfo.canBleed){
+            User.findOneAndUpdate({email: email}, {canBleed:canBleed}).exec();
         }
-        if(isBleeding != user.isBleeding){
-            User.findOneAndUpdate({_id:user._id}, {isBleeding:isBleeding}).exec();
+        if(isBleeding != userInfo.isBleeding){
+            User.findOneAndUpdate({email: email}, {isBleeding:isBleeding}).exec();
         }
-        user.save()
+        userInfo.isBleeding = isBleeding;
+        userInfo.canBleed = canBleed
+        userInfo.save()
+        const user = userInfo.sendUserInfo(userInfo)
         res.status(200).json(user)
     }else{
         res.status(500).json({messege: 'Internal Server Error'})
@@ -82,16 +85,20 @@ const setPeriodStatus = async (req, res) =>{
 
 const updatePeriod = async (req, res) =>{
     const {email, periodStartDate, periodEndDate} = req.body
-    const user = await User.findOne({email: email});
+    const userInfo = await User.findOne({email: email});
     try{
-        if(user.periodStartDate != periodStartDate){
-            User.findOneAndUpdate({_id:user._id}, {periodStartDate:periodStartDate}).exec();
+        if(userInfo.periodStartDate != periodStartDate){
+            User.findOneAndUpdate({_id:userInfo._id}, {periodStartDate:periodStartDate}).exec();
         }
-        if(user.periodEndDate != periodEndDate){
-            User.findOneAndUpdate({_id:user._id}, {periodEndDate:periodEndDate}).exec();
+        if(userInfo.periodEndDate != periodEndDate){
+            User.findOneAndUpdate({_id:userInfo._id}, {periodEndDate:periodEndDate}).exec();
         }
-        User.findByIdAndUpdate({_id:user._id},{isBleeding:true}).exec();
-        User.findByIdAndUpdate({_id:user._id},{canBleed:false}).exec();
+        User.findByIdAndUpdate({_id:userInfo._id},{isBleeding:true}).exec();
+        User.findByIdAndUpdate({_id:userInfo._id},{canBleed:false}).exec();
+        userInfo.isBleeding = true; 
+        userInfo.canBleed = false;
+        userInfo.save()
+        const user = userInfo.sendUserInfo(userInfo)
         res.status(200).json(user)
     }catch(err){
         res.status(500).json({error: err.messege})
@@ -125,7 +132,6 @@ const nullPeriodDates = async (req, res) =>{
     const {email} = req.body;
     try{
         const user = await User.findOneAndUpdate({email:email}, {periodStartDate:null, periodEndDate:null}).exec()
-        console.log(user)
     }catch(err){
         res.status(500).json({error:err.message})
     }

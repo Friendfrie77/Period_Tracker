@@ -1,16 +1,12 @@
 import Datestrip from './Datestrip';
 import { useDispatch,useSelector } from 'react-redux';
+import Spinner from './Spinner';
 
 const Test = () => {    
   const periodEndDate = useSelector((state) => state.periodEndDate)
   const periodStartDate = useSelector((state) => state.periodStartDate)
     const calendar = (
-      <div className='page-wrapper'>
-            <Datestrip
-                startValue = {periodStartDate}
-                endValue = {periodEndDate}
-            />
-      </div>
+      <Spinner />
     )
     return calendar
 }

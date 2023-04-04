@@ -9,3 +9,13 @@
         font-size: inherit;
     }
 }
+
+.index-background-img{
+    position: absolute;
+    background-image: url('../images/logo.svg');
+    background-repeat: no-repeat;
+    min-height: 30%;
+    width: 30%;
+    opacity: .4;
+    left: 80%;
+}
