@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const schedule = require('node-schedule')
 const corsOptions = require ('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const db = require('./config/dbConn');
@@ -29,7 +30,14 @@ app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 
 // data.checkTextStatus()
-utils.checkTextStatus()
+// utils.checkTextStatus('5 13 * * * *', function(){
+//   console.log('test')
+// })
+schedule.scheduleJob('30 14 * * *', function(){
+  utils.checkTextStatus()
+  console.log('done')
+})
+
 
 app.listen(PORT, () =>{
   console.log(`Listening at http://localhost:${PORT}`)

@@ -15,6 +15,7 @@ import DeleteAccout from './DeleteAccout';
 import ChangePassword from './ChangePassword';
 import Notication from './Notication';
 import Settings from './Settings';
+import { passwordRegex } from '../../utils/password-regex';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -91,15 +92,18 @@ const Proflie = () => {
     }
   }
   const changePassword = () =>{
-    if (newPassword == confirmNewPassword){
-      axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
-        email, oldPassword, newPassword
-      },{
-        headers: {'Authorization': `Bearer ${token}`},
-      })
-    }else(
-      setErrorMsg('New passwords do not match')
-    )
+    const test = passwordRegex(newPassword, confirmNewPassword)
+    setErrorMsg(test.msg)
+    console.log(erroMsg)
+    // if (newPassword == confirmNewPassword ){
+    //   axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+    //     email, oldPassword, newPassword
+    //   },{
+    //     headers: {'Authorization': `Bearer ${token}`},
+    //   })
+    // }else(
+    //   setErrorMsg('New passwords do not match')
+    // )
   }
   useEffect(() =>{
     checkUserInfo()
@@ -129,7 +133,7 @@ const Proflie = () => {
          <PageFade content= {<Notication close ={noticationBox} />} />
         }
         {showPasswordChange &&
-          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange}/> } />
+          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange}/>} />
         }
       </section>
       <Footer />

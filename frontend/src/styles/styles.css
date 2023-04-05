@@ -1120,13 +1120,14 @@ h1, h2, h3, h4 {
 }
 
 .index-background-img {
-  position: absolute;
+  position: relative;
   background-image: url("../images/logo.svg");
   background-repeat: no-repeat;
   min-height: 30%;
-  width: 30%;
+  width: 20%;
+  height: auto;
   opacity: 0.4;
-  left: 80%;
+  left: 0%;
 }
 
 .username-input, .password-input, .email-input {
