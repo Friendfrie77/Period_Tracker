@@ -8,12 +8,13 @@ import { setLogin } from '../../state';
 import Spinner from '../../components/Spinner';
 import { useSelector } from "react-redux";
 import {AiOutlineClose} from 'react-icons/ai'
+import { invalid } from 'moment';
 function Login(props){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [errormsg, setError] = useState()
-    const [regError, setRegError] = useState("");
+    const [regError, setRegError] = useState();
     async function onSubmit(values){
         setLoading(true)
         let email = values.email
@@ -23,7 +24,6 @@ function Login(props){
         }).catch(function (error){
             if(error.response){
                 setError(error.response.data.error)
-                console.log(error.response.data.error)
             }
             setLoading(false)
         });
@@ -65,7 +65,7 @@ function Login(props){
                 render = {({handleSubmit, form, submitting, pristine, values}) =>(
                     <form onSubmit={handleSubmit}>
                         <h1>Sign In</h1>
-                        <span className='message'>{errormsg}</span>
+                        <span className='message warning'>{errormsg}</span>
                         <Field name='email'>
                             {({input, meta})=> (
                             <div className='email-input'>
@@ -73,7 +73,7 @@ function Login(props){
                                 <label htmlFor='email' className='login-lable'>
                                     <span className='login-span'>Email<small>*</small></span>
                                 </label>
-                                {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                                {meta.error && meta.touched && setError('Invaild email')}
                             </div>
                             )}
                         </Field>
@@ -84,7 +84,7 @@ function Login(props){
                                     <label htmlFor='password' className='login-lable'>
                                         <span className='login-span'>Password<small>*</small></span>
                                     </label>
-                                    {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                                    {meta.error && meta.touched && setError('Required')}
                                 </div>
                             )}
                         </Field>

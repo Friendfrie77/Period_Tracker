@@ -1,60 +1,14 @@
 import {Form, Field} from 'react-final-form';
-import {useNavigate} from 'react-router-dom';
-import {useState} from 'react';
-import axios from 'axios'
-import { setLogin } from '../../state';
-import { useDispatch } from 'react-redux';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
+import {passwordRegex} from '../../utils/password-regex';
 
 export default function SignUp(props){
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [err, setErrMsg] = useState();
-    const [loading, setLoading] = useState(false);
-    const onSubmit = async (values) =>{
-        let email = values.email
-        let username = values.username
-        let password = values.password
-        setLoading(true)
-        try{
-            const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
-                email, username, password
-            })
-            const result = await results
-            if (result){
-                const login = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
-                    email, password
-            });
-            const user = await login
-            if (user){
-                dispatch(
-                    setLogin({
-                        user: user.data.user.username,
-                        email: user.data.user.email,
-                        token: user.data.accessToken,
-                        cycle: user.data.user.cycle,
-                        avgLength: user.data.avgLength,
-                        periodStartDate: user.data.user.periodStartDate,
-                        periodEndDate: user.data.user.periodEndDate,
-                        previousPeriod: user.data.user.previousPeriod,
-                        isBleeding: user.data.user.isBleeding,
-                        canBleed: user.data.user.canBleed,
-                        notification: user.data.user.notification
-                    })
-                  );
-                  navigate('/AccountSetup')
-                }
-            }
-        }catch(err){
-            setErrMsg(err)
-        }
-    }
-    const content = loading ? <Spinner /> : (
+    const content = props.loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
-             onSubmit={onSubmit}
+             onSubmit={props.onSubmit}
              validate = {values => {
                 const errors = {}
                 if (!values.email){
@@ -68,15 +22,19 @@ export default function SignUp(props){
                 }
                 if (!values.passwordconfirm){
                     errors.passwordconfirm = 'Required'
-                }else if (values.password !== values.passwordconfirm){
-                    errors.passwordconfirm = 'Must match'
+                } else{
+                    const regex = passwordRegex(values.password, values.passwordconfirm)
+                    if(!regex.isvaild){
+                        props.setErr(regex.msg)
+                    }
                 }
                 return errors
              }}
              render = {({handleSubmit, form, submitting, pristine, values}) =>(
                 <form onSubmit={handleSubmit}>
+                    <span className='message-warning'>{props.err}</span>
                     <h1>Sign Up</h1>
-                    <Field name='email' >
+                    <Field name='email'>
                         {({input, meta}) => (
                         <div className='email-input'>
                             <input {...input} type= 'email' required/>

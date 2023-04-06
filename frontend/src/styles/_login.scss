@@ -2,7 +2,7 @@
     width: 95%;
     position: relative;
     height: 2.5rem;
-    overflow: hidden;
+    // overflow: hidden;
     margin-bottom: 2.2rem;
     input{
         background-color: $login-input-background;
@@ -29,6 +29,7 @@
             position: absolute;
             height: 100%;
             width: 100%;
+            opacity: 0%;
             border-bottom: 3px solid $color6;
             left: 0px;
             bottom: -1;
@@ -43,9 +44,14 @@
     }
     .error{
         position: absolute;
-        top: 0px;
-        left: 100px;
-        color: palegreen;
+        z-index: 10;
+        left: 0%;
+        bottom: 100%;
+        color: red;
+        font-size: var(--fs-cal);
+    }
+    @include for-size(phone-only){
+        width: 100%;
     }
 }
 

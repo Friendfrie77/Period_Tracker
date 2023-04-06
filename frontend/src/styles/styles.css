@@ -787,6 +787,14 @@ h1, h2, h3, h4 {
   font-family: "Varela_Round", Sans-Serif;
 }
 
+.message-warning {
+  color: red !important;
+}
+
+.warning {
+  color: red !important;
+}
+
 .button {
   margin-top: 16px;
   width: 125px;
@@ -973,6 +981,7 @@ h1, h2, h3, h4 {
   flex-direction: column;
   align-items: center;
   grid-area: 3/2/3/6;
+  width: 100%;
 }
 @media (max-width: 535px) {
   .login-wrapper form {
@@ -1005,6 +1014,11 @@ h1, h2, h3, h4 {
   background-color: #241E4E;
   height: 2px;
   border: none;
+}
+@media (max-width: 425px) {
+  .login-wrapper {
+    width: 100%;
+  }
 }
 
 .setup-wrapper {
@@ -1134,7 +1148,6 @@ h1, h2, h3, h4 {
   width: 95%;
   position: relative;
   height: 2.5rem;
-  overflow: hidden;
   margin-bottom: 2.2rem;
 }
 .username-input input, .password-input input, .email-input input {
@@ -1163,6 +1176,7 @@ h1, h2, h3, h4 {
   position: absolute;
   height: 100%;
   width: 100%;
+  opacity: 0%;
   border-bottom: 3px solid #5CFFC9;
   left: 0px;
   bottom: -1;
@@ -1176,9 +1190,16 @@ h1, h2, h3, h4 {
 }
 .username-input .error, .password-input .error, .email-input .error {
   position: absolute;
-  top: 0px;
-  left: 100px;
-  color: palegreen;
+  z-index: 10;
+  left: 0%;
+  bottom: 100%;
+  color: red;
+  font-size: var(--fs-cal);
+}
+@media (max-width: 425px) {
+  .username-input, .password-input, .email-input {
+    width: 100%;
+  }
 }
 
 .remember-me {
@@ -1627,7 +1648,7 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
 }
 .password-change .password-input {
   margin: 1rem auto;
@@ -2116,6 +2137,7 @@ h1, h2, h3, h4 {
 
 .username-input input:focus + .login-lable:after, .username-input input:valid + .login-lable:after {
   translate: 100%;
+  opacity: 100%;
 }
 
 .password-input input:focus + .login-lable .login-span, .password-input input:valid + .login-lable .login-span {
@@ -2126,6 +2148,7 @@ h1, h2, h3, h4 {
 
 .password-input input:focus + .login-lable:after, .password-input input:valid + .login-lable:after {
   translate: 100%;
+  opacity: 100%;
 }
 
 .email-input input:focus + .login-lable .login-span, .email-input input:valid + .login-lable .login-span {
@@ -2136,6 +2159,7 @@ h1, h2, h3, h4 {
 
 .email-input input:focus + .login-lable:after, .email-input input:valid + .login-lable:after {
   translate: 100%;
+  opacity: 100%;
 }
 
 @keyframes pagefade {

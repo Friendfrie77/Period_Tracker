@@ -4,8 +4,12 @@ const User = require('../mongoose-schmea/User');
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
+    console.log(results)
     try{
-        if (!results){
+        if(results){
+            console.log('aaa')
+            res.status(401).json({msg:'User already exists'})
+        }else{
             const user = new User({email, username ,password, refreshToken: '', cycle: '', 
             periodStartDate: '', periodEndDate: '', previousPeriod: []});
             user.save(function(err){
@@ -15,7 +19,7 @@ const register = async (req, res) => {
                     const newUser = user.sendUserInfo(user)
                     res.status(201).json({newUser})
                 }
-            })} 
+            })}
     }catch (err){
         res.status(500).json({error : err.messege})
     }

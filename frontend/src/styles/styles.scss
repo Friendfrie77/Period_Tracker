@@ -90,7 +90,13 @@ p, span, button, a, label, select, ul, li{
 h1, h2, h3, h4{
     font-family: $Header-Font;
 }
+.message-warning{
+    color: red !important;
 
+}
+.warning{
+    color: red !important;
+}
 .button{
     margin-top: 16px;
     width: 125px;

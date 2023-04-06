@@ -27,18 +27,23 @@ function PeriodInfo() {
   const optionChange = (event) =>{
     setRemove(event.target.value)
   }
+
   const removePeriod = async () =>{
-    const res =  await axios.post(`${process.env.REACT_APP_APIURL}/user/removePeriod`,{
-      email, removeDate},{
-        headers: {'Authorization': `Bearer ${token}`},
-      })
-      if (res.status === 201){
-        dispatch(
-          setPeriod({
-            previousPeriod: res.data.previousPeriod
-          })
-        )
-        setMessage(res.data.message)
+    if (!removeDate){
+      setMessage('Please select a date')
+    }else{
+      const res =  await axios.post(`${process.env.REACT_APP_APIURL}/user/removePeriod`,{
+        email, removeDate},{
+          headers: {'Authorization': `Bearer ${token}`},
+        })
+        if (res.status === 201){
+          dispatch(
+            setPeriod({
+              previousPeriod: res.data.previousPeriod
+            })
+          )
+          setMessage(res.data.message)
+        }
       }
     }
     const userData = (date) =>{

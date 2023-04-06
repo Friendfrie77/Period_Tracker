@@ -48,7 +48,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 50%;
+    width: 100%;
     .password-input{
         margin: $box-padding auto;
     }
@@ -57,7 +57,6 @@
     }
 }
 .delete-account{
-
     .email-input{
         margin-bottom: $box-padding !important;
         width: 40%;

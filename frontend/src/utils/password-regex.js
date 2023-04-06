@@ -5,9 +5,11 @@ function passwordRegex (newPassword, confirmNewPassword){
         }else if(newPassword.search(/[a-z]/i) < 0){
             return ({isvaild:false, msg: 'Password must contain at least one letter'})
         }else if(newPassword.search(/[0-9]/i) < 0){
-            return ({isvaild:false, msg: 'Password must contain at least one numer'})
+            return ({isvaild:false, msg: 'Password must contain at least one number'})
         }else if(newPassword.search(/^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/i) < 0){
             return ({isvaild:false, msg: 'Password must contain at least one special symbol'})
+        }else{
+            return true
         }
     }else{
         return ({isvaild:false, msg: 'New passwords do not match'})
