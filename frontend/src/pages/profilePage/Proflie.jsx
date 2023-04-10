@@ -92,18 +92,16 @@ const Proflie = () => {
     }
   }
   const changePassword = () =>{
-    const test = passwordRegex(newPassword, confirmNewPassword)
-    setErrorMsg(test.msg)
-    console.log(erroMsg)
-    // if (newPassword == confirmNewPassword ){
-    //   axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
-    //     email, oldPassword, newPassword
-    //   },{
-    //     headers: {'Authorization': `Bearer ${token}`},
-    //   })
-    // }else(
-    //   setErrorMsg('New passwords do not match')
-    // )
+    const regex = passwordRegex(newPassword, confirmNewPassword)
+    if (!regex.isvaild){
+      setErrorMsg(regex.msg)
+    }else{
+      axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+        email, oldPassword, newPassword
+      },{
+        headers: {'Authorization': `Bearer ${token}`},
+      })
+    }
   }
   useEffect(() =>{
     checkUserInfo()

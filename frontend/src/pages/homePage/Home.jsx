@@ -77,33 +77,29 @@ const Home = () => {
 const periodStarted = async () =>{
   if (Moment(periodStartDate).format('YYYY-MM-DD') != todaysDate){
     const newEndDate = Moment(todaysDate).add(avgLength, 'days').format('YYYY-MM-DD')
-    const update = sendUpdatedPeriod(email, todaysDate, newEndDate, token)
-    const bloodGod = await update
-    dispatch(
-      setCanBleed({
-        canBleed: bloodGod.data.canBleed
-      })
-    )
-    dispatch(
-      setIsBleeding({
-        isBleeding: bloodGod.data.isBleeding
-      })
-    )
-    setBleeding(true)
-  }else{
-    const update = sendUpdatedPeriod(email, periodStartDate, periodEndDate, token)
-    const bloodGod = await update
-    dispatch(
-      setCanBleed({
-        canBleed: bloodGod.data.canBleed
-      })
-    )
-    dispatch(
-      setIsBleeding({
-        isBleeding: bloodGod.data.isBleeding
-      })
-    )
-    setBleeding(true)
+    if(!(email == 'test@test.com')){
+      const update = sendUpdatedPeriod(email, todaysDate, newEndDate, token)
+      const bloodGod = await update
+      dispatch(
+        setCanBleed({
+          canBleed: bloodGod.data.canBleed
+        })
+      )
+      dispatch(
+        setIsBleeding({
+          isBleeding: bloodGod.data.isBleeding
+        })
+      )
+      setBleeding(true)
+    }else{
+      dispatch(
+        setNewPeriod({
+          periodStartDate: todaysDate,
+          periodEndDate: newEndDate
+        })
+      )
+      setBleeding(true)
+    }
   }
 }
 
