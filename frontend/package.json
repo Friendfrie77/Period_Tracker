@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "env-cmd -f .env.development react-scripts start",
-    "build": "env-cmd react-scripts build",
+    "build": "eact-scripts build",
     "test": "env-cmd -f .env.production react-scripts test",
     "eject": "react-scripts eject"
   },
