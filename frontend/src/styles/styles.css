@@ -2342,7 +2342,7 @@ nav {
     opacity: 1;
     transition: cubic-bezier(0.23, 1, 0.32, 1) 0.35s;
     background-color: #5C0F47;
-    overflow-y: scroll;
+    overflow-y: hidden;
     z-index: 101;
     -webkit-overflow-scrolling: touch;
   }
