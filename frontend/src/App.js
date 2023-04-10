@@ -6,7 +6,7 @@ import Index from './pages/index/Index'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
-import Test from "./components/Test";
+
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
     const newAccount = useSelector((state) => state.previousPeriod);
@@ -28,7 +28,6 @@ function App() {
                 <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />
                 <Route path='/periodinfo' element={isAuth ? <PeriodInfo /> : <Navigate to='/' />} />
                 <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>
-                <Route path='/Test1' element= {<Test />} />
             </Routes>
         </BrowserRouter>
 );
