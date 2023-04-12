@@ -941,7 +941,7 @@ h1, h2, h3, h4 {
 }
 .index-wrapper h1 {
   color: #EAE8FF;
-  font-size: var(--fs-header);
+  font-size: var(--fs-subheader);
 }
 .index-wrapper p, .index-wrapper span {
   color: #EAE8FF;
@@ -1134,14 +1134,16 @@ h1, h2, h3, h4 {
 }
 
 .index-background-img {
-  position: relative;
-  background-image: url("../images/logo.svg");
-  background-repeat: no-repeat;
-  min-height: 30%;
-  width: 20%;
-  height: auto;
-  opacity: 0.4;
-  left: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo-text {
+  color: #EAE8FF !important;
+  text-shadow: #5CFFC9 0px 0px 3px;
+  font-size: var(--fs-welcome) !important;
 }
 
 .username-input, .password-input, .email-input {

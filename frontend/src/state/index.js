@@ -14,8 +14,7 @@ const initialState = {
     daysleft: null,
     previousPeriod: [{
         startDate: null,
-        endDate: null,
-        count: null
+        endDate: null
     }],
     notification: false,
 };
@@ -77,6 +76,10 @@ export const authSlice = createSlice({
         setIsBleeding: (state, action) =>{
             state.isBleeding = action.payload.isBleeding;
         },
+        setPeriodStatus: (state, action) =>{
+            state.canBleed = action.payload.canBleed;
+            state.isBleeding = action.payload.isBleeding;
+        },
         setDays: (state, action) =>{
             state.daysleft = action.payload.daysleft;
         },
@@ -86,6 +89,6 @@ export const authSlice = createSlice({
     }
 })
 
-export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setDays, setNotificationStatus} = authSlice.actions;
+export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setPeriodStatus, setDays, setNotificationStatus} = authSlice.actions;
 
 export default authSlice.reducer;

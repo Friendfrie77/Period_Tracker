@@ -1,8 +1,7 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState} from "react";
 import { useDispatch,useSelector } from 'react-redux';
-import { setCycle, setIsBleeding, setNewPeriod, setUserInfo, setCanBleed, setPeriod} from '../../state';
+import { setCycle, setIsBleeding, setNewPeriod, setUserInfo, setCanBleed, setPeriod, setPeriodStatus} from '../../state';
 import Moment from 'moment';
-import axios from "axios";
 import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
@@ -15,16 +14,15 @@ const Home = () => {
   const dispatch = useDispatch();
   const cycle = useSelector((state) => state.cycle)
   const userName = useSelector((state) => state.user)
-  const previousPeriod = useSelector((state) => state.previousPeriod)
   const periodEndDate = useSelector((state) => state.periodEndDate)
   const periodStartDate = useSelector((state) => state.periodStartDate)
   const avgLength = useSelector((state) => state.avgLength)
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
+  const previousPeriod= useSelector((state) => state.previousPeriod)
   const [isBleeding, setBleeding] = useState(useSelector((state) => state.isBleeding))
-  const canBleed = useSelector((state) => state.canBleed)
+  const [canBleed, setBleed] = useState(useSelector((state) => state.canBleed))
   const [needInfo, setInfo] = useState(true)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
   let todaysDate = new Date()
   todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
@@ -40,6 +38,7 @@ const Home = () => {
       })
     )
     const avgLengths = await avgPeriodLength(previousPeriod)
+    console.log(avgLength)
     if (avgLengths){
       const cycle = avgLengths.cycle;
       const avgLength = avgLengths.avgLength
@@ -65,7 +64,7 @@ const Home = () => {
       }
     }
     setInfo(false)
-    if (Moment(periodStartDate).format('YYYY-MM-DD') == todaysDate || Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate && !isBleeding){
+    if ((Moment(periodStartDate).format('YYYY-MM-DD') === todaysDate) || (Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate && !isBleeding)){
       dispatch(
         setCanBleed({
           canBleed: true
@@ -75,36 +74,32 @@ const Home = () => {
   }
 
 const periodStarted = async () =>{
-  if (Moment(periodStartDate).format('YYYY-MM-DD') != todaysDate){
+  if (Moment(periodStartDate).format('YYYY-MM-DD') !== todaysDate){
     const newEndDate = Moment(todaysDate).add(avgLength, 'days').format('YYYY-MM-DD')
-    if(!(email == 'test@test.com')){
-      const update = sendUpdatedPeriod(email, todaysDate, newEndDate, token)
-      const bloodGod = await update
-      dispatch(
-        setCanBleed({
-          canBleed: bloodGod.data.canBleed
-        })
-      )
-      dispatch(
-        setIsBleeding({
-          isBleeding: bloodGod.data.isBleeding
-        })
-      )
-      setBleeding(true)
+    const update = sendUpdatedPeriod(email, todaysDate, newEndDate, token)
+    const bloodGod = await update
+    dispatch(
+      setPeriodStatus({
+        canBleed: bloodGod.canBleed,
+        isBleeding: bloodGod.isBleeding,
+      })
+    )
+    setBleeding(true)
     }else{
+      const update = sendPeriodStatus(email, true, false, token)
+      const bloodGod = await update;
       dispatch(
-        setNewPeriod({
-          periodStartDate: todaysDate,
-          periodEndDate: newEndDate
+        setPeriodStatus({
+          canBleed: bloodGod.canBleed,
+          isBleeding: bloodGod.isBleeding,
         })
       )
       setBleeding(true)
     }
-  }
 }
 
 const periodEnded = async () =>{
-  if (periodEndDate != todaysDate){
+  if (periodEndDate !== todaysDate){
     dispatch(
       setPeriod({
         previousPeriod: [...previousPeriod,
@@ -117,6 +112,8 @@ const periodEnded = async () =>{
         isBleeding: false
       })
     )
+    const newDates = {startDate: periodStartDate, endDate: todaysDate};
+    sendPreviousPeriod(email, newDates, token)
   }else{
     dispatch(
       setPeriod({
@@ -130,15 +127,14 @@ const periodEnded = async () =>{
         isBleeding: false
       })
     )
+    const newDates = {startDate: periodStartDate, endDate: periodEndDate}
+    sendPreviousPeriod(email, newDates, token)
   }
-  sendPeriodStatus(email, false, canBleed, token)
-  removeCurrentDates(email, token)
-  setBleeding(false)
+  sendPeriodStatus(email, false, canBleed, token);
+  removeCurrentDates(email, token);
+  setBleeding(false);
 }
-const test = () =>{
-  console.log('test')
-  window.location.reload(true)
-}
+
 useEffect(()=>{
   setUser()
 },[isBleeding, periodStartDate])  

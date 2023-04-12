@@ -4,6 +4,7 @@ import SignUp from '../signupPage/SignUp';
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import logo from '../../images/logo.svg';
 function Index() {
     const [loginOpen, setLogin] = useState(false)
     const [newAccount, setAccount] = useState(false)
@@ -64,7 +65,11 @@ function Index() {
 
     const content = (
         <section className='index-wrapper content'>
-            <div className='index-background-img'></div>
+            <div className='index-background-img'>
+                <h1 className='logo-text'>Simple</h1>
+                <img src={logo} width='200px' height='auto' />
+                <h2 className='logo-text'>Tracker</h2>
+            </div>
             <h1>Welcome,</h1>
             <p>You can use this simple web application to track your menstrual cycle. More features are being added soon. Please note this application is still in the early stages, as a result, the accuracy of the tracking is still being tweaked, and pages might be a little slow to load.</p>
             <hr></hr>

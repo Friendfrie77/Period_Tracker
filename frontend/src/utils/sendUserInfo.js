@@ -17,9 +17,9 @@ const user = axios.post(`${process.env.REACT_APP_APIURL}/user/updateperiod`, {
 return user
 }
 
-const sendPreviousPeriod = async (email, previousPeriod, token) => {
+const sendPreviousPeriod = async (email, newDates, token) => {
 axios.post(`${process.env.REACT_APP_APIURL}/user/addpreviousperiod`, {
-    email, previousPeriod
+    email, newDates
 },{
     headers: {'Authorization': `Bearer ${token}`},
 })

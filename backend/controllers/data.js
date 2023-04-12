@@ -106,10 +106,10 @@ const updatePeriod = async (req, res) =>{
 }
 
 const addPreviousPeriod = async (req, res) =>{
-    const {email, previousPeriod} = req.body;
+    const {email, newDates} = req.body;
     try{
-        const user = await User.findOneAndUpdate({email: email}, {previousPeriod:previousPeriod}).exec();
-        res.status(200)
+        const user = await User.findOne({email: email});
+        User.findOneAndUpdate({email: email}, {previousPeriod: [...user.previousPeriod, {...newDates}]}).exec();
     }catch(err){
         res.status(500).json({error: err.messege})
     }

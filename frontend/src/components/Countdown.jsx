@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState} from 'react';
 import Moment from 'moment';
 import { CountdownCircleTimer} from "react-countdown-circle-timer";
 
@@ -11,16 +10,15 @@ const renderTime = (dimension, time) =>{
     )
 }
 const Countdown = (props) => {
-    const [update, forceUpdate] = useReducer(x => x + 1, 0);
-    const getTime = (time) =>Math.ceil((time / daySeconds));
+    const [timerKey, setTimerKey] = useState(0)
+    const getTime = (time) => Math.ceil((time / daySeconds));
     const daySeconds = 86400
-    const startDate = Moment(props.startDate).format('YYYY-MM-DD')
-    const endDate = Moment(props.endDate).format('YYYY-MM-DD')
     let todaysDate = Date.now() / 1000;
-    const startTime = new Date(startDate).getTime() / 1000;
-    const endTime = new Date(endDate).getTime() / 1000;
+    const startTime = new Date(props.startDate).getTime() / 1000;
+    const endTime = new Date(props.endDate).getTime() / 1000;
     const duration = endTime - startTime;
-    const remainingTime = (endTime - todaysDate);
+    const remainingTime = Math.ceil(endTime - todaysDate);
+    console.log(remainingTime)
     const half = (duration/2)
     const quarter = (duration/4)
     const timerProps = {
@@ -28,10 +26,14 @@ const Countdown = (props) => {
     size: 500,
     strokeWidth: 10,
     };
+    useEffect(() =>{
+        setTimerKey(prev => prev + 1)
+    },[props.endDate])
   return (
     <div className='countdown-timer'>
         <CountdownCircleTimer
               {...timerProps}
+              key= {timerKey}
               colors={[props.color1, props.color2, props.color3, props.color3]}
               colorsTime={[duration , half, quarter, 0]}
               duration={duration}
