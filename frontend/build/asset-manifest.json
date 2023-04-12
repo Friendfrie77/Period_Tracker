@@ -1,25 +1,22 @@
 {
   "files": {
-    "main.css": "/static/css/main.34818886.chunk.css",
-    "main.js": "/static/js/main.d2af95ed.chunk.js",
-    "main.js.map": "/static/js/main.d2af95ed.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c02035dc.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c02035dc.js.map",
-    "static/css/2.666db0df.chunk.css": "/static/css/2.666db0df.chunk.css",
-    "static/js/2.d352997d.chunk.js": "/static/js/2.d352997d.chunk.js",
-    "static/js/2.d352997d.chunk.js.map": "/static/js/2.d352997d.chunk.js.map",
+    "main.css": "/static/css/main.0c6900d4.css",
+    "main.js": "/static/js/main.3d652568.js",
+    "static/media/VarelaRound-Regular.ttf": "/static/media/VarelaRound-Regular.6b0ad79431843e696f58.ttf",
+    "static/media/Comfortaa-Light.ttf": "/static/media/Comfortaa-Light.2d79c8b673318d831c9b.ttf",
+    "static/media/bebas-neue-v9-latin-regular.ttf": "/static/media/bebas-neue-v9-latin-regular.0ff2d56b1f45e08ee26b.ttf",
+    "static/media/bebas-neue-v9-latin-regular.woff": "/static/media/bebas-neue-v9-latin-regular.b2c51ea5356cf5a381c7.woff",
+    "static/media/bebas-neue-v9-latin-regular.eot": "/static/media/bebas-neue-v9-latin-regular.eba3d8e796ef0d4c6528.eot",
+    "static/media/bebas-neue-v9-latin-regular.woff2": "/static/media/bebas-neue-v9-latin-regular.2722c396c28250094a8c.woff2",
+    "static/media/logo2.svg": "/static/media/logo2.18d8e11e495e95aa96dd895dedef1eac.svg",
+    "static/media/logo.svg": "/static/media/logo.8824417b5e8a12196ca1943f20d84a89.svg",
+    "static/media/loading-background.svg": "/static/media/loading-background.0bd22d56c91b4c910feb.svg",
     "index.html": "/index.html",
-    "static/css/2.666db0df.chunk.css.map": "/static/css/2.666db0df.chunk.css.map",
-    "static/css/main.34818886.chunk.css.map": "/static/css/main.34818886.chunk.css.map",
-    "static/js/2.d352997d.chunk.js.LICENSE.txt": "/static/js/2.d352997d.chunk.js.LICENSE.txt",
-    "static/media/styles.css": "/static/media/logo.8824417b.svg",
-    "static/media/logo2.18d8e11e.svg": "/static/media/logo2.18d8e11e.svg"
+    "main.0c6900d4.css.map": "/static/css/main.0c6900d4.css.map",
+    "main.3d652568.js.map": "/static/js/main.3d652568.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.c02035dc.js",
-    "static/css/2.666db0df.chunk.css",
-    "static/js/2.d352997d.chunk.js",
-    "static/css/main.34818886.chunk.css",
-    "static/js/main.d2af95ed.chunk.js"
+    "static/css/main.0c6900d4.css",
+    "static/js/main.3d652568.js"
   ]
 }
