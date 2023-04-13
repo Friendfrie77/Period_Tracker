@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.0c6900d4.css",
-    "main.js": "/static/js/main.3d652568.js",
+    "main.css": "/static/css/main.797e0730.css",
+    "main.js": "/static/js/main.fd800dad.js",
     "static/media/VarelaRound-Regular.ttf": "/static/media/VarelaRound-Regular.6b0ad79431843e696f58.ttf",
     "static/media/Comfortaa-Light.ttf": "/static/media/Comfortaa-Light.2d79c8b673318d831c9b.ttf",
     "static/media/bebas-neue-v9-latin-regular.ttf": "/static/media/bebas-neue-v9-latin-regular.0ff2d56b1f45e08ee26b.ttf",
@@ -12,11 +12,11 @@
     "static/media/logo.svg": "/static/media/logo.8824417b5e8a12196ca1943f20d84a89.svg",
     "static/media/loading-background.svg": "/static/media/loading-background.0bd22d56c91b4c910feb.svg",
     "index.html": "/index.html",
-    "main.0c6900d4.css.map": "/static/css/main.0c6900d4.css.map",
-    "main.3d652568.js.map": "/static/js/main.3d652568.js.map"
+    "main.797e0730.css.map": "/static/css/main.797e0730.css.map",
+    "main.fd800dad.js.map": "/static/js/main.fd800dad.js.map"
   },
   "entrypoints": [
-    "static/css/main.0c6900d4.css",
-    "static/js/main.3d652568.js"
+    "static/css/main.797e0730.css",
+    "static/js/main.fd800dad.js"
   ]
 }
