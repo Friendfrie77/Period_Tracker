@@ -22,7 +22,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/accountsetup' element={ <AccountSetup/>} />
+                <Route path='/accountsetup' element={ isAuth ? <AccountSetup/> : <Navigate to='/' />} />
                 <Route path='/signup' element={<SignupForm />} />
                 <Route path='/' element={<Index />} />
                 <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />

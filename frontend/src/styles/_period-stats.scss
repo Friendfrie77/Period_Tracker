@@ -1,0 +1,18 @@
+.on-page-stats{
+    display: flex;
+    flex-direction: column;
+    background-color: $color2;
+    align-self: center;
+    margin-bottom: 1rem;
+    color:$textcolor;
+    padding: $box-padding;
+    border-radius: $radius;
+    padding: 1rem;
+    text-align: center;
+    h3{
+        font-size: var(--fs-subheader);
+    }
+    span{
+        font-size: var(--fs-body);
+    }
+}

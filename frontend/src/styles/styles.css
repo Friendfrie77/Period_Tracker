@@ -1680,7 +1680,7 @@ h1, h2, h3, h4 {
 
 .profile-cal {
   max-height: 1000px;
-  min-height: 400px;
+  min-height: 500px;
   height: 100%;
   position: relative;
   padding: 1rem;
@@ -2359,6 +2359,10 @@ nav {
   color: #EAE8FF;
 }
 
+.nav-item:nth-of-type(4) {
+  justify-self: end;
+}
+
 .mobile-nav-container {
   display: none;
   height: 100%;
@@ -2448,12 +2452,15 @@ footer a {
 
 .horizontal-date-picker {
   height: 100px;
-  max-width: 100%;
-  width: 100vw;
+  max-width: 95vw;
+  display: flex;
+  justify-self: center;
+  align-self: center;
 }
 
 .dM {
   height: 100%;
+  width: 100%;
   padding: 0px !important;
 }
 
@@ -2541,4 +2548,23 @@ footer a {
 .react-tel-input .form-control {
   font-size: var(--fs-body) !important;
   font-family: "Varela_Round", Sans-Serif !important;
+}
+
+.on-page-stats {
+  display: flex;
+  flex-direction: column;
+  background-color: #241E4E;
+  align-self: center;
+  margin-bottom: 1rem;
+  color: #EAE8FF;
+  padding: 1rem;
+  border-radius: 5px;
+  padding: 1rem;
+  text-align: center;
+}
+.on-page-stats h3 {
+  font-size: var(--fs-subheader);
+}
+.on-page-stats span {
+  font-size: var(--fs-body);
 }/*# sourceMappingURL=styles.css.map */

@@ -6,8 +6,7 @@ import Moment from 'moment';
 import {setPeriod} from '../../state';
 import { useSelector } from "react-redux";
 import axios from 'axios';
-import Spinner from '../../components/Spinner'
-import Waves from '../../components/Waves'
+import Spinner from '../../components/Spinner';
 
 
 const AccountSetup = () => {

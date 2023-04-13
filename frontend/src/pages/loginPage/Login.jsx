@@ -28,6 +28,7 @@ function Login(props){
             setLoading(false)
         });
         const user = await loginTry
+        console.log(user)
         if (user){
             dispatch(
                 setLogin({

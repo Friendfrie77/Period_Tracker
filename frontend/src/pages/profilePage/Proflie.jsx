@@ -6,16 +6,15 @@ import Nav from '../navbar/Nav'
 import {useNavigate} from 'react-router-dom';
 import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
-import {fetchUserInfo} from '../../utils/fetchUserInfo'
 import Footer from '../footer/Footer';
 import ProfileCal from '../../components/ProfileCal';
 import {Events } from '../../classes/events';
+import PeriodStats from '../../components/PeriodStats';
 import PageFade from '../../components/PageFade'
 import DeleteAccout from './DeleteAccout';
 import ChangePassword from './ChangePassword';
 import Notication from './Notication';
 import Settings from './Settings';
-import { passwordRegex } from '../../utils/password-regex';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +24,6 @@ const Proflie = () => {
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
   const previousPeriod = useSelector((state) => state.previousPeriod)
-  // const user = fetchUserInfo(email, token)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false);
@@ -36,7 +34,6 @@ const Proflie = () => {
   const [confirmNewPassword, setConfirmPassword] = useState('');
   const [erroMsg, setErrorMsg] = useState('');
   const notification = useSelector((state) => state.notification);
-  console.log(notification)
   let periodEvent = new Events()
   const [pEvents, setEvents] = useState(periodEvent.allEvents)
   const checkUserInfo = async () => {
@@ -55,7 +52,6 @@ const Proflie = () => {
   }
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
-    console.log(email.target.value)
   }
   const oldPasswordChange = (password) =>{
     setOldPassword(password.target.value)
@@ -91,22 +87,21 @@ const Proflie = () => {
       navigate('/')
     }
   }
-  const changePassword = () =>{
-    const regex = passwordRegex(newPassword, confirmNewPassword)
-    if (!regex.isvaild){
-      setErrorMsg(regex.msg)
-    }else{
-      axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+  const changePassword = async () =>{
+      const passwordChange = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
         email, oldPassword, newPassword
       },{
         headers: {'Authorization': `Bearer ${token}`},
       })
-    }
+      const message = await passwordChange
+      setOldPassword('')
+      setNewPassword('')
+      setConfirmPassword('')
+      return ({isVaild: message.data.isValid, message: message.data.messege})
   }
   useEffect(() =>{
     checkUserInfo()
   },[])
-
   const content = (
     <div className='page-wrapper'>
       <Nav />
@@ -118,20 +113,21 @@ const Proflie = () => {
             event= {pEvents}
           />
         </div>
+        <PeriodStats />
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
           {open &&
-            <PageFade content = {<Settings openPassword = {openPasswordChange} openNotication = {noticationBox} openDeleteBox= {openDeleteBox} close={settingToggle} />} />
+            <PageFade content = {<Settings openPassword = {openPasswordChange} openNotication = {noticationBox} openDeleteBox= {openDeleteBox} close={settingToggle} erroMsg= {erroMsg} />} />
           }
         </div>
         {deleteBox &&
-        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccount} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox}/>} />
+        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccount} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} />} />
         }
         {openNoticationBox &&
          <PageFade content= {<Notication close ={noticationBox} />} />
         }
         {showPasswordChange &&
-          <PageFade content= {<ChangePassword changePassword = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange}/>} />
+          <PageFade content= {<ChangePassword callPasswordChange = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange} /> } />
         }
       </section>
       <Footer />

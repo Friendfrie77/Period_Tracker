@@ -1,14 +1,58 @@
+
 import {Form, Field} from 'react-final-form';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
 import {passwordRegex} from '../../utils/password-regex';
+import {useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../../state';
+import axios from 'axios';
 
 export default function SignUp(props){
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    async function onSubmit(values){
+        props.setLoading(true)
+        let email = values.email;
+        let username = values.username;
+        let password = values.password;
+        const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
+            email, username, password
+        }).catch(function (error){
+            if(error.response){
+                console.log(error)
+                props.setErr(error.response.data.error)
+            }
+            props.setLoading(false)
+        });
+        const user = await results
+        console.log(user)
+        if(user){
+            console.log(user)
+            dispatch(
+                setLogin({
+                  user: user.data.newUser.username,
+                  email: user.data.newUser.email,
+                  token: user.data.accessToken,
+                  cycle: user.data.newUser.cycle,
+                  avgLength: user.data.newUser.avgLength,
+                  periodStartDate: user.data.newUser.periodStartDate,
+                  periodEndDate: user.data.newUser.periodEndDate,
+                  previousPeriod: user.data.newUser.previousPeriod,
+                  isBleeding: user.data.newUser.isBleeding,
+                  canBleed: user.data.newUser.canBleed,
+                  notification: user.data.newUser.notification
+                })
+              );
+              navigate('/accountsetup')
+        }
+
+    }
     const content = props.loading ? <Spinner /> : (
         <section className='login-wrapper'>
             <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
-             onSubmit={props.onSubmit}
+             onSubmit={onSubmit}
              validate = {values => {
                 const errors = {}
                 if (!values.email){
@@ -24,7 +68,7 @@ export default function SignUp(props){
                     errors.passwordconfirm = 'Required'
                 } else{
                     const regex = passwordRegex(values.password, values.passwordconfirm)
-                    if(!regex.isvaild){
+                    if(!regex.isVaild){
                         props.setErr(regex.msg)
                     }
                 }

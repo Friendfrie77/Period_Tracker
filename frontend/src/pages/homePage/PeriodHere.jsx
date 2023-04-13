@@ -23,7 +23,7 @@ const PeriodHere = (props) => {
                 </div>
                 <div className="check-period">
                     <label htmlFor = 'check-period'>Has your period started?</label>
-                    <button name='check-period' type='button' onClick={props.onClick}>Yes</button>
+                    <button name='check-period' type='button' onClick={props.onClick} className='button'>Yes</button>
                 </div>
             </section>
             <Footer />

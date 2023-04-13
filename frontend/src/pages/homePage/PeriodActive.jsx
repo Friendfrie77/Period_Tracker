@@ -9,11 +9,10 @@ const PeriodActive = (props) => {
   useEffect(() =>{
     forceUpdate()
   }, [props.startDate, props.endDate, props.periodStartDate, props.periodEndDate])
-  // console.log(props.startDate, props.endDate, props.periodStartDate, props.periodEndDate)
   return (
     <div className='page-wrapper'>
         <Nav />
-        <section className='home'>
+        <section className='home content'>
             <h1 className='welcome-text'>Welcome back, {props.userName}</h1>
             <Datestrip
                 startValue = {props.periodStartDate}
@@ -25,7 +24,7 @@ const PeriodActive = (props) => {
             </div>
             <div className="check-period">
                     <label htmlFor = 'check-period'>Has your period ended?</label>
-                    <button name='check-period' type='button' onClick={props.onClick}>Yes</button>
+                    <button name='check-period' type='button' onClick={props.onClick} className='button'>Yes</button>
             </div>
         </section>
         <Footer />

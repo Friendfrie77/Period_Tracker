@@ -4,13 +4,20 @@ import { passwordRegex } from '../../utils/password-regex'
 function ChangePassword(props) {
   const [vaildPassword, setVaildPassword] = useState()
   const [errorMsg, setErrorMsg] = useState()
-  const test = () =>{
+  const [message, setmessage] = useState()
+  const callPasswordChange = props.callPasswordChange
+  const close = props.close
+  const test = async () =>{
     const passVaild = passwordRegex(props.newPassword, props.confirmNewPassword)
-    if(!passVaild.isvaild){
+    if(!passVaild.isVaild){
       setErrorMsg(passVaild.msg)
     }else{
-      setVaildPassword(true)
-      props.ChangePassword()
+      const response = await callPasswordChange()
+      if(!response.isVaild){
+        setErrorMsg(response.message)
+      }else{
+        setmessage(response.message)
+      }
     }
   }
   return (
@@ -18,8 +25,9 @@ function ChangePassword(props) {
       <h1>Would you like to change your password?</h1>
       <div className='password-change'>
         <span className='warning'>{errorMsg}</span>
+        <span className='success'>{message}</span>
         <div className='password-input'>
-          <input type = 'password' value={props.oldPassword} onChange={props.oldPasswordChange}></input>
+          <input type = 'password' id = 'oldPassword' value={props.oldPassword} onChange={props.oldPasswordChange}></input>
           <label htmlFor='password' className='login-lable'>
               <span className='login-span'>Old Password<small>*</small></span>
           </label>

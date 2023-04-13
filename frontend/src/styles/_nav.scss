@@ -91,6 +91,9 @@ nav{
         color: $textcolor;
     }
 }
+.nav-item:nth-of-type(4){
+    justify-self: end;
+}
 .mobile-nav-container{
     display: none;
     height: 100%;

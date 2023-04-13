@@ -2,6 +2,7 @@ import React from 'react'
 function Settings(props) {
   return (
     <div className='warning-box'>
+        <span>{props.erroMsg}</span>
         <div className='inner-account-settings'>
             <div className='setting-option'>
                 <button onClick={props.openPassword}>Password Change</button>

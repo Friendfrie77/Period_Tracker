@@ -1,6 +1,6 @@
 const User = require('../mongoose-schmea/User');
 const moment = require('moment')
-
+const twillo = require('../utils/twilio')
 async function setNotificationStatus (req, res){
     const {email, status, number} = req.body;
     const user = await User.findOne({email: email})
@@ -10,6 +10,7 @@ async function setNotificationStatus (req, res){
         user.save();
         const notification = user.notification
         if(status){
+            // twillo.sendNotification(user.username, number)
             res.status(200).json({message: 'You will now get notfications before your period starts', notification})
         }else{
             res.status(200).json({message: 'You will no longer get notfications', notification})

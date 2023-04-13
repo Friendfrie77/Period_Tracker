@@ -40,13 +40,13 @@ const Nav = () => {
                 </NavLink>
             </li>
             <li className='nav-item'>
-                <NavLink to='/profile'>
-                    Profile
+                <NavLink to='/periodinfo'>
+                    Period Info
                 </NavLink>
             </li>
             <li className='nav-item'>
-                <NavLink to='/periodinfo'>
-                    Period Info
+                <NavLink to='/profile'>
+                    Profile
                 </NavLink>
             </li>
             <li className='logout'>

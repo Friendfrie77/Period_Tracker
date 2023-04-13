@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { setLogin } from '../state';
+
 
 const sendPeriodStatus = async (email, isBleeding, canBleed, token) => {
     axios.post(`${process.env.REACT_APP_APIURL}/user/setperiodinfo`,{

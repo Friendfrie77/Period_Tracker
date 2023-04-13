@@ -3,8 +3,8 @@ const User = require('../mongoose-schmea/User');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
+
 async function checkTextStatus(){
-    console.log('test')
     const users = await User.find({notification: true})
     const todaysDate = new Date()
     for (let user in users){
@@ -28,4 +28,12 @@ async function checkTextStatus(){
     }
 }
 
-module.exports = {checkTextStatus}
+async function sendNotification(username, number){
+    client.messages.create({
+        body: `Thank you ${username} for signing up for text notifications. You will get a notfication 3 days before your period starts. You can turn them off anytime in settings.`,
+        from: process.env.TWILIO_NUMBER,
+        to: `${number}`
+    })
+}
+
+module.exports = {checkTextStatus, sendNotification}

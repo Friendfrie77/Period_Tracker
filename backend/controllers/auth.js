@@ -7,17 +7,18 @@ const register = async (req, res) => {
     console.log(results)
     try{
         if(results){
-            console.log('aaa')
-            res.status(401).json({msg:'User already exists'})
+            res.status(401).json({error:'User already exists'})
         }else{
             const user = new User({email, username ,password, refreshToken: '', cycle: '', 
-            periodStartDate: '', periodEndDate: '', previousPeriod: []});
+            periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             user.save(function(err){
                 if (err){
                     console.log(err)
                 } else {
+                    const userId = {id: user._id};
+                    const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
                     const newUser = user.sendUserInfo(user)
-                    res.status(201).json({newUser})
+                    res.status(201).json({newUser, accessToken})
                 }
             })}
     }catch (err){
@@ -75,8 +76,8 @@ const deleteAccount = async (req, res) =>{
 
 const changePassword = async (req, res) =>{
     const {email, oldPassword, newPassword} = req.body;
-    console.log(email)
     const user = await User.findOne(({email: email}))
+    let isVaild;
     if (user){
         const isSame = user.authPassword(oldPassword, function(err, same){
             if(err){
@@ -85,12 +86,12 @@ const changePassword = async (req, res) =>{
                 });
             } else if (!same){
                 res.status(200).json({
-                    error: 'Incorrect password'
+                    isValid: false, messege: 'Incorrect password'
                 });
             }else{
                 user.password = newPassword
                 user.save()
-                res.status(200).json({messege: 'Password Updated'})
+                res.status(200).json({isValid: true, messege: 'Password Updated'})
             }
         })
     }

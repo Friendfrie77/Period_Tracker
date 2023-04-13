@@ -21,48 +21,33 @@ function Index() {
     const errMsg = (msg) =>{
         setErrMsg(msg)
     }
-    const regNewAccount = async (values) =>{
+    const load = (loading) =>{
+        setLoading(loading)
+    }
+    async function regNewAccount(values){
         let email = values.email
         let username = values.username
         let password = values.password
         setLoading(true)
-        try{
-            const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
-                email, username, password
-            })
-            const result = await results
-            if (result){
-                const login = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
-                    email, password
-            });
-            const user = await login
-            if (user){
-                dispatch(
-                    setLogin({
-                        user: user.data.user.username,
-                        email: user.data.user.email,
-                        token: user.data.accessToken,
-                        cycle: user.data.user.cycle,
-                        avgLength: user.data.avgLength,
-                        periodStartDate: user.data.user.periodStartDate,
-                        periodEndDate: user.data.user.periodEndDate,
-                        previousPeriod: user.data.user.previousPeriod,
-                        isBleeding: user.data.user.isBleeding,
-                        canBleed: user.data.user.canBleed,
-                        notification: user.data.user.notification
-                    })
-                  );
-                  navigate('/AccountSetup')
-                }
+        const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
+            email, username, password
+        }).catch(function (error){
+            if(error.response){
+                console.log(error)
             }
-        }catch(err){
-            if(err.response.status === 401){
-                setErrMsg(err.response.data.msg)
-                setLoading(false)
-            }
+            setLoading(false)
+        });
+        const user = await results
+        console.log(user)
+        if(user){
+            dispatch(
+                setLogin({
+                    user: user.data.newUser.username
+                })
+            )
         }
     }
-
+    
     const content = (
         <section className='index-wrapper content'>
             <div className='index-background-img'>
@@ -84,7 +69,7 @@ function Index() {
             }
             {newAccount &&
                 <div className='page-fade'>
-                    <SignUp onShow={openNewAccount} onSubmit = {regNewAccount} loading ={loading} setErr = {errMsg} err = {err}/>
+                    <SignUp onShow={openNewAccount} onSubmit = {regNewAccount} setLoading = {load} loading ={loading} setErr = {errMsg} err = {err}/>
                 </div>
             }
         </section>
