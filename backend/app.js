@@ -29,10 +29,7 @@ app.post('/register', auth.register)
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)
 
-// data.checkTextStatus()
-// utils.checkTextStatus('5 13 * * * *', function(){
-//   console.log('test')
-// })
+
 schedule.scheduleJob('30 14 * * *', function(){
   utils.checkTextStatus()
   console.log('done')
