@@ -9,16 +9,7 @@ import AccountSetup from "./pages/accountSetupPage/AccountSetup";
 
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
-    const newAccount = useSelector((state) => state.previousPeriod);
-    let isNew;
-    // function newAccountCheck(newAccount){
-    //     if (newAccount.length < 1){
-    //         isNew = true;
-    //     }else{
-    //         isNew = false;
-    //     }
-    // }
-    // newAccountCheck(newAccount)
+
     return (
         <BrowserRouter>
             <Routes>

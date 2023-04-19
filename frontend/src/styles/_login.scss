@@ -2,10 +2,9 @@
     width: 95%;
     position: relative;
     height: 2.5rem;
-    // overflow: hidden;
     margin-bottom: 2.2rem;
     input{
-        background-color: $login-input-background;
+        background-color: $login-input-background !important;
         width: 100%;
         height: 100%;
         border: none;
@@ -54,7 +53,20 @@
         width: 100%;
     }
 }
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: $textcolor;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
 .remember-me{
     width: 100%;
     text-align: center;

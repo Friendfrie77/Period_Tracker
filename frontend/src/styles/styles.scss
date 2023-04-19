@@ -125,6 +125,7 @@ h1, h2, h3, h4{
 .page-fade{
     background-color: rgba(0,0,0,.5);
     position: fixed;
+    z-index: 11;
     left: 0;
     right: 0;
     bottom: 0;
@@ -141,16 +142,12 @@ h1, h2, h3, h4{
     background-color: $color4;
     transform: translate(-50%, -50%);
     width: 50%;
-    height: auto;
-    max-height: 500px;
-    max-width: 500px;
     border-radius: $radius;
     color: $textcolor;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
     @include for-size(tablet-only){
         width: 95%;
-        height: 50%;
     }
     h1{
         font-size: var(--fs-body);
@@ -193,7 +190,6 @@ h1, h2, h3, h4{
 @import './profile';
 @import './react-calendar-theme';
 @import './animations';
-@import './waves';
 @import './loading';
 @import './nav';
 @import './footer';

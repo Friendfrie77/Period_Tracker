@@ -18,7 +18,6 @@ const Countdown = (props) => {
     const endTime = new Date(props.endDate).getTime() / 1000;
     const duration = endTime - startTime;
     const remainingTime = Math.ceil(endTime - todaysDate);
-    console.log(remainingTime)
     const half = (duration/2)
     const quarter = (duration/4)
     const timerProps = {

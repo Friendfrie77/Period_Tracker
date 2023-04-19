@@ -20,15 +20,12 @@ export default function SignUp(props){
             email, username, password
         }).catch(function (error){
             if(error.response){
-                console.log(error)
                 props.setErr(error.response.data.error)
             }
             props.setLoading(false)
         });
         const user = await results
-        console.log(user)
         if(user){
-            console.log(user)
             dispatch(
                 setLogin({
                   user: user.data.newUser.username,

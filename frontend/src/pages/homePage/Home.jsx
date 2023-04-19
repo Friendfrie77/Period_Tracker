@@ -38,7 +38,6 @@ const Home = () => {
       })
     )
     const avgLengths = await avgPeriodLength(previousPeriod)
-    console.log(avgLength)
     if (avgLengths){
       const cycle = avgLengths.cycle;
       const avgLength = avgLengths.avgLength
