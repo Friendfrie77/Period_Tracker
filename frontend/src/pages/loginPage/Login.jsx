@@ -85,11 +85,11 @@ function Login(props){
                                 </div>
                             )}
                         </Field>
-                        <div className='remember-me'>
+                        {/* <div className='remember-me'>
                             <input type='checkbox' id='remember' name='chkbox'></input>
                             <label htmlFor='chkbox'>Remember Me</label>
-                        </div>
-                        <button type='submit' disabled={submitting}>Submit</button>
+                        </div> */}
+                        <button type='submit' disabled={submitting}>Login</button>
                     </form>
                 )}
             />

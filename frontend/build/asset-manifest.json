@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.2f5f1ad2.css",
-    "main.js": "/static/js/main.42ed319a.js",
+    "main.js": "/static/js/main.673f3331.js",
     "static/media/VarelaRound-Regular.ttf": "/static/media/VarelaRound-Regular.6b0ad79431843e696f58.ttf",
     "static/media/Comfortaa-Light.ttf": "/static/media/Comfortaa-Light.2d79c8b673318d831c9b.ttf",
     "static/media/bebas-neue-v9-latin-regular.ttf": "/static/media/bebas-neue-v9-latin-regular.0ff2d56b1f45e08ee26b.ttf",
@@ -13,10 +13,10 @@
     "static/media/loading-background.svg": "/static/media/loading-background.0bd22d56c91b4c910feb.svg",
     "index.html": "/index.html",
     "main.2f5f1ad2.css.map": "/static/css/main.2f5f1ad2.css.map",
-    "main.42ed319a.js.map": "/static/js/main.42ed319a.js.map"
+    "main.673f3331.js.map": "/static/js/main.673f3331.js.map"
   },
   "entrypoints": [
     "static/css/main.2f5f1ad2.css",
-    "static/js/main.42ed319a.js"
+    "static/js/main.673f3331.js"
   ]
 }
