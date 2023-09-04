@@ -26,6 +26,7 @@ function Login(props){
         });
         const user = await loginTry
         if (user){
+            console.log(user)
             dispatch(
                 setLogin({
                   user: user.data.user.username,

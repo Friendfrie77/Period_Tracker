@@ -1,6 +1,7 @@
 const User = require('../mongoose-schmea/User');
 const moment = require('moment')
 const twillo = require('../utils/twilio')
+
 async function setNotificationStatus (req, res){
     const {email, status, number} = req.body;
     const user = await User.findOne({email: email})
