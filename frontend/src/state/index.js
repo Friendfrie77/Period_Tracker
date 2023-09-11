@@ -10,7 +10,8 @@ const initialState = {
     periodEndDate: null,
     daysTillPeriod: null,
     canBleed: false,
-    isBleeding: false, 
+    isBleeding: false,
+    daysTill: null,
     daysleft: null,
     previousPeriod: [{
         startDate: null,

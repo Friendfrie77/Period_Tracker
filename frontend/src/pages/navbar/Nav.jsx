@@ -30,7 +30,7 @@ const Nav = () => {
         <ul className='nav-links' id='nav-links'>
             <li className='stats'>
                 <h3>Information at a Glance</h3>
-                <span>Cycle Lenght: {cycle} days</span><br/>
+                <span>Cycle Length: {cycle} days</span><br/>
                 <span>Average Length: {avgLength} days </span><br />
                 <span>Periods Logged: {previousPeriod.length}</span>
             </li>

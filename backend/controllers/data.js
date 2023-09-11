@@ -11,7 +11,7 @@ async function setNotificationStatus (req, res){
         user.save();
         const notification = user.notification
         if(status){
-            // twillo.sendNotification(user.username, number)
+            twillo.sendNotification(user.username, number)
             res.status(200).json({message: 'You will now get notfications before your period starts', notification})
         }else{
             res.status(200).json({message: 'You will no longer get notfications', notification})

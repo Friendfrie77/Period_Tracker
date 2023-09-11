@@ -8,7 +8,6 @@ import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
 import { sendPeriodStatus, sendUpdatedPeriod, sendPreviousPeriod, removeCurrentDates, sendPeriodInfo} from "../../utils/sendUserInfo";
 import { fetchUserInfo } from '../../utils/fetchUserInfo'
-import { avgPeriodLength, estimateDate} from "../../utils/calcPeriodInfo";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -35,44 +34,13 @@ const Home = () => {
         canBleed: userInfo.canBleed,
         isBleeding: userInfo.isBleeding,
         previousPeriod: userInfo.previousPeriod,
+        cycle: userInfo.cycle,
+        avgLength: userInfo.avgLength
       })
     )
     if (periodStartDate && periodEndDate){
       setInfo(false)
     }
-    // const avgLengths = await avgPeriodLength(previousPeriod)
-    // if (avgLengths){
-    //   const cycle = avgLengths.cycle;
-    //   const avgLength = avgLengths.avgLength
-    //   dispatch(
-    //     setCycle({
-    //       cycle: cycle,
-    //       avgLength: avgLength
-    //     })
-    //   )
-    // }
-    // const estimateDates = await estimateDate(periodStartDate, periodEndDate, previousPeriod, avgLengths.cycle, avgLengths.avgLength)
-    // if (estimateDates){
-    //   const startDate = Moment(estimateDates.startDate).format('YYYY-MM-DD')
-    //   const endDate = Moment(estimateDates.endDate).format('YYYY-MM-DD')
-    //   dispatch(
-    //     setNewPeriod({
-    //       periodStartDate: startDate,
-    //       periodEndDate: endDate
-    //     })
-    //   )
-    //   if(startDate && endDate){
-    //     const test = await sendPeriodInfo(email, estimateDates.startDate, estimateDates.endDate, avgLengths.cycle, avgLengths.avgLength, token)
-    //   }
-    // }
-    // setInfo(false)
-    // if ((Moment(periodStartDate).format('YYYY-MM-DD') === todaysDate) || (Moment(periodStartDate).format('YYYY-MM-DD') < todaysDate && !isBleeding)){
-    //   dispatch(
-    //     setCanBleed({
-    //       canBleed: true
-    //     })
-    //   )
-    // }
   }
 
 const periodStarted = async () =>{

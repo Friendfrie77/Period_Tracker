@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     avgLength: Number, 
     periodStartDate: Date,
     periodEndDate: Date,
+    daysTill: Number,
     canBleed:{
         type: Boolean,
         default: false
@@ -131,13 +132,24 @@ userSchema.methods.estimateDate = function(user){
         return(false)
     }
 }
+
+//checking if user period is less than x days from period
+userSchema.methods.daysTillBlood = function(user){
+    let daysTill;
+    const todaysDate = new Date();
+    daysTill = moment(user.periodStartDate).diff(todaysDate, 'days')
+    user.daysTill = daysTill
+    console.log(daysTill)
+}
+
 //sending user infor after login
 userSchema.methods.sendUserInfo = function(user){
     if (user.periodStartDate || user.periodEndDate == null){
         userSchema.methods.calcAvgLength(user)
         userSchema.methods.estimateDate(user)
-        user.save()
     }
+    userSchema.methods.daysTillBlood(user)
+    user.save()
     const userInfo ={
         email: user.email,
         username: user.username,
@@ -146,6 +158,7 @@ userSchema.methods.sendUserInfo = function(user){
         avgLength: user.avgLength,
         periodStartDate: user.periodStartDate,
         periodEndDate: user.periodEndDate,
+        daysTill: user.daysTill,
         canBleed: user.canBleed,
         isBleeding: user.isBleeding,
         previousPeriod: user.previousPeriod
