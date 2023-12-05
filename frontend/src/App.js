@@ -6,6 +6,7 @@ import Index from './pages/index/Index'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
+import Landing from "./pages/landingPage/landing"
 
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
