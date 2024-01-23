@@ -6,6 +6,10 @@ import Index from './pages/index/Index'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
+<<<<<<< Updated upstream
+=======
+import Landing from "./pages/landingPage/Landing"
+>>>>>>> Stashed changes
 
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
@@ -13,9 +17,10 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path='/landing' element={<Landing />} />
                 <Route path='/accountsetup' element={ isAuth ? <AccountSetup/> : <Navigate to='/' />} />
                 <Route path='/signup' element={<SignupForm />} />
-                <Route path='/' element={<Index />} />
+                <Route path='/' element={<Landing />} />
                 <Route path='/profile' element={ isAuth ? <Proflie /> : <Navigate to='/' />} />
                 <Route path='/periodinfo' element={isAuth ? <PeriodInfo /> : <Navigate to='/' />} />
                 <Route path='/home' element= {isAuth ? <Home /> : <Navigate to='/' />}/>

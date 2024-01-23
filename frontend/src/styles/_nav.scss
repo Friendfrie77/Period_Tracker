@@ -1,8 +1,4 @@
 nav{
-    display: flex;
-    flex-direction: row;
-    align-items: right;
-    justify-content: space-between;
     background-color: $login-input-background;
     height: 75px;
     width: 100%;
@@ -11,10 +7,19 @@ nav{
     top: 0;
     z-index: 10;
     opacity: 1;
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
     @include for-size(tablet-only){
         opacity: 1;
     }
+}
+.nav-container{
+    max-width: 1440px;
+    display: flex;
+    flex-direction: row;
+    align-items: right;
+    justify-content: space-between;
+    margin: 0 auto;
+
 }
 .logout{
     text-align: center;
@@ -53,7 +58,10 @@ nav{
 }
 .nav-links{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    // grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px 1fr));
+    // gap: 15px;
+    grid-auto-flow: column;
     list-style-type: none;
     margin: 0;
     padding: 5px;
@@ -99,6 +107,7 @@ nav{
     height: 100%;
     width: 30px;
     padding-right: 20px;
+    padding-top: 20px;
     cursor: pointer;
     flex-direction: column;
     justify-content: center;
@@ -106,6 +115,11 @@ nav{
     @include for-size(tablet-only){
         display: flex;
     }
+}
+.nav-button{
+    background-color: transparent;
+    border: none;
+    color: $textcolor;
 }
 #mobile-nav-toggle{
     display: none;
