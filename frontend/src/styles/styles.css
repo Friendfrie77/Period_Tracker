@@ -1120,6 +1120,16 @@ h1, h2, h3, h4 {
   height: 100%;
 }
 
+.flex-row-to-col {
+  display: flex;
+  flex-direction: row;
+}
+@media (max-width: 768px) {
+  .flex-row-to-col {
+    flex-direction: column;
+  }
+}
+
 .login-button-container {
   text-align: center;
   display: flex;
@@ -2651,4 +2661,15 @@ footer a {
 }
 .on-page-stats span {
   font-size: var(--fs-body);
+}
+
+.info-card {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card-heading {
+  text-align: center;
+  font-size: var(--fs-subheader);
 }/*# sourceMappingURL=styles.css.map */

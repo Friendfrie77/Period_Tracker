@@ -1,0 +1,11 @@
+.info-card{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: $box-padding;
+}
+.card-heading{
+    text-align: center;
+    font-size: var(--fs-subheader);
+}
+.card-content-wrapper{
+}

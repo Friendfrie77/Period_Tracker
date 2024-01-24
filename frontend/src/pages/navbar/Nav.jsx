@@ -14,7 +14,6 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
     const avgLength = useSelector((state) => state.avgLength)
     const previousPeriod = useSelector((state) => state.previousPeriod)
     const isLoggedIn = Boolean(useSelector((state) => state.token))
-    // const [loginOpen, setLogin] = useState(props.loginOpen)
     const logout = () =>{
         dispatch(
             setLogout()
@@ -28,7 +27,6 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
 
         onDataSentReg(true)
     }
-    // console.log(loginOpen)
     const navbar = (
         <header>
             <nav className='nav'>
@@ -49,13 +47,11 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
                                 <span>Periods Logged: {previousPeriod.length}</span>
                             </li>
                         ) : null}
-                        <li className='nav-item'>
-                            <NavLink to='/home'>
-                                Home
-                            </NavLink>
-                        </li>
                         {isLoggedIn ? (
                             <>
+                            <li className='nav-item'>
+                                <NavLink to='/home'>Home</NavLink>
+                            </li>
                             <li className='nav-item'>
                                 <NavLink to='/periodinfo'>Period Info</NavLink>
                             </li>
@@ -75,7 +71,7 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
                                 <button className='nav-button' onClick={openLogin}>Login</button>
                             </li>
                             <li className='nav-item'>
-                                <button className='nav-button' onClick={openRegister}>Register</button>
+                                <button className='nav-cta' onClick={openRegister}>Register</button>
                             </li>
                             </>
                         )}

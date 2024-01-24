@@ -1,9 +1,9 @@
  $color1: #8FDDC3;
  $color2: #241E4E;
- $textcolor: #EAE8FF;
  $color4: #5C0F47;
  $color5: #8FDDC3;
  $color6: #5CFFC9;
+ $textcolor: #EAE8FF;
  $button-color:#AF4D98;
  $login-input-background: #4B203F;
  $backgroundgrad: linear-gradient($color2, #302867, #7B145F,  $color4);
@@ -184,6 +184,7 @@ h1, h2, h3, h4{
 
 
 @import './wrappers';
+@import './layouts';
 @import './index';
 @import './login';
 @import './react-calendar';
@@ -198,3 +199,4 @@ h1, h2, h3, h4{
 @import './horizontal-date-picker';
 @import './reactTelephoneInput';
 @import './period-stats';
+@import './infoCard';

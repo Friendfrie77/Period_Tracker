@@ -1,0 +1,7 @@
+.flex-row-to-col{
+    display: flex;
+    flex-direction: row;
+    @include for-size(tablet-only){
+        flex-direction: column;
+    }
+}

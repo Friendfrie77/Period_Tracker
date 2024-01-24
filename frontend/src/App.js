@@ -6,10 +6,8 @@ import Index from './pages/index/Index'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
-<<<<<<< Updated upstream
-=======
 import Landing from "./pages/landingPage/Landing"
->>>>>>> Stashed changes
+
 
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));

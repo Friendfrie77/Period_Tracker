@@ -1,7 +1,7 @@
 import axios from "axios";
 
 async function fetchUserInfo(email, token){
-    const result = axios.post(`${process.env.REACT_APP_APIURL}/user/getuserinfo`,{
+    const result = axios.post(`${process.env.REACT_APP_APIURL}user/getuserinfo`,{
       email
       },{
         headers: {'Authorization': `Bearer ${token}`},

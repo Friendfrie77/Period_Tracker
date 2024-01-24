@@ -4,6 +4,7 @@ import Login from '../loginPage/Login';
 import SignUp from '../signupPage/SignUp';
 import Phone from '../../images/phone.png'
 import Footer from '../footer/Footer';
+import IndexInfoCards from '../../components/indexPageCards/IndexInfoCards';
 const IndexPage = () => {
   const [loginOpen, setLogin] = useState(false)
   const [regOpen, setReg] = useState(false)
@@ -19,6 +20,15 @@ const IndexPage = () => {
   const openReg = () =>{
     setReg(!regOpen);
   }
+  const colors ={
+    color1: '#8FDDC3',
+    color2: '#241E4E',
+    color4: '#5C0F47',
+    color5: '#8FDDC3',
+    color6: '#5CFFC9',
+    textcolor:'#EAE8FF',
+  }
+  console.log(colors.color1)
   const content =(
     <section className='page-wrapper'>
       <Nav onDataSentLogin={handleDataReceiveLogin} onDataSentReg = {handleDataReceiveReg} />
@@ -40,15 +50,11 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nibh praesent tristique magna sit amet purus gravida. Et netus et malesuada fames ac. Malesuada pellentesque elit eget gravida cum sociis. Fermentum leo vel orci porta. Massa massa ultricies mi quis hendrerit. Pharetra pharetra massa massa ultricies mi quis hendrerit. Eros donec ac odio tempor orci. Proin sed libero enim sed. Donec enim diam vulputate ut. Vel orci porta non pulvinar. Magna fringilla urna porttitor rhoncus. Pharetra vel turpis nunc eget lorem. Suspendisse faucibus interdum posuere lorem ipsum. Vestibulum lorem sed risus ultricies. Velit ut tortor pretium viverra suspendisse potenti nullam. Ut lectus arcu bibendum at varius vel. Leo integer malesuada nunc vel.</p>
-        </div>
-        <div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nibh praesent tristique magna sit amet purus gravida. Et netus et malesuada fames ac. Malesuada pellentesque elit eget gravida cum sociis. Fermentum leo vel orci porta. Massa massa ultricies mi quis hendrerit. Pharetra pharetra massa massa ultricies mi quis hendrerit. Eros donec ac odio tempor orci. Proin sed libero enim sed. Donec enim diam vulputate ut. Vel orci porta non pulvinar. Magna fringilla urna porttitor rhoncus. Pharetra vel turpis nunc eget lorem. Suspendisse faucibus interdum posuere lorem ipsum. Vestibulum lorem sed risus ultricies. Velit ut tortor pretium viverra suspendisse potenti nullam. Ut lectus arcu bibendum at varius vel. Leo integer malesuada nunc vel.</p>
-        </div>
-        <div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquet nibh praesent tristique magna sit amet purus gravida. Et netus et malesuada fames ac. Malesuada pellentesque elit eget gravida cum sociis. Fermentum leo vel orci porta. Massa massa ultricies mi quis hendrerit. Pharetra pharetra massa massa ultricies mi quis hendrerit. Eros donec ac odio tempor orci. Proin sed libero enim sed. Donec enim diam vulputate ut. Vel orci porta non pulvinar. Magna fringilla urna porttitor rhoncus. Pharetra vel turpis nunc eget lorem. Suspendisse faucibus interdum posuere lorem ipsum. Vestibulum lorem sed risus ultricies. Velit ut tortor pretium viverra suspendisse potenti nullam. Ut lectus arcu bibendum at varius vel. Leo integer malesuada nunc vel.</p>
-        </div>
+        <IndexInfoCards 
+          heading = "Tracking Your Period: Made easy"
+          styles = {{backgroundColor: colors.color2, color: colors.textcolor}}
+          contentTypeOne = 'txt'
+        />
         {loginOpen &&
           <div className='page-fade'>
               <Login onShow={openLogin}/>
