@@ -16,12 +16,13 @@ function Login(props){
         setLoading(true)
         let email = values.email
         let password = values.password
-        console.log(password, process.env.REACT_APP_APIURL)
-        const loginTry = await axios.post(`${process.env.REACT_APP_APIURL}auth/login`,{
+        console.log(password, `${process.env.REACT_APP_APIURL}auth/login`)
+        const loginTry = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
             email, password
         }).catch(function (error){
             if(error.response){
                 setError(error.response.data.error)
+                console.log(error.response.data.error)
             }
             setLoading(false)
         });

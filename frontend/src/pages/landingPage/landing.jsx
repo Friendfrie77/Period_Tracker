@@ -3,6 +3,7 @@ import Nav from '../navbar/Nav'
 import Login from '../loginPage/Login';
 import SignUp from '../signupPage/SignUp';
 import Phone from '../../images/phone.png'
+import Laptop from '../../images/laptop.jpg'
 import Footer from '../footer/Footer';
 import IndexInfoCards from '../../components/indexPageCards/IndexInfoCards';
 const IndexPage = () => {
@@ -28,7 +29,6 @@ const IndexPage = () => {
     color6: '#5CFFC9',
     textcolor:'#EAE8FF',
   }
-  console.log(colors.color1)
   const content =(
     <section className='page-wrapper'>
       <Nav onDataSentLogin={handleDataReceiveLogin} onDataSentReg = {handleDataReceiveReg} />
@@ -51,9 +51,12 @@ const IndexPage = () => {
           </div>
         </div>
         <IndexInfoCards 
-          heading = "Tracking Your Period: Made easy"
+          heading = "Tracking Your Period: Made Easy"
           styles = {{backgroundColor: colors.color2, color: colors.textcolor}}
-          contentTypeOne = 'txt'
+          contentTypeOne = 'img'
+          contentOne = {Laptop}
+          contentTypeTwo = 'txt'
+          txtHeader= 'test'
         />
         {loginOpen &&
           <div className='page-fade'>

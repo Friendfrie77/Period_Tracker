@@ -37,6 +37,9 @@
 }
 .content{
     grid-area: 'content';
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .index-wrapper{
     margin: auto;

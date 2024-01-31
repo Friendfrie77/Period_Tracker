@@ -55,3 +55,20 @@
         }
     }
 }
+
+.period-add{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $textcolor;
+    span{
+        font-size: var(--fs-subheader);
+    }
+    li{
+        margin-bottom: 1rem;
+        font-size: var(--fs-body);
+    }
+}
+.btn-period-list{
+    @include button-mixin;
+}

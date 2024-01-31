@@ -2,10 +2,21 @@
     max-width: 1440px;
     margin: 0 auto;
     padding: $box-padding;
+    flex-grow: 1;
+    width: 100%;
 }
 .card-heading{
     text-align: center;
     font-size: var(--fs-subheader);
 }
 .card-content-wrapper{
+}
+.card-text-content{
+    text-align: center;
+    width: 50%;
+    @include phone-width-100;
+}
+.card-img-content{
+    width: 50%;
+    @include phone-width-100;
 }

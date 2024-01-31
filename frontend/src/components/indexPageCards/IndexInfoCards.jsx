@@ -11,11 +11,12 @@ function IndexInfoCards(props) {
             </div>
         ) : props.contentTypeOne === 'img' ?(
             <picture className='card-img-content'>
+              <img src={props.contentOne} />
             </picture>
         ) : null}
         {props.contentTypeTwo == 'txt' ?(
             <div className='card-text-content'>
-                <h1>test</h1>
+                <h1>{props.txtHeader}</h1>
             </div>
         ) : props.contentTypeTwo === 'img' ?(
             <picture className='card-img-content'>

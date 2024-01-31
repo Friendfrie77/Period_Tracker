@@ -13,7 +13,7 @@ function PeriodInfo() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token)
   const email = useSelector((state) => state.email)
-  const userInfo = useSelector((state) => state.previousPeriod)
+  const userInfo =[useSelector((state) => state.previousPeriod)]
   const [removeDate, setRemove] = useState()
   const [message, setMessage] = useState()
   const [periodMessage, setPMessage] = useState()
@@ -24,10 +24,10 @@ function PeriodInfo() {
       key: 'selection'
     }
   ]);
+  const [loggedPeriods, setLoggedPeriods] =useState([])
   const optionChange = (event) =>{
     setRemove(event.target.value)
   }
-
   const removePeriod = async () =>{
     if (!removeDate){
       setMessage('Please select a date')
@@ -46,31 +46,20 @@ function PeriodInfo() {
         }
       }
     }
-    const userData = (date) =>{
-      if (date[0].endDate){
-        const start = date[0].startDate.getDate()
-        const end = date[0].endDate.getDate()
-        if (start != end){
-          const startDate = Moment(date[0].startDate).format()
-          const endDate = Moment(date[0].endDate).format()
-          if (userInfo.length != 0){
-            const dates = userInfo.map(function(element){return element;})
-            let period = {
-              startDate: startDate,
-              endDate: endDate,
-              count: userInfo.length,
-            }
-            dates.push(period)
-            setDates(dates)
-          }else{
-            let period = {
-              startDate: startDate,
-              endDate: endDate,
-              count: 0,
-            }
-            let dates = [period]
-            setDates(dates)
-          }
+    const userData = () =>{
+      const startDate = Moment(date[0].startDate).format()
+      const endDate = Moment(date[0].endDate).format()
+
+      let period = [{
+        startDate: startDate,
+        endDate: endDate
+      }]
+      if (period[0].startDate !== period[0].endDate){
+        if(loggedPeriods.length === 0){
+          setLoggedPeriods(period)
+        }else{
+          let newLogged = [...loggedPeriods, ...period]
+          setLoggedPeriods(newLogged)
         }
       }
     }
@@ -90,10 +79,15 @@ function PeriodInfo() {
       const res = await sendDates
       setPMessage(`${res.data.message}!`)
     };
-    
+    const removeNewPeriod = (key) =>{
+      const periodUpdate = [...loggedPeriods]
+      periodUpdate.splice(key, 1)
+      setLoggedPeriods(periodUpdate)
+    }
     useEffect(()=>{
       userData(date)
     },[date]);
+    loggedPeriods.forEach((dates, key)=> {console.log(dates,key)})
   const content =
     <div className='page-wrapper'>
       <Nav />
@@ -108,9 +102,24 @@ function PeriodInfo() {
               onChange={item => setDate([item.selection])}
               moveRangeOnFirstSelection={false}
               ranges={date}
-              // scroll = {{enabled: true}}
             />
+         <div className='period-add'>
+          <h2>Periods to add:</h2>
+          {loggedPeriods.length ?(
+            <>
+            <ol>
+            {loggedPeriods.map((dates, key)=>(
+              <li key={key}>
+                {`${Moment(dates.startDate).format('MMMM Do')} - ${Moment(dates.endDate).format('MMMM Do')}`}&nbsp;<button onClick={()=>removeNewPeriod(key)} className='btn-period-list'>&#120684;</button>
+              </li>
+            ))}
+          </ol>
           <button className='button' onClick={addPeriod}>Add</button>
+          </>
+          ):(
+            <span>None</span>
+          )}
+         </div> 
         </div>
         <div className='remove-period'>
           <span className='message'>{message}</span>

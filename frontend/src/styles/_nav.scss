@@ -60,7 +60,7 @@ nav{
     display: grid;
     // grid-template-columns: repeat(4, 1fr);
     grid-template-columns: repeat(auto-fit, minmax(150px 1fr));
-    // gap: 15px;
+    gap: 15px;
     grid-auto-flow: column;
     list-style-type: none;
     margin: 0;
@@ -169,4 +169,8 @@ nav{
 
 .logo img{
     box-shadow: $drop-shadow-wrappers;
+}
+
+.nav-cta{
+    @include button-mixin;
 }

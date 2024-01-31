@@ -27,6 +27,7 @@ const Home = () => {
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
   const setUser = async () =>{
     const userInfo = await fetchUserInfo(email, token)
+    console.log(userInfo)
     dispatch(
       setUserInfo({
         periodStartDate: userInfo.periodStartDate,
@@ -38,11 +39,11 @@ const Home = () => {
         avgLength: userInfo.avgLength
       })
     )
+    console.log(periodEndDate)
     if (periodStartDate && periodEndDate){
       setInfo(false)
     }
   }
-
 const periodStarted = async () =>{
   if (Moment(periodStartDate).format('YYYY-MM-DD') !== todaysDate){
     const newEndDate = Moment(todaysDate).add(avgLength, 'days').format('YYYY-MM-DD')
