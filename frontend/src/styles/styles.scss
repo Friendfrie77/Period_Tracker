@@ -40,11 +40,13 @@
     border: none;
     border-radius: $radius;
     color: $textcolor;
+    transition: all .2s ease-in;
     &:active{
         transform: translateY(2px);
     }
     &:hover{
         background-color: $color2;
+        border-bottom: #5CFFC9;
     }
 }
 @mixin phone-width-100{
@@ -62,6 +64,7 @@
     --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
     --fs-hero:clamp(1.5rem, calc(4vw + .5rem), 4.25rem);
     --fs-hero-button:clamp(1.5rem, calc(4vw + .5rem), 2.5rem);
+    --fs-info-card: clamp(1.5rem, calc(2vw + .2rem), 2rem);
     --fs-body: 1.5rem;
     --fs-cal: 1.5rem;
     --fs-signup: 1.15rem;

@@ -97,6 +97,9 @@ nav{
     a{
         text-decoration: none;
         color: $textcolor;
+        &:hover{
+            color: $color4;
+        }
     }
 }
 .nav-item:nth-of-type(4){
@@ -120,6 +123,9 @@ nav{
     background-color: transparent;
     border: none;
     color: $textcolor;
+    &:hover{
+        color: $color5;
+    }
 }
 #mobile-nav-toggle{
     display: none;

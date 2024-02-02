@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
 const User = require('../mongoose-schmea/User');
+const Demo = require('../mongoose-schmea/Demo')
 
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
-    console.log(results)
     try{
         if(results){
             res.status(401).json({error:'User already exists'})
         }else{
-            const user = new User({email, username ,password, refreshToken: '', cycle: '', 
+            const user = new User({email, username ,password, cycle: '', 
             periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             user.save(function(err){
                 if (err){
@@ -96,4 +96,11 @@ const changePassword = async (req, res) =>{
         })
     }
 }
-module.exports = {register, login, deleteAccount, changePassword}
+
+const demoAccount = async (req, res) =>{
+    const {username, password} = req.body;
+    const demoUser = new Demo({username, password,})
+    // const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
+
+}
+module.exports = {register, login, deleteAccount, changePassword, demoAccount}

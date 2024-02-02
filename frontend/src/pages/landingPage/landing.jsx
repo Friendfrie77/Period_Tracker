@@ -29,6 +29,9 @@ const IndexPage = () => {
     color6: '#5CFFC9',
     textcolor:'#EAE8FF',
   }
+  const demo = () =>{
+    
+  }
   const content =(
     <section className='page-wrapper'>
       <Nav onDataSentLogin={handleDataReceiveLogin} onDataSentReg = {handleDataReceiveReg} />
@@ -51,12 +54,28 @@ const IndexPage = () => {
           </div>
         </div>
         <IndexInfoCards 
-          heading = "Tracking Your Period: Made Easy"
           styles = {{backgroundColor: colors.color2, color: colors.textcolor}}
           contentTypeOne = 'img'
-          contentOne = {Laptop}
           contentTypeTwo = 'txt'
-          txtHeader= 'test'
+          txtContentType = 'text'
+          hasButton = {true}
+          link= '/demo'
+          buttonTxt = 'Demo Now'
+          contentImg = {Laptop}
+          txtHeader= "Tracking Your Period: Made Easy"
+          txtContent="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna fermentum iaculis eu non. Porttitor leo a diam sollicitudin tempor id eu nisl. Odio ut sem nulla pharetra diam sit amet. Commodo viverra maecenas accumsan lacus vel facilisis volutpat. In hac habitasse platea dictumst. Ut placerat orci nulla pellentesque dignissim enim sit. "
+        />
+        <IndexInfoCards 
+          styles = {{backgroundColor: colors.color2, color: colors.textcolor}}
+          contentTypeOne = 'txt'
+          contentTypeTwo = 'img'
+          hasButton = {false}
+          hasLink = {true}
+          linkTxt="Find out more"
+          contentOne = {Laptop}
+          contentImg = {Laptop}
+          txtHeader= "Privacy Focused "
+          txtContent=""
         />
         {loginOpen &&
           <div className='page-fade'>

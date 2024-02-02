@@ -12,6 +12,7 @@ import Spinner from '../../components/Spinner';
 const AccountSetup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isAuth = Boolean(useSelector((state) => state.token));
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -23,7 +24,7 @@ const AccountSetup = () => {
   const userInfo = useSelector((state) => state.previousPeriod);
   const email = useSelector((state) => state.email)
   const token = useSelector((state) => state.token)
-
+  console.log(isAuth)
   const userData = (date) =>{
     if (date[0].endDate){
       const start = date[0].startDate.getDate()
@@ -59,7 +60,7 @@ const AccountSetup = () => {
       })
     );
   }
-
+  const username = 'test';
   useEffect(()=>{
     userData(date)
   },[date]);
@@ -80,8 +81,19 @@ const AccountSetup = () => {
       console.log(err)
     }
   }
+  const demoAccount = async () =>{
+    setLoading(true)
+    const test = await axios.post(`${process.env.REACT_APP_APIURL}/demo`,{
+      username
+    })
+  }
   const setup = isLoading ? <Spinner /> : (
         <section className='setup-wrapper'>
+          {isAuth ? (
+            null
+          ):( 
+            <span>Please enter in a name</span>
+          )}
           <h1>When was your last few periods?</h1>
           <p>Just select them below, and once your done hit next. Please try to make them as close as you can.</p>
           <DateRange
@@ -93,7 +105,11 @@ const AccountSetup = () => {
             ranges={date}
             // scroll = {{enabled: true}}
           />
-          <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+          {isAuth ? (
+            <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+          ):(
+            <button type='submit' className='nextButton' onClick={demoAccount}>Next</button>
+          )}
         </section>
   )
   return setup

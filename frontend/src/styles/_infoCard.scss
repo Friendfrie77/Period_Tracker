@@ -15,8 +15,29 @@
     text-align: center;
     width: 50%;
     @include phone-width-100;
+    h1{
+        font-size: var(--fs-info-card);
+    }
+    a{
+        text-decoration: none;
+        color: $textcolor;
+    }
 }
 .card-img-content{
     width: 50%;
     @include phone-width-100;
+}
+
+.card-cta-button{
+    @include button-mixin;
+    margin-top: 30px;
+    padding: 10px 35px;
+    box-shadow: $drop-shadow-wrappers;
+    &:hover{
+        background-color: $color4;
+    }
+
+}
+.card-cta-button-container{
+    margin-top: 15px;
 }
