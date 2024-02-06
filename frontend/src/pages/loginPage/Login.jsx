@@ -1,52 +1,15 @@
 import {Form, Field} from 'react-final-form';
-import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setLogin } from '../../state';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai'
+import useLogin from '../../hooks/useLogin';
 function Login(props){
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
-    const [errormsg, setError] = useState()
-    const [regError, setRegError] = useState();
-    async function onSubmit(values){
-        setLoading(true)
-        let email = values.email
-        let password = values.password
-        const loginTry = await axios.post(`${process.env.REACT_APP_APIURL}/auth/login`,{
-            email, password
-        }).catch(function (error){
-            if(error.response){
-                setError(error.response.data.error)
-                console.log(error.response.data.error)
-            }
-            setLoading(false)
-        });
-        const user = await loginTry
-        if (user){
-            console.log(user)
-            dispatch(
-                setLogin({
-                  user: user.data.user.username,
-                  email: user.data.user.email,
-                  token: user.data.accessToken,
-                  cycle: user.data.user.cycle,
-                  avgLength: user.data.avgLength,
-                  periodStartDate: user.data.user.periodStartDate,
-                  periodEndDate: user.data.user.periodEndDate,
-                  previousPeriod: user.data.user.previousPeriod,
-                  isBleeding: user.data.user.isBleeding,
-                  canBleed: user.data.user.canBleed,
-                  notification: user.data.user.notification
-                })
-              );
-              navigate('/home')
-        };
+    const {login, isLoading, loginError} = useLogin()
+    const [errormsg, setError] = useState(null)
+    const onSubmit = (values) => {
+        login(values.email, values.password)
     }
-    const content = loading ? <Spinner /> : (
+    const content = isLoading ? <Spinner /> : (
         <section className='login-wrapper'>
             <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
@@ -64,7 +27,7 @@ function Login(props){
                 render = {({handleSubmit, form, submitting, pristine, values}) =>(
                     <form onSubmit={handleSubmit}>
                         <h1>Sign In</h1>
-                        <span className='message warning'>{errormsg}</span>
+                        <span className='message warning'>{loginError}</span>
                         <Field name='email'>
                             {({input, meta})=> (
                             <div className='email-input'>

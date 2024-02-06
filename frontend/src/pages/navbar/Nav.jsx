@@ -20,7 +20,6 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
         )
     }
     const openLogin = () =>{
-
         onDataSentLogin(true)
     }
     const openRegister = () =>{

@@ -23,17 +23,20 @@ async function setNotificationStatus (req, res){
     }
 }
 const addNewUserInfo = async (req, res) => {
-    const {email, userInfo} = req.body;
+    const {email, loggedPeriods} = req.body;
     const user = await User.findOne({email: email});
     try{
         if(user.previousPeriod.length === 0){
-            user.previousPeriod = userInfo;
+            user.previousPeriod = loggedPeriods;
             user.save()
             res.status(200).json({message: 'Added Periods'})
         }else{
-            user.previousPeriod = userInfo;
+            let newPeriods = user.previousPeriod;
+            newPeriods = [...newPeriods, ...loggedPeriods];
+            user.previousPeriod = newPeriods;
             user.save()
-            res.status(200).json({message: 'Added Periods'})
+            previousPeriod = user.previousPeriod
+            res.status(201).json({message: 'Added Periods', previousPeriod})
         }
     }catch(err){
         res.status(500).json({
