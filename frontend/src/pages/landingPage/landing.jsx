@@ -9,6 +9,7 @@ import IndexInfoCards from '../../components/indexPageCards/IndexInfoCards';
 const IndexPage = () => {
   const [loginOpen, setLogin] = useState(false)
   const [regOpen, setReg] = useState(false)
+  const [isLoading, setLoading] = useState(true)
   const handleDataReceiveLogin = (data) => {
     setLogin(data);
   };
@@ -84,7 +85,7 @@ const IndexPage = () => {
         }
         {regOpen &&
           <div className='page-fade'>
-            <SignUp onShow={openReg} />
+            <SignUp onShow={openReg} setLoading = {isLoading} loading ={setLoading} />
           </div>
         }
       </div>

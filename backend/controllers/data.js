@@ -29,7 +29,8 @@ const addNewUserInfo = async (req, res) => {
         if(user.previousPeriod.length === 0){
             user.previousPeriod = loggedPeriods;
             user.save()
-            res.status(200).json({message: 'Added Periods'})
+            previousPeriod = user.previousPeriod
+            res.status(200).json({message: 'Added Periods', previousPeriod})
         }else{
             let newPeriods = user.previousPeriod;
             newPeriods = [...newPeriods, ...loggedPeriods];

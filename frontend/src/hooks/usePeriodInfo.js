@@ -10,6 +10,7 @@ const usePeriodInfo = () =>{
     const dispatch = useDispatch();
     const [message, setMessage] = useState()
     const [periodMessage, setPMessage] = useState()
+    const [loggedPeriods, setLoggedPeriods] =useState([])
 
     const removePeriod = async (removeDate) =>{
         if(!removeDate){
@@ -49,6 +50,21 @@ const usePeriodInfo = () =>{
             console.log(error)
         }        
     }
-    return{removePeriod, addPeriod, message,periodMessage}
+
+    const updateUserDates = (dates) =>{
+        let period = [{
+            startDate: Moment(dates[0].startDate).format(),
+            endDate: Moment(dates[0].endDate).format()
+        }]
+        //prob dont need array of arrays here
+        if(period[0].startDate !== period[0].endDate){
+            if(loggedPeriods.length === 0){
+                setLoggedPeriods(period)
+            }else{
+                setLoggedPeriods([...loggedPeriods, ...period])
+            }
+        }
+    }
+    return{removePeriod, addPeriod, updateUserDates, setLoggedPeriods, message, periodMessage, loggedPeriods}
 }
 export default usePeriodInfo

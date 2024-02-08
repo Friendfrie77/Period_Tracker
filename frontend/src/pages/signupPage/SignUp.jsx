@@ -12,7 +12,7 @@ export default function SignUp(props){
     const dispatch = useDispatch();
     const navigate = useNavigate();
     async function onSubmit(values){
-        props.setLoading(true)
+        props.setLoading(false)
         let email = values.email;
         let username = values.username;
         let password = values.password;

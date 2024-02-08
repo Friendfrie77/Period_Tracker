@@ -7,12 +7,16 @@ import {setPeriod} from '../../state';
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import Spinner from '../../components/Spinner';
+import useAccountSetup from '../../hooks/useAccountSetup';
+import usePeriodInfo from '../../hooks/usePeriodInfo';
 
 
 const AccountSetup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.token));
+  const {sendAccountInfo, updateUserData, isLoading} = useAccountSetup();
+  const {updateUserDates, loggedPeriods} = usePeriodInfo();
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -20,38 +24,16 @@ const AccountSetup = () => {
       key: 'selection'
     }
   ]);
-  const [isLoading, setLoading] = useState(false)
-  const userInfo = useSelector((state) => state.previousPeriod);
+  // const [isLoading, setLoading] = useState(false)
+  // const userInfo = useSelector((state) => state.previousPeriod);
   const email = useSelector((state) => state.email)
   const token = useSelector((state) => state.token)
-  console.log(isAuth)
-  const userData = (date) =>{
-    if (date[0].endDate){
-      const start = date[0].startDate.getDate()
-      const end = date[0].endDate.getDate()
-      if (start != end){
-        const startDate = Moment(date[0].startDate).format()
-        const endDate = Moment(date[0].endDate).format()
-        if (userInfo.length != 0){
-          const dates = userInfo.map(function(element){return element;})
-          let period = {
-            startDate: startDate,
-            endDate: endDate,
-            count: userInfo.length,
-          }
-          dates.push(period)
-          setDates(dates)
-        }else{
-          let period = {
-            startDate: startDate,
-            endDate: endDate,
-            count: 0,
-          }
-          let dates = [period]
-          setDates(dates)
-        }
-      }
-    }
+
+  const userDates = (date) =>{
+    updateUserDates(date);
+  }
+  const accountInfoButton = (loggedPeriods) =>{
+    sendAccountInfo(loggedPeriods)
   }
   const setDates = (dates) =>{
     dispatch(
@@ -62,27 +44,29 @@ const AccountSetup = () => {
   }
   const username = 'test';
   useEffect(()=>{
-    userData(date)
+    updateUserDates(date);
   },[date]);
-  const accountInfo = async () =>{
-    setLoading(true)
-    try{
-      const dates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
-          email,
-          userInfo
-          },{
-            headers: {'Authorization': `Bearer ${token}`},
-          }
-          );
-          if (dates){
-            navigate('/Home')
-          }
-    }catch(err){
-      console.log(err)
-    }
-  }
+  console.log(date)
+  console.log(loggedPeriods)
+  // const accountInfo = async () =>{
+  //   // setLoading(true)
+  //   try{
+  //     const dates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
+  //         email,
+  //         userInfo
+  //         },{
+  //           headers: {'Authorization': `Bearer ${token}`},
+  //         }
+  //         );
+  //         if (dates){
+  //           navigate('/Home')
+  //         }
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
   const demoAccount = async () =>{
-    setLoading(true)
+    // setLoading(true)
     const test = await axios.post(`${process.env.REACT_APP_APIURL}/demo`,{
       username
     })
@@ -106,7 +90,7 @@ const AccountSetup = () => {
             // scroll = {{enabled: true}}
           />
           {isAuth ? (
-            <button type='submit' className='nextButton' onClick={accountInfo}>Next</button>
+            <button type='submit' className='nextButton' onClick={accountInfoButton}>Next</button>
           ):(
             <button type='submit' className='nextButton' onClick={demoAccount}>Next</button>
           )}

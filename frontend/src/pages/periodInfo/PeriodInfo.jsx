@@ -9,7 +9,6 @@ import Moment from 'moment';
 import axios from 'axios';
 import { setPeriod } from '../../state';
 
-
 function PeriodInfo() {
   const userInfo =useSelector((state) => state.previousPeriod)
   const [removeDate, setRemove] = useState(null)
@@ -20,8 +19,8 @@ function PeriodInfo() {
       key: 'selection'
     }
   ]);
-  const [loggedPeriods, setLoggedPeriods] =useState([])
-  const {removePeriod, addPeriod, message, periodMessage} = usePeriodInfo()
+  // const [loggedPeriods, setLoggedPeriods] =useState([])
+  const {removePeriod, addPeriod, updateUserDates, setLoggedPeriods,  message, periodMessage, loggedPeriods} = usePeriodInfo()
 
   const optionChange = (event) =>{
     setRemove(event.target.value)
@@ -32,23 +31,23 @@ function PeriodInfo() {
   const addPeriodButton = async () =>{
     addPeriod(loggedPeriods);
   };
-  const userData = () =>{
-    const startDate = Moment(date[0].startDate).format()
-    const endDate = Moment(date[0].endDate).format()
+  // const userData = () =>{
+  //   const startDate = Moment(date[0].startDate).format()
+  //   const endDate = Moment(date[0].endDate).format()
 
-    let period = [{
-      startDate: startDate,
-      endDate: endDate
-    }]
-    if (period[0].startDate !== period[0].endDate){
-      if(loggedPeriods.length === 0){
-        setLoggedPeriods(period)
-      }else{
-        let newLogged = [...loggedPeriods, ...period]
-        setLoggedPeriods(newLogged)
-      }
-    }
-  }
+  //   let period = [{
+  //     startDate: startDate,
+  //     endDate: endDate
+  //   }]
+  //   if (period[0].startDate !== period[0].endDate){
+  //     if(loggedPeriods.length === 0){
+  //       setLoggedPeriods(period)
+  //     }else{
+  //       let newLogged = [...loggedPeriods, ...period]
+  //       setLoggedPeriods(newLogged)
+  //     }
+  //   }
+  // }
   const removeNewPeriod = (key) =>{
     const periodUpdate = [...loggedPeriods]
     periodUpdate.splice(key, 1)
@@ -62,7 +61,7 @@ function PeriodInfo() {
     //   );
     // }
     useEffect(()=>{
-      userData(date)
+      updateUserDates(date)
     },[date]);
     console.log(loggedPeriods)
 
