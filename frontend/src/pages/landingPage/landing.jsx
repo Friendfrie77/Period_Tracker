@@ -10,6 +10,7 @@ const IndexPage = () => {
   const [loginOpen, setLogin] = useState(false)
   const [regOpen, setReg] = useState(false)
   const [isLoading, setLoading] = useState(true)
+  const [err, setErrMsg] = useState('');
   const handleDataReceiveLogin = (data) => {
     setLogin(data);
   };
@@ -85,7 +86,7 @@ const IndexPage = () => {
         }
         {regOpen &&
           <div className='page-fade'>
-            <SignUp onShow={openReg} setLoading = {isLoading} loading ={setLoading} />
+            <SignUp onShow={openReg} setLoading = {isLoading} loading ={setLoading}  setErr = {setErrMsg} err = {err}/>
           </div>
         }
       </div>

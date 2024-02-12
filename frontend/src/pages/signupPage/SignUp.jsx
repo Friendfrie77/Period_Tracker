@@ -7,45 +7,49 @@ import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state';
 import axios from 'axios';
-
+import useRegSetup from '../../hooks/useRegSetup';
 export default function SignUp(props){
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    async function onSubmit(values){
-        props.setLoading(false)
-        let email = values.email;
-        let username = values.username;
-        let password = values.password;
-        const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
-            email, username, password
-        }).catch(function (error){
-            if(error.response){
-                props.setErr(error.response.data.error)
-            }
-            props.setLoading(false)
-        });
-        const user = await results
-        if(user){
-            dispatch(
-                setLogin({
-                  user: user.data.newUser.username,
-                  email: user.data.newUser.email,
-                  token: user.data.accessToken,
-                  cycle: user.data.newUser.cycle,
-                  avgLength: user.data.newUser.avgLength,
-                  periodStartDate: user.data.newUser.periodStartDate,
-                  periodEndDate: user.data.newUser.periodEndDate,
-                  previousPeriod: user.data.newUser.previousPeriod,
-                  isBleeding: user.data.newUser.isBleeding,
-                  canBleed: user.data.newUser.canBleed,
-                  notification: user.data.newUser.notification
-                })
-              );
-              navigate('/accountsetup')
-        }
-
+    const {regNewUser ,isLoading} = useRegSetup();
+    
+    const onSubmit = (values) => {
+        regNewUser(values);
     }
-    const content = props.loading ? <Spinner /> : (
+    // async function onSubmit(values){
+    //     let email = values.email;
+    //     let username = values.username;
+    //     let password = values.password;
+    //     const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
+    //         email, username, password
+    //     }).catch(function (error){
+    //         if(error.response){
+    //             props.setErr(error.response.data.error)
+    //         }
+    //         props.setLoading(false)
+    //     });
+    //     const user = await results
+    //     if(user){
+    //         dispatch(
+    //             setLogin({
+    //               user: user.data.newUser.username,
+    //               email: user.data.newUser.email,
+    //               token: user.data.accessToken,
+    //               cycle: user.data.newUser.cycle,
+    //               avgLength: user.data.newUser.avgLength,
+    //               periodStartDate: user.data.newUser.periodStartDate,
+    //               periodEndDate: user.data.newUser.periodEndDate,
+    //               previousPeriod: user.data.newUser.previousPeriod,
+    //               isBleeding: user.data.newUser.isBleeding,
+    //               canBleed: user.data.newUser.canBleed,
+    //               notification: user.data.newUser.notification
+    //             })
+    //           );
+    //           navigate('/accountsetup')
+    //     }
+
+    // }
+    const content = isLoading ? <Spinner /> : (
         <section className='login-wrapper'>
             <AiOutlineClose onClick={props.onShow} className='exit-button' />
             <Form
