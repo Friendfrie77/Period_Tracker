@@ -1,121 +1,22 @@
-.username-input, .password-input, .email-input{
-    width: 95%;
-    position: relative;
-    height: 2.5rem;
-    margin-bottom: 2.2rem;
-    input{
-        background-color: $login-input-background !important;
-        width: 100%;
-        height: 100%;
-        border: none;
-        outline: none;
-        font-size: 1.2rem;
-        color: $textcolor;
-        border-radius: $radius;
-        padding: 5px;
-    }
-    label{
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-        pointer-events: none;
-        border-bottom: 1px solid $textcolor;
-        color: $textcolor;
-        transform: all 0.3s ease;
-        &:after{
-            content: "";
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            opacity: 0%;
-            border-bottom: 3px solid $color6;
-            left: 0px;
-            bottom: -1;
-            transform: translateX(-100%);
-            transform: all .3s ease;
-        }
-        span{
-            position: absolute;
-            bottom: 0px;
-            left: 4px;
-        }
-    }
-    .error{
-        position: absolute;
-        z-index: 10;
-        left: 0%;
-        bottom: 100%;
-        color: red;
-        font-size: var(--fs-cal);
-    }
-    @include for-size(phone-only){
-        width: 100%;
-    }
-}
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
+.username-input,
+.password-input,
+.email-input {
+  width: 95%;
+  position: relative;
+  height: 2.5rem;
+  margin-bottom: 2.2rem;
+  input {
+    background-color: $login-input-background !important;
+    width: 100%;
+    height: 100%;
     border: none;
-    -webkit-text-fill-color: $textcolor;
-    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-    transition: background-color 5000s ease-in-out 0s;
-}
-.remember-me{
-    width: 100%;
-    text-align: center;
-    label{
-        padding-left: 2%;
-        color: $textcolor;
-        font-size: 1.2rem;
-    }
-}
-.sign-up{
-    margin-top: 1rem;
-    span{
-        color: $textcolor;
-        padding-right: 5px;
-    }
-    a{
-        color: $color1;
-        text-decoration: none;
-    }
-}
-.recover{
-    text-decoration: none;
-    color:$color1;
-    font-size: .80rem;
-    margin-bottom: 1rem;
-}
-
-.bottom-wave{
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    bottom: 0;
-}
-
-.reg-error{
+    outline: none;
+    font-size: 1.2rem;
     color: $textcolor;
-    font-size: 1.4rem;
-}
-
-.exit-button{
-    color: $textcolor;
-    font-size: 2.5rem;
-    grid-area:1/7/1/7;
-    &:hover{
-        color: $color5;
-    }
-}
-
-.login-lable{
+    border-radius: $radius;
+    padding: 5px;
+  }
+  label {
     position: absolute;
     bottom: 0px;
     left: 0px;
@@ -124,21 +25,122 @@ select:-webkit-autofill:focus {
     border-bottom: 1px solid $textcolor;
     color: $textcolor;
     transform: all 0.3s ease;
-    &:after{
-        content: "";
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        border-bottom: 3px solid $color6;
-        left: 0px;
-        bottom: -1;
-        transform: translateX(-100%);
-        transform: all .3s ease;
+    &:after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0%;
+      border-bottom: 3px solid $color6;
+      left: 0px;
+      bottom: -1;
+      transform: translateX(-100%);
+      transform: all 0.3s ease;
     }
+    span {
+      position: absolute;
+      bottom: 0px;
+      left: 4px;
+    }
+  }
+  .error {
+    // position: absolute;
+    z-index: 10;
+    // left: 0%;
+    // bottom: -100%;
+    color: red;
+    font-size: var(--fs-font);
+  }
+  @include for-size(phone-only) {
+    width: 100%;
+  }
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: $textcolor;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+.remember-me {
+  width: 100%;
+  text-align: center;
+  label {
+    padding-left: 2%;
+    color: $textcolor;
+    font-size: 1.2rem;
+  }
+}
+.sign-up {
+  margin-top: 1rem;
+  span {
+    color: $textcolor;
+    padding-right: 5px;
+  }
+  a {
+    color: $color1;
+    text-decoration: none;
+  }
+}
+.recover {
+  text-decoration: none;
+  color: $color1;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 }
 
-.login-span{
-        position: absolute;
-        bottom: 0px;
-        left: 4px;
+.bottom-wave {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  bottom: 0;
+}
+
+.reg-error {
+  color: $textcolor;
+  font-size: 1.4rem;
+}
+
+.exit-button {
+  color: $textcolor;
+  font-size: 2.5rem;
+  grid-area: 1/7/1/7;
+  &:hover {
+    color: $color5;
+  }
+}
+
+.login-lable {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  pointer-events: none;
+  border-bottom: 1px solid $textcolor;
+  color: $textcolor;
+  transform: all 0.3s ease;
+  &:after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid $color6;
+    left: 0px;
+    bottom: -1;
+    transform: translateX(-100%);
+    transform: all 0.3s ease;
+  }
+}
+
+.login-span {
+  position: absolute;
+  bottom: 0px;
+  left: 4px;
 }

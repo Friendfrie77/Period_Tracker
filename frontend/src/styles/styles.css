@@ -1246,13 +1246,17 @@ h1, h2, h3, h4 {
   font-size: var(--fs-hero);
 }
 
-.username-input, .password-input, .email-input {
+.username-input,
+.password-input,
+.email-input {
   width: 95%;
   position: relative;
   height: 2.5rem;
   margin-bottom: 2.2rem;
 }
-.username-input input, .password-input input, .email-input input {
+.username-input input,
+.password-input input,
+.email-input input {
   background-color: #4B203F !important;
   width: 100%;
   height: 100%;
@@ -1263,7 +1267,9 @@ h1, h2, h3, h4 {
   border-radius: 5px;
   padding: 5px;
 }
-.username-input label, .password-input label, .email-input label {
+.username-input label,
+.password-input label,
+.email-input label {
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -1273,7 +1279,9 @@ h1, h2, h3, h4 {
   color: #EAE8FF;
   transform: all 0.3s ease;
 }
-.username-input label:after, .password-input label:after, .email-input label:after {
+.username-input label:after,
+.password-input label:after,
+.email-input label:after {
   content: "";
   position: absolute;
   height: 100%;
@@ -1285,21 +1293,24 @@ h1, h2, h3, h4 {
   transform: translateX(-100%);
   transform: all 0.3s ease;
 }
-.username-input label span, .password-input label span, .email-input label span {
+.username-input label span,
+.password-input label span,
+.email-input label span {
   position: absolute;
   bottom: 0px;
   left: 4px;
 }
-.username-input .error, .password-input .error, .email-input .error {
-  position: absolute;
+.username-input .error,
+.password-input .error,
+.email-input .error {
   z-index: 10;
-  left: 0%;
-  bottom: 100%;
   color: red;
-  font-size: var(--fs-cal);
+  font-size: var(--fs-font);
 }
 @media (max-width: 425px) {
-  .username-input, .password-input, .email-input {
+  .username-input,
+  .password-input,
+  .email-input {
     width: 100%;
   }
 }

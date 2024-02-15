@@ -11,6 +11,8 @@ const register = async (req, res) => {
         }else{
             const user = new User({email, username ,password, cycle: '', 
             periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
+            // const user = new User({email, username ,password, cycle: '', 
+            // canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             user.save(function(err){
                 if (err){
                     console.log(err)

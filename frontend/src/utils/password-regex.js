@@ -9,7 +9,7 @@ function passwordRegex (newPassword, confirmNewPassword){
         }else if(newPassword.search(/^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/i) < 0){
             return ({isVaild:false, msg: 'Password must contain at least one special symbol'})
         }else{
-            return ({isVaild:true})
+            return ({isVaild:true, msg:''})
         }
     }else{
         return ({isvaild:false, msg: 'New passwords do not match'})

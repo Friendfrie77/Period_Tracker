@@ -1,54 +1,21 @@
 
+import {React ,useState} from "react";
 import {Form, Field} from 'react-final-form';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
 import {passwordRegex} from '../../utils/password-regex';
-import {useNavigate} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setLogin } from '../../state';
-import axios from 'axios';
 import useRegSetup from '../../hooks/useRegSetup';
-export default function SignUp(props){
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const {regNewUser ,isLoading} = useRegSetup();
-    
-    const onSubmit = (values) => {
-        regNewUser(values);
-    }
-    // async function onSubmit(values){
-    //     let email = values.email;
-    //     let username = values.username;
-    //     let password = values.password;
-    //     const results = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{
-    //         email, username, password
-    //     }).catch(function (error){
-    //         if(error.response){
-    //             props.setErr(error.response.data.error)
-    //         }
-    //         props.setLoading(false)
-    //     });
-    //     const user = await results
-    //     if(user){
-    //         dispatch(
-    //             setLogin({
-    //               user: user.data.newUser.username,
-    //               email: user.data.newUser.email,
-    //               token: user.data.accessToken,
-    //               cycle: user.data.newUser.cycle,
-    //               avgLength: user.data.newUser.avgLength,
-    //               periodStartDate: user.data.newUser.periodStartDate,
-    //               periodEndDate: user.data.newUser.periodEndDate,
-    //               previousPeriod: user.data.newUser.previousPeriod,
-    //               isBleeding: user.data.newUser.isBleeding,
-    //               canBleed: user.data.newUser.canBleed,
-    //               notification: user.data.newUser.notification
-    //             })
-    //           );
-    //           navigate('/accountsetup')
-    //     }
 
-    // }
+export default function SignUp(props){
+    const {regNewUser ,isLoading} = useRegSetup();
+    const [vaildReg, setVaildReg] = useState(false)
+    const onSubmit = async (values) => {
+        const res = regNewUser(values);
+        if(res){
+            console.log(res)
+            props.setErr(await res);
+        }
+    }
     const content = isLoading ? <Spinner /> : (
         <section className='login-wrapper'>
             <AiOutlineClose onClick={props.onShow} className='exit-button' />
@@ -70,14 +37,18 @@ export default function SignUp(props){
                 } else{
                     const regex = passwordRegex(values.password, values.passwordconfirm)
                     if(!regex.isVaild){
+                        errors.password = regex.msg
+                        // props.setErr(regex.msg)
+                    }if(regex.isVaild && props.err){
                         props.setErr(regex.msg)
                     }
                 }
+       
                 return errors
              }}
-             render = {({handleSubmit, form, submitting, pristine, values}) =>(
+             render = {({handleSubmit, form, submitting, pristine, values, valid}) =>(
                 <form onSubmit={handleSubmit}>
-                    <span className='message-warning'>{props.err}</span>
+                    {/* <span className='message-warning'>{props.err}</span> */}
                     <h1>Sign Up</h1>
                     <Field name='email'>
                         {({input, meta}) => (
@@ -86,7 +57,7 @@ export default function SignUp(props){
                             <label htmlFor='email' className='login-lable'>
                                 <span className='login-span'>Email<small>*</small></span>
                             </label>
-                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                            {meta.error && meta.touched && <span className='error'>{meta.error} test</span>}
                         </div>
                         )}
                     </Field>
@@ -95,7 +66,7 @@ export default function SignUp(props){
                         <div className='username-input'>
                             <input {...input} type='text' required />
                             <label htmlFor='username' className='login-lable'>
-                                <span className='login-span'>Username<small>*</small></span>
+                                <span className={`login-span ${meta.error ? `span-error` : ''}`}>Username<small>*</small></span>
                             </label>
                             {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
                         </div>
@@ -123,7 +94,7 @@ export default function SignUp(props){
                         </div>
                         )}
                     </Field>
-                    <button type="submit" disabled={submitting}>Submit</button>
+                    <button type="submit" disabled={!valid}>Submit</button>
                 </form>
             )}
             />
