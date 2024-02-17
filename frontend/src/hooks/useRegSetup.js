@@ -11,7 +11,6 @@ const useRegSetup = () =>{
     
     const regNewUser = async (val) =>{
         let {email, username, password} = val
-        console.log(email, username, password)
         setLoading(true)
         try{
             const newUser = await axios.post(`${process.env.REACT_APP_APIURL}/register`,{

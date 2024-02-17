@@ -5,7 +5,8 @@ import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
 import {passwordRegex} from '../../utils/password-regex';
 import useRegSetup from '../../hooks/useRegSetup';
-
+import UserLogin
+ from "../../components/userLoginField/UserLogin";
 export default function SignUp(props){
     const {regNewUser ,isLoading} = useRegSetup();
     const [vaildReg, setVaildReg] = useState(false)
@@ -43,57 +44,36 @@ export default function SignUp(props){
                         props.setErr(regex.msg)
                     }
                 }
-       
                 return errors
              }}
-             render = {({handleSubmit, form, submitting, pristine, values, valid}) =>(
+             render = {({handleSubmit, form, submitting, pristine, values, valid, touched
+             }) =>(
                 <form onSubmit={handleSubmit}>
-                    {/* <span className='message-warning'>{props.err}</span> */}
                     <h1>Sign Up</h1>
-                    <Field name='email'>
-                        {({input, meta}) => (
-                        <div className='email-input'>
-                            <input {...input} type= 'email' required/>
-                            <label htmlFor='email' className='login-lable'>
-                                <span className='login-span'>Email<small>*</small></span>
-                            </label>
-                            {meta.error && meta.touched && <span className='error'>{meta.error} test</span>}
-                        </div>
-                        )}
-                    </Field>
-                    <Field name='username'>
-                        {({input, meta})=> (
-                        <div className='username-input'>
-                            <input {...input} type='text' required />
-                            <label htmlFor='username' className='login-lable'>
-                                <span className={`login-span ${meta.error ? `span-error` : ''}`}>Username<small>*</small></span>
-                            </label>
-                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
-                        </div>
-                        )}
-                    </Field>
-                    <Field type='password' name='password'>
-                        {({input, meta}) => (
-                        <div className='password-input'>
-                            <input {...input} type='password' required />
-                            <label htmlFor='password' className='login-lable'>
-                                <span className='login-span'>Password<small>*</small></span>
-                            </label>
-                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
-                        </div>
-                        )}
-                    </Field>
-                    <Field type='password' name='passwordconfirm'>
-                        {({input, meta}) => (
-                        <div className='password-input'>
-                            <input {...input} type='password' required />
-                            <label htmlFor='passwordconfirm' className='login-lable'>
-                                <span className='login-span'>Confirm Password<small>*</small></span>
-                            </label>
-                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
-                        </div>
-                        )}
-                    </Field>
+                    <UserLogin
+                        fieldName = 'email'
+                        type = 'email'
+                        spanHtmlFor = 'email'
+                        span = 'Email'
+                    />
+                    <UserLogin
+                        fieldName = 'username'
+                        type = 'text'
+                        spanHtmlFor = 'username'
+                        span = 'Username'
+                    />
+                    <UserLogin
+                        fieldName = 'password'
+                        type = 'password'
+                        spanHtmlFor = 'password'
+                        span = 'Password'
+                    />
+                    <UserLogin
+                        fieldName = 'passwordconfirm'
+                        type = 'password'
+                        spanHtmlFor = 'passwordconfirm'
+                        span = 'Confirm Password'
+                    />
                     <button type="submit" disabled={!valid}>Submit</button>
                 </form>
             )}

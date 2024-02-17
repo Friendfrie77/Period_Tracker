@@ -58,6 +58,52 @@
         }
       }
 
+
+       {/* <Field name='email'>
+                        {({input, meta}) => (
+                        <div className='email-input'>
+                            <input {...input} type= 'email' required/>
+                            <label htmlFor='email' className={`login-lable ${meta.error && meta.touched && !meta.active  ? `span-error` : ''}`}>
+                                <span className='login-span'>Email<small>*</small></span>
+                            </label>
+                            {meta.error && meta.touched && <span className='error'>{meta.error} test</span>}
+                        </div>
+                        )}
+                    </Field> */}
+                    {/* <Field name='username'>
+                        {({input, meta})=> (
+                        <div className='username-input'>
+                            <input {...input} type='text' required />
+                            <label htmlFor='username' className={`login-lable ${meta.error && meta.touched && !meta.active  ? `span-error` : ''}`}>
+                                <span className='login-span'>Username<small>*</small></span>
+                            </label>
+                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                        </div>
+                        )}
+                    </Field> */}
+                    {/* <Field type='password' name='password'>
+                        {({input, meta}) => (
+                        <div className='password-input'>
+                            <input {...input} type='password' required />
+                            <label htmlFor='password' className={`login-lable ${meta.error && meta.touched && !meta.active  ? `span-error` : ''}`}>
+                                <span className='login-span'>Password<small>*</small></span>
+                            </label>
+                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                        </div>
+                        )}
+                    </Field>
+                    <Field type='password' name='passwordconfirm'>
+                        {({input, meta}) => (
+                        <div className='password-input'>
+                            <input {...input} type='password' required />
+                            <label htmlFor='passwordconfirm' className={`login-lable ${meta.error && meta.touched && !meta.active  ? `span-error` : ''}`}>
+                                <span className='login-span'>Confirm Password<small>*</small></span>
+                            </label>
+                            {meta.error && meta.touched && <span className='error'>{meta.error}</span>}
+                        </div>
+                        )}
+                    </Field> */}
+                    
       //backend
 //       userSchema.methods.calcAvgLength = function(user){
 //     let totalDays = 0;
