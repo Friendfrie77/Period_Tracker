@@ -48,6 +48,10 @@
         background-color: $color2;
         border-bottom: #5CFFC9;
     }
+    &:disabled{
+        opacity: 50%;
+        pointer-events: none;
+    }
 }
 @mixin phone-width-100{
     @include for-size(tablet-only){
@@ -201,6 +205,7 @@ h1, h2, h3, h4{
 @import './layouts';
 @import './index';
 @import './login';
+@import './accountSetup';
 @import './react-calendar';
 @import './home';
 @import './periodinfo';

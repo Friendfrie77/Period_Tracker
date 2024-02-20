@@ -9,7 +9,7 @@ const register = async (req, res) => {
         if(results){
             res.status(401).json({error:'User already exists'})
         }else{
-            const user = new User({email, username ,password, cycle: '', 
+            const user = new User({email, username ,password, roll: 'user', cycle: '', 
             periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             // const user = new User({email, username ,password, cycle: '', 
             // canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
@@ -100,8 +100,11 @@ const changePassword = async (req, res) =>{
 }
 
 const demoAccount = async (req, res) =>{
-    const {username, password} = req.body;
-    const demoUser = new Demo({username, password,})
+    const {username, loggedPeriods} = req.body;
+    console.log(loggedPeriods.length)
+    if(loggedPeriods.length === 0){
+        console.log('test')
+    }
     // const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
 
 }

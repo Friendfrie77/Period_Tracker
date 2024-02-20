@@ -819,6 +819,10 @@ h1, h2, h3, h4 {
   background-color: #241E4E;
   border-bottom: #5CFFC9;
 }
+.button:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
 
 .message {
   text-align: center;
@@ -1140,6 +1144,13 @@ h1, h2, h3, h4 {
   }
 }
 
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-button-container {
   text-align: center;
   display: flex;
@@ -1412,6 +1423,10 @@ select:-webkit-autofill:focus {
   position: absolute;
   bottom: 0px;
   left: 4px;
+}
+
+.demo-form {
+  min-width: 150px;
 }
 
 .rdrCalendarWrapper {
@@ -1754,6 +1769,10 @@ select:-webkit-autofill:focus {
 .btn-period-list:hover {
   background-color: #241E4E;
   border-bottom: #5CFFC9;
+}
+.btn-period-list:disabled {
+  opacity: 50%;
+  pointer-events: none;
 }
 
 .account-settings {
@@ -2600,6 +2619,10 @@ nav {
   background-color: #241E4E;
   border-bottom: #5CFFC9;
 }
+.nav-cta:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
 
 footer {
   background-color: #4B203F;
@@ -2794,6 +2817,10 @@ footer a {
 .card-cta-button:hover {
   background-color: #241E4E;
   border-bottom: #5CFFC9;
+}
+.card-cta-button:disabled {
+  opacity: 50%;
+  pointer-events: none;
 }
 .card-cta-button:hover {
   background-color: #5C0F47;

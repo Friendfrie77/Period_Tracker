@@ -9,13 +9,15 @@ import axios from 'axios';
 import Spinner from '../../components/Spinner';
 import useAccountSetup from '../../hooks/useAccountSetup';
 import usePeriodInfo from '../../hooks/usePeriodInfo';
+import UserLogin from '../../components/userLoginField/UserLogin';
+import {Form} from 'react-final-form';
 
 
 const AccountSetup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.token));
-  const {sendAccountInfo, updateUserData, isLoading} = useAccountSetup();
+  const {sendAccountInfo, sendDemoInfo,  updateUserData, isLoading} = useAccountSetup();
   const {updateUserDates, loggedPeriods} = usePeriodInfo();
   const [date, setDate] = useState([
     {
@@ -24,16 +26,12 @@ const AccountSetup = () => {
       key: 'selection'
     }
   ]);
-  // const [isLoading, setLoading] = useState(false)
-  // const userInfo = useSelector((state) => state.previousPeriod);
-  const email = useSelector((state) => state.email)
-  const token = useSelector((state) => state.token)
 
-  const userDates = (date) =>{
-    updateUserDates(date);
-  }
-  const accountInfoButton = (loggedPeriods) =>{
+  const accountInfoButton = () =>{
     sendAccountInfo(loggedPeriods)
+  }
+  const demoAccountButton = (val) => {
+    sendDemoInfo(val,loggedPeriods)
   }
   const setDates = (dates) =>{
     dispatch(
@@ -42,57 +40,60 @@ const AccountSetup = () => {
       })
     );
   }
-  const username = 'test';
   useEffect(()=>{
     updateUserDates(date);
   },[date]);
-  console.log(date)
-  console.log(loggedPeriods)
-  // const accountInfo = async () =>{
-  //   // setLoading(true)
-  //   try{
-  //     const dates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
-  //         email,
-  //         userInfo
-  //         },{
-  //           headers: {'Authorization': `Bearer ${token}`},
-  //         }
-  //         );
-  //         if (dates){
-  //           navigate('/Home')
-  //         }
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // }
-  const demoAccount = async () =>{
-    // setLoading(true)
-    const test = await axios.post(`${process.env.REACT_APP_APIURL}/demo`,{
-      username
-    })
-  }
   const setup = isLoading ? <Spinner /> : (
         <section className='setup-wrapper'>
           {isAuth ? (
-            null
-          ):( 
-            <span>Please enter in a name</span>
-          )}
-          <h1>When was your last few periods?</h1>
-          <p>Just select them below, and once your done hit next. Please try to make them as close as you can.</p>
-          <DateRange
-            editableDateInputs={true}
-            showMonthAndYearPickers={false}
-            fixedHeight = {true}
-            onChange={item => setDate([item.selection])}
-            moveRangeOnFirstSelection={false}
-            ranges={date}
-            // scroll = {{enabled: true}}
-          />
-          {isAuth ? (
-            <button type='submit' className='nextButton' onClick={accountInfoButton}>Next</button>
+            <>
+              <h1>When was your last few periods?</h1>
+              <p>Just select them below, and once your done hit next. Please try to make them as close as you can.</p>
+              <DateRange
+                editableDateInputs={true}
+                showMonthAndYearPickers={false}
+                fixedHeight = {true}
+                onChange={item => setDate([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={date}
+              />
+              <button type='submit' className='nextButton' onClick={accountInfoButton}>Next</button>
+            </>
           ):(
-            <button type='submit' className='nextButton' onClick={demoAccount}>Next</button>
+            <>
+              <h1>Welcome to the demo!</h1>
+              <p>You can select dates if you would like, but it is not required, all we need is something to call you by.</p>
+              <DateRange
+                editableDateInputs={true}
+                showMonthAndYearPickers={false}
+                fixedHeight = {true}
+                onChange={item => setDate([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={date}
+              />
+              <Form
+                onSubmit={demoAccountButton}
+                validate = {values =>{
+                  const errors = {};
+                  if(!values.name){
+                    errors.name = 'Required'
+                  }
+                  return errors
+                }}
+                render = {({handleSubmit, form, submitting, pristine, values, valid, touched
+                }) =>(
+                  <form className='flex-center demo-form' onSubmit={handleSubmit}>
+                    <UserLogin
+                      fieldName= 'name'
+                      type = 'text'
+                      spanHtmlFor = 'name'
+                      span='Name' 
+                    />
+                    <button className='button' type='submit' disabled={!valid}>Submit</button>
+                  </form>
+                )}
+              />
+            </>
           )}
         </section>
   )

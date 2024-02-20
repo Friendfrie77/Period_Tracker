@@ -161,3 +161,48 @@
 //         return(false)
 //     }
 // }
+
+
+
+
+        //   <h1>When was your last few periods?</h1>
+        //   <p>Just select them below, and once your done hit next. Please try to make them as close as you can.</p>
+        //   <DateRange
+        //     editableDateInputs={true}
+        //     showMonthAndYearPickers={false}
+        //     fixedHeight = {true}
+        //     onChange={item => setDate([item.selection])}
+        //     moveRangeOnFirstSelection={false}
+        //     ranges={date}
+        //     // scroll = {{enabled: true}}
+        //   />
+        //   {isAuth ? (
+        //     <button type='submit' className='nextButton' onClick={accountInfoButton}>Next</button>
+        //   ):(
+        //     <button type='submit' className='nextButton' onClick={demoAccount}>Next</button>
+        //   )}
+
+
+          // const accountInfo = async () =>{
+  //   // setLoading(true)
+  //   try{
+  //     const dates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
+  //         email,
+  //         userInfo
+  //         },{
+  //           headers: {'Authorization': `Bearer ${token}`},
+  //         }
+  //         );
+  //         if (dates){
+  //           navigate('/Home')
+  //         }
+  //   }catch(err){
+  //     console.log(err)
+  //   }
+  // }
+  // const demoAccount = async () =>{
+  //   // setLoading(true)
+  //   const test = await axios.post(`${process.env.REACT_APP_APIURL}/demo`,{
+  //     username
+  //   })
+  // }

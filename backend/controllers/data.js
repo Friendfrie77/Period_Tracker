@@ -24,6 +24,7 @@ async function setNotificationStatus (req, res){
 }
 const addNewUserInfo = async (req, res) => {
     const {email, loggedPeriods} = req.body;
+    console.log(loggedPeriods)
     const user = await User.findOne({email: email});
     try{
         if(user.previousPeriod.length === 0){
