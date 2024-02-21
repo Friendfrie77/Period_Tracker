@@ -7,7 +7,6 @@ import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
 import { sendPeriodStatus, sendUpdatedPeriod, sendPreviousPeriod, removeCurrentDates, sendPeriodInfo} from "../../utils/sendUserInfo";
-import { fetchUserInfo } from '../../utils/fetchUserInfo'
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,28 +21,16 @@ const Home = () => {
   const [isBleeding, setBleeding] = useState(useSelector((state) => state.isBleeding))
   const [canBleed, setBleed] = useState(useSelector((state) => state.canBleed))
   const [needInfo, setInfo] = useState(true)
+
   let todaysDate = new Date()
   todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
-  const setUser = async () =>{
-    const userInfo = await fetchUserInfo(email, token)
-    console.log(userInfo)
-    dispatch(
-      setUserInfo({
-        periodStartDate: userInfo.periodStartDate,
-        periodEndDate: userInfo.periodEndDate,
-        canBleed: userInfo.canBleed,
-        isBleeding: userInfo.isBleeding,
-        previousPeriod: userInfo.previousPeriod,
-        cycle: userInfo.cycle,
-        avgLength: userInfo.avgLength
-      })
-    )
-    console.log(periodEndDate)
+  const checkInfo = () => {
     if (periodStartDate && periodEndDate){
       setInfo(false)
     }
   }
+
 const periodStarted = async () =>{
   if (Moment(periodStartDate).format('YYYY-MM-DD') !== todaysDate){
     const newEndDate = Moment(todaysDate).add(avgLength, 'days').format('YYYY-MM-DD')
@@ -105,11 +92,10 @@ const periodEnded = async () =>{
   removeCurrentDates(email, token);
   setBleeding(false);
 }
-
 useEffect(()=>{
-  setUser()
-},[isBleeding, periodStartDate])  
-console.log(periodStartDate, isBleeding, canBleed, needInfo)
+  checkInfo()
+},[])
+
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){
     return <PeriodNotActive cycle = {cycle} userName = {userName} endDate = {periodStartDate} startDate = {cycleStartDate} onClick = {periodStarted} periodStartDate={periodStartDate} periodEndDate = {periodEndDate}/>

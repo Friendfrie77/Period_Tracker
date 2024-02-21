@@ -206,3 +206,23 @@
   //     username
   //   })
   // }
+
+  //   const setUser = async () =>{
+//     const userInfo = await fetchUserInfo(email, token)
+//     // console.log(userInfo)
+//     dispatch(
+//       setUserInfo({
+//         periodStartDate: userInfo.periodStartDate,
+//         periodEndDate: userInfo.periodEndDate,
+//         canBleed: userInfo.canBleed,
+//         isBleeding: userInfo.isBleeding,
+//         previousPeriod: userInfo.previousPeriod,
+//         cycle: userInfo.cycle,
+//         avgLength: userInfo.avgLength
+//       })
+//     )
+//     console.log(periodEndDate)
+//     if (periodStartDate && periodEndDate){
+//       setInfo(false)
+//     }
+//   }

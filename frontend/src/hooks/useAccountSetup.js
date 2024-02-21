@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setPeriod } from "../state";
+import { setPeriod, setLogin } from "../state";
 import usePeriodInfo from "./usePeriodInfo";
 
 const useAccountSetup = () => {
@@ -38,13 +38,31 @@ const useAccountSetup = () => {
     }
   };
   const sendDemoInfo = async (val,loggedPeriods) => {
-    const username = val
+    const username = val.name
     const demoAccountAPICall = await axios.post(
         `${process.env.REACT_APP_APIURL}/auth/demo`,{
             username,
             loggedPeriods
         }
     );
+    const UserData = demoAccountAPICall.data.userInfo;
+    console.log(UserData)
+    console.log(demoAccountAPICall.data.userInfo)
+    dispatch(
+      setLogin({
+            user: UserData.username,
+            email: UserData.email,
+            token: demoAccountAPICall.data.accessToken,
+            cycle: UserData.cycle,
+            avgLength: UserData.avgLength,
+            periodStartDate: UserData.periodStartDate,
+            periodEndDate: UserData.periodEndDate,
+            previousPeriod: UserData.previousPeriod,
+            isBleeding: UserData.isBleeding,
+            canBleed: UserData.canBleed,
+      })
+  )
+  navigate('/home')
   };
   return { sendAccountInfo, sendDemoInfo, isLoading };
 };

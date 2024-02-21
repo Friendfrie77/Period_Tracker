@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../mongoose-schmea/User');
-const Demo = require('../mongoose-schmea/Demo')
-
+const Guest = require('../mongoose-schmea/Demo');
+const GenPeriods = require('../utils/genGuestPeriodInfo');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
@@ -101,11 +103,20 @@ const changePassword = async (req, res) =>{
 
 const demoAccount = async (req, res) =>{
     const {username, loggedPeriods} = req.body;
-    console.log(loggedPeriods.length)
+    let user;
     if(loggedPeriods.length === 0){
-        console.log('test')
+        let periodInfo = []
+        GenPeriods.genAllPeriods(periodInfo, 4);
+        user = new Guest({username, password:'password', roll:'Guest', cycle: '', 
+        periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, avgLength: '', previousPeriod:[...periodInfo]})
+        // user.save();
+        // console.log(user)
+    }else{
+        //come back to;
     }
-    // const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
-
+    const userId = {id: user._id};
+    const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
+    const userInfo = user.sendUserInfo(user)
+    res.status(200).json({accessToken, userInfo});
 }
 module.exports = {register, login, deleteAccount, changePassword, demoAccount}
