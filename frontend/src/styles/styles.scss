@@ -1,9 +1,9 @@
  $color1: #8FDDC3;
  $color2: #241E4E;
- $textcolor: #EAE8FF;
  $color4: #5C0F47;
  $color5: #8FDDC3;
  $color6: #5CFFC9;
+ $textcolor: #EAE8FF;
  $button-color:#AF4D98;
  $login-input-background: #4B203F;
  $backgroundgrad: linear-gradient($color2, #302867, #7B145F,  $color4);
@@ -35,6 +35,29 @@
     }
 }
 
+@mixin button-mixin{
+    background-color: $button-color;
+    border: none;
+    border-radius: $radius;
+    color: $textcolor;
+    transition: all .2s ease-in;
+    &:active{
+        transform: translateY(2px);
+    }
+    &:hover{
+        background-color: $color2;
+        border-bottom: #5CFFC9;
+    }
+    &:disabled{
+        opacity: 50%;
+        pointer-events: none;
+    }
+}
+@mixin phone-width-100{
+    @include for-size(tablet-only){
+        width: 100%
+    }
+}
 @import './reset';
 @import './big-cal/big-cal-styles';
 
@@ -43,6 +66,9 @@
     --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
     --fs-subheader:clamp(1.6rem, calc(4vw + .3rem), 3rem);
     --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
+    --fs-hero:clamp(1.5rem, calc(4vw + .5rem), 4.25rem);
+    --fs-hero-button:clamp(1.5rem, calc(4vw + .5rem), 2.5rem);
+    --fs-info-card: clamp(1.5rem, calc(2vw + .2rem), 2rem);
     --fs-body: 1.5rem;
     --fs-cal: 1.5rem;
     --fs-signup: 1.15rem;
@@ -83,7 +109,7 @@
 
 
 
-p, span, button, a, label, select, ul, li{
+p, span, button, a, label, select, ul, li, ol{
     font-family: $Copy-Font;
 }
 
@@ -101,16 +127,10 @@ h1, h2, h3, h4{
     margin-top: 16px;
     width: 125px;
     align-self: center;
-    background-color: $button-color;
-    border: none;
-    border-radius: $radius;
     box-shadow: $drop-shadow-wrappers;
     height: 35px;
     font-size: var(--fs-body);
-    color: $textcolor;
-    &:active{
-        transform: translateY(2px);
-    }
+    @include button-mixin;
 }
 .message{
     text-align: center;
@@ -182,8 +202,10 @@ h1, h2, h3, h4{
 
 
 @import './wrappers';
+@import './layouts';
 @import './index';
 @import './login';
+@import './accountSetup';
 @import './react-calendar';
 @import './home';
 @import './periodinfo';
@@ -196,3 +218,4 @@ h1, h2, h3, h4{
 @import './horizontal-date-picker';
 @import './reactTelephoneInput';
 @import './period-stats';
+@import './infoCard';

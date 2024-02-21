@@ -1,0 +1,43 @@
+.info-card{
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: $box-padding;
+    flex-grow: 1;
+    width: 100%;
+}
+.card-heading{
+    text-align: center;
+    font-size: var(--fs-subheader);
+}
+.card-content-wrapper{
+}
+.card-text-content{
+    text-align: center;
+    width: 50%;
+    @include phone-width-100;
+    h1{
+        font-size: var(--fs-info-card);
+    }
+    a{
+        text-decoration: none;
+        color: $textcolor;
+    }
+}
+.card-img-content{
+    width: 50%;
+    @include phone-width-100;
+}
+
+.card-cta-button{
+    @include button-mixin;
+    margin-top: 30px;
+    padding: 10px 35px;
+    box-shadow: $drop-shadow-wrappers;
+    &:hover{
+        background-color: $color4;
+    }
+
+}
+.card-cta-button-container{
+    margin-top: 15px;
+}

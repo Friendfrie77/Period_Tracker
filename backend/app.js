@@ -25,6 +25,7 @@ app.use(credentials)
 app.use(cors(corsOptions));
 
 app.post('/register', auth.register)
+app.post('/demo', auth.demoAccount)
 
 app.use('/auth', authRoutes)
 app.use('/user', userRoutes)

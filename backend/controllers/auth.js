@@ -1,16 +1,20 @@
 const jwt = require('jsonwebtoken');
 const User = require('../mongoose-schmea/User');
-
+const Guest = require('../mongoose-schmea/Demo');
+const GenPeriods = require('../utils/genGuestPeriodInfo');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
-    console.log(results)
     try{
         if(results){
             res.status(401).json({error:'User already exists'})
         }else{
-            const user = new User({email, username ,password, refreshToken: '', cycle: '', 
+            const user = new User({email, username ,password, roll: 'user', cycle: '', 
             periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
+            // const user = new User({email, username ,password, cycle: '', 
+            // canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             user.save(function(err){
                 if (err){
                     console.log(err)
@@ -96,4 +100,23 @@ const changePassword = async (req, res) =>{
         })
     }
 }
-module.exports = {register, login, deleteAccount, changePassword}
+
+const demoAccount = async (req, res) =>{
+    const {username, loggedPeriods} = req.body;
+    let user;
+    if(loggedPeriods.length === 0){
+        let periodInfo = []
+        GenPeriods.genAllPeriods(periodInfo, 4);
+        user = new Guest({username, password:'password', roll:'Guest', cycle: '', 
+        periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, avgLength: '', previousPeriod:[...periodInfo]})
+        // user.save();
+        // console.log(user)
+    }else{
+        //come back to;
+    }
+    const userId = {id: user._id};
+    const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
+    const userInfo = user.sendUserInfo(user)
+    res.status(200).json({accessToken, userInfo});
+}
+module.exports = {register, login, deleteAccount, changePassword, demoAccount}

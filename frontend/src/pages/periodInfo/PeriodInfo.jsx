@@ -3,20 +3,15 @@ import Nav from '../navbar/Nav'
 import Footer from '../footer/Footer';
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
+import usePeriodInfo from '../../hooks/usePeriodInfo';
 import { useSelector, useDispatch } from "react-redux";
 import Moment from 'moment';
 import axios from 'axios';
 import { setPeriod } from '../../state';
 
-
 function PeriodInfo() {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.token)
-  const email = useSelector((state) => state.email)
-  const userInfo = useSelector((state) => state.previousPeriod)
-  const [removeDate, setRemove] = useState()
-  const [message, setMessage] = useState()
-  const [periodMessage, setPMessage] = useState()
+  const userInfo =useSelector((state) => state.previousPeriod)
+  const [removeDate, setRemove] = useState(null)
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -24,76 +19,52 @@ function PeriodInfo() {
       key: 'selection'
     }
   ]);
+  // const [loggedPeriods, setLoggedPeriods] =useState([])
+  const {removePeriod, addPeriod, updateUserDates, setLoggedPeriods,  message, periodMessage, loggedPeriods} = usePeriodInfo()
+
   const optionChange = (event) =>{
     setRemove(event.target.value)
   }
+  const removePeriodButton = () =>{
+    removePeriod(removeDate)
+  }
+  const addPeriodButton = async () =>{
+    addPeriod(loggedPeriods);
+  };
+  // const userData = () =>{
+  //   const startDate = Moment(date[0].startDate).format()
+  //   const endDate = Moment(date[0].endDate).format()
 
-  const removePeriod = async () =>{
-    if (!removeDate){
-      setMessage('Please select a date')
-    }else{
-      const res =  await axios.post(`${process.env.REACT_APP_APIURL}/user/removePeriod`,{
-        email, removeDate},{
-          headers: {'Authorization': `Bearer ${token}`},
-        })
-        if (res.status === 201){
-          dispatch(
-            setPeriod({
-              previousPeriod: res.data.previousPeriod
-            })
-          )
-          setMessage(res.data.message)
-        }
-      }
-    }
-    const userData = (date) =>{
-      if (date[0].endDate){
-        const start = date[0].startDate.getDate()
-        const end = date[0].endDate.getDate()
-        if (start != end){
-          const startDate = Moment(date[0].startDate).format()
-          const endDate = Moment(date[0].endDate).format()
-          if (userInfo.length != 0){
-            const dates = userInfo.map(function(element){return element;})
-            let period = {
-              startDate: startDate,
-              endDate: endDate,
-              count: userInfo.length,
-            }
-            dates.push(period)
-            setDates(dates)
-          }else{
-            let period = {
-              startDate: startDate,
-              endDate: endDate,
-              count: 0,
-            }
-            let dates = [period]
-            setDates(dates)
-          }
-        }
-      }
-    }
-    const setDates = (dates) =>{
-      dispatch(
-        setPeriod({
-          previousPeriod: dates
-        })
-      );
-    }
-    const addPeriod = async () =>{
-      const sendDates = await axios.post(`${process.env.REACT_APP_APIURL}/user/newuser`,{
-        email, userInfo},{
-          headers: {'Authorization': `Bearer ${token}`},
-        }
-      )
-      const res = await sendDates
-      setPMessage(`${res.data.message}!`)
-    };
-    
+  //   let period = [{
+  //     startDate: startDate,
+  //     endDate: endDate
+  //   }]
+  //   if (period[0].startDate !== period[0].endDate){
+  //     if(loggedPeriods.length === 0){
+  //       setLoggedPeriods(period)
+  //     }else{
+  //       let newLogged = [...loggedPeriods, ...period]
+  //       setLoggedPeriods(newLogged)
+  //     }
+  //   }
+  // }
+  const removeNewPeriod = (key) =>{
+    const periodUpdate = [...loggedPeriods]
+    periodUpdate.splice(key, 1)
+    setLoggedPeriods(periodUpdate)
+  }
+    // const setDates = (dates) =>{
+    //   dispatch(
+    //     setPeriod({
+    //       previousPeriod: dates
+    //     })
+    //   );
+    // }
     useEffect(()=>{
-      userData(date)
+      updateUserDates(date)
     },[date]);
+    console.log(loggedPeriods)
+
   const content =
     <div className='page-wrapper'>
       <Nav />
@@ -108,22 +79,37 @@ function PeriodInfo() {
               onChange={item => setDate([item.selection])}
               moveRangeOnFirstSelection={false}
               ranges={date}
-              // scroll = {{enabled: true}}
             />
-          <button className='button' onClick={addPeriod}>Add</button>
+         <div className='period-add'>
+          <h2>Periods to add:</h2>
+          {loggedPeriods.length ?(
+            <>
+            <ol>
+            {loggedPeriods.map((dates, key)=>(
+              <li key={key}>
+                {`${Moment(dates.startDate).format('MMMM Do')} - ${Moment(dates.endDate).format('MMMM Do')}`}&nbsp;<button onClick={()=>removeNewPeriod(key)} className='btn-period-list'>&#120684;</button>
+              </li>
+            ))}
+          </ol>
+          <button className='button' onClick={addPeriodButton}>Add</button>
+          </>
+          ):(
+            <span>None</span>
+          )}
+         </div> 
         </div>
         <div className='remove-period'>
-          <span className='message'>{message}</span>
           <h2>Or would you like to remove some?</h2>
+          <span className='message'>{message}</span>
           <fieldset>
             <label htmlFor = 'periods'>Select a period to remove:</label>
             <select name='periods' className='periods' onChange={optionChange}>
               <option disabled selected>Select a date</option>
-              {userInfo.map((date, key) => <option value={key} key={date + key}>{`${Moment(date.startDate).format('MMMM Do YYYY')} - ${Moment(date.endDate).format('MMMM Do YYYY')}`}</option>
+              {userInfo.map((period, key) => <option value={key} key={key}>{`${Moment(period.startDate).format('MMMM Do YYYY')} - ${Moment(period.endDate).format('MMMM Do YYYY')}`}</option>
               )}
             </select>
           </fieldset>
-          <button className='button' onClick={removePeriod}>Remove</button>
+          <button className='button' onClick={removePeriodButton}>Remove</button>
         </div>
       </section>
       <Footer />
