@@ -2,12 +2,10 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import SignupForm from './pages/signupPage/SignUp'
 import { useSelector } from "react-redux";
 import Home from './pages/homePage/Home'
-import Index from './pages/index/Index'
 import Proflie from "./pages/profilePage/Proflie";
 import PeriodInfo from "./pages/periodInfo/PeriodInfo";
 import AccountSetup from "./pages/accountSetupPage/AccountSetup";
-import Landing from "./pages/landingPage";
-
+import Landing from "./pages/landingPage/Landing";
 
 function App() {
     const isAuth = Boolean(useSelector((state) => state.token));
