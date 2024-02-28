@@ -1832,6 +1832,10 @@ select:-webkit-autofill:focus {
     width: 100%;
   }
 }
+.setting-option button:disabled {
+  opacity: 50%;
+  pointer-events: none;
+}
 
 .password-change {
   padding: 1rem;

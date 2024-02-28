@@ -1,5 +1,5 @@
 import axios from "axios";
-import {React ,useState} from "react";
+import {useState} from "react";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../state";
 import {useNavigate} from 'react-router-dom';
@@ -20,6 +20,7 @@ const useLogin = () => {
             setLogin({
                   user: UserData.username,
                   email: UserData.email,
+                  userId: loginAPI.data.userId,
                   token: loginAPI.data.accessToken,
                   cycle: UserData.cycle,
                   avgLength: loginAPI.data.avgLength,

@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     user: null,
-    roll: null,
+    userId: null,
+    role: null,
     email: null,
     token : null,
     cycle: null,
@@ -27,8 +28,10 @@ export const authSlice = createSlice({
     reducers: {
         setLogin: (state, action) =>{
             state.user = action.payload.user;
+            state.userId = action.payload.userId;
             state.email = action.payload.email;
             state.token = action.payload.token;
+            state.role = action.payload.role;
             state.cycle = action.payload.cycle;
             state.avgLength = action.payload.avgLength
             state.periodStartDate = action.payload.periodStartDate;
@@ -41,6 +44,7 @@ export const authSlice = createSlice({
         },
         setLogout: (state) =>{
             state.user = null;
+            state.role = null;
             state.token = null;
             state.cycle = null;
             state.daysTillPeriod = null;
@@ -59,9 +63,17 @@ export const authSlice = createSlice({
             state.cycle = action.payload.cycle;
             state.avgLength = action.payload.avgLength;
         },
+        setPeriodInfo: (state, action) => {
+            state.periodStartDate = action.payload.periodStartDate;
+            state.periodEndDate = action.payload.periodEndDate;
+            state.daysTillPeriod = action.payload.daysTillPeriod;
+            state.cycle = action.payload.cycle;
+            state.avgLength = action.payload.avgLength;
+        },
         setNewPeriod: (state, action) => {
             state.periodStartDate = action.payload.periodStartDate;
             state.periodEndDate = action.payload.periodEndDate;
+            state.daysTillPeriod = action.payload.daysTillPeriod;
         },
         setUserInfo: (state, action) =>{
             state.periodStartDate = action.payload.periodStartDate;
@@ -91,6 +103,6 @@ export const authSlice = createSlice({
     }
 })
 
-export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setPeriodStatus, setDays, setNotificationStatus} = authSlice.actions;
+export const {setLogin, setLogout, setPeriod, setCycle, setNewPeriod, setUserInfo, setIsBleeding, setCanBleed, setPeriodStatus, setDays, setNotificationStatus, setPeriodInfo} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -4,6 +4,7 @@ const Guest = require('../mongoose-schmea/Demo');
 const GenPeriods = require('../utils/genGuestPeriodInfo');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
+
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
@@ -11,18 +12,17 @@ const register = async (req, res) => {
         if(results){
             res.status(401).json({error:'User already exists'})
         }else{
-            const user = new User({email, username ,password, roll: 'user', cycle: '', 
+            const user = new User({email, username ,password, role: 'User', cycle: '', 
             periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
-            // const user = new User({email, username ,password, cycle: '', 
-            // canBleed: false, isBleeding: false, notification: false, avgLength: '', previousPeriod: []});
             user.save(function(err){
                 if (err){
                     console.log(err)
                 } else {
                     const userId = {id: user._id};
+                    console.log(userId)
                     const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
                     const newUser = user.sendUserInfo(user)
-                    res.status(201).json({newUser, accessToken})
+                    res.status(201).json({newUser, userId,  accessToken})
                 }
             })}
     }catch (err){
@@ -55,7 +55,7 @@ const login = async (req, res) => {
                         const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
                         username.accessToken = accessToken
                         const user = username.sendUserInfo(username)
-                        res.status(200).json({accessToken, user});
+                        res.status(200).json({accessToken, user, userId});
                     }
                 })
             }
@@ -66,16 +66,23 @@ const login = async (req, res) => {
 }
 
 const deleteAccount = async (req, res) =>{
-    const {email} = req.body;
-    const user = await User.findOne({email:email});
-    if (user){
-        User.deleteOne({_id: user._id}).exec();
-        res.status(200).json({messege: 'Account Deleted'})
-    } else{
-        res.status(401).json({
-            error:'No account found'
-        })
+    let user;
+    const {role, id} = req.body;
+    if(id === 'Guest'){
+        user =  await Guest.findOne({id: id})
+    }else{
+        user = User
     }
+    // const {email} = req.body;
+    // const user = await User.findOne({email:email});
+    // if (user){
+    //     User.deleteOne({_id: user._id}).exec();
+    //     res.status(200).json({messege: 'Account Deleted'})
+    // } else{
+    //     res.status(401).json({
+    //         error:'No account found'
+    //     })
+    // }
 }
 
 const changePassword = async (req, res) =>{
@@ -107,7 +114,7 @@ const demoAccount = async (req, res) =>{
     if(loggedPeriods.length === 0){
         let periodInfo = []
         GenPeriods.genAllPeriods(periodInfo, 4);
-        user = new Guest({username, password:'password', roll:'Guest', cycle: '', 
+        user = new Guest({username, password:'password', role:'Guest', cycle: '', 
         periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, avgLength: '', previousPeriod:[...periodInfo]})
         // user.save();
         // console.log(user)
@@ -117,6 +124,6 @@ const demoAccount = async (req, res) =>{
     const userId = {id: user._id};
     const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
     const userInfo = user.sendUserInfo(user)
-    res.status(200).json({accessToken, userInfo});
+    res.status(200).json({accessToken, userInfo, userId});
 }
 module.exports = {register, login, deleteAccount, changePassword, demoAccount}

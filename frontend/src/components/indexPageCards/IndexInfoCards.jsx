@@ -5,7 +5,7 @@ function IndexInfoCards(props) {
   return (
     <section className='info-card' style={props.styles}>
       <div className='card-content-wrapper flex-row-to-col'>
-        {props.contentTypeOne == 'txt' ?(
+        {props.contentTypeOne === 'txt' ?(
             <div className='card-text-content'>
                 <h1>{props.txtHeader}</h1>
                 {props.txtContentType === 'text'?(
@@ -25,7 +25,7 @@ function IndexInfoCards(props) {
                       <NavLink className='card-cta-button' to={props.link}>{props.buttonTxt}</NavLink>
                     </div>
                   ): props.hasLink ?(
-                    <NavLink className='card-cta-link'>{props.linkTxt} <span>&#8594;</span></NavLink>
+                    <NavLink className='card-cta-link' to={props.link}>{props.linkTxt} <span>&#8594;</span></NavLink>
                   ):null}
                 </div>
             </div>
@@ -34,7 +34,7 @@ function IndexInfoCards(props) {
               <img src={props.contentImg} alt ={props.imgAlt} />
             </picture>
         ) : null}
-        {props.contentTypeTwo == 'txt' ?(
+        {props.contentTypeTwo === 'txt' ?(
           <div className='card-text-content'>
             <h1>{props.txtHeader}</h1>
             {props.txtContentType === 'text'?(
@@ -53,7 +53,7 @@ function IndexInfoCards(props) {
                   <NavLink className='card-cta-button' to={props.link}>{props.buttonTxt}</NavLink>
                 </div>
               ): props.hasLink ?(
-                <a className='card-cta-link' >{props.linkTxt} <span>&#8594;</span></a>
+                <a className='card-cta-link' href={props.link} >{props.linkTxt} <span>&#8594;</span></a>
               ):null}
           </div>
         ) : props.contentTypeTwo === 'img' ?(

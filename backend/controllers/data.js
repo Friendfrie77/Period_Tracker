@@ -23,15 +23,16 @@ async function setNotificationStatus (req, res){
     }
 }
 const addNewUserInfo = async (req, res) => {
-    const {email, loggedPeriods} = req.body;
-    console.log(loggedPeriods)
-    const user = await User.findOne({email: email});
+    const {id, loggedPeriods} = req.body;
+    const user = await User.findById(id);
     try{
         if(user.previousPeriod.length === 0){
             user.previousPeriod = loggedPeriods;
             user.save()
             previousPeriod = user.previousPeriod
-            res.status(200).json({message: 'Added Periods', previousPeriod})
+            const periodInfo = user.calcCycleInfo(user);
+            console.log(periodInfo);
+            res.status(200).json({message: 'Added Periods', periodInfo, previousPeriod})
         }else{
             let newPeriods = user.previousPeriod;
             newPeriods = [...newPeriods, ...loggedPeriods];
@@ -71,8 +72,9 @@ const addNewPeriod = async (req, res) => {
 }
 
 const setPeriodStatus = async (req, res) =>{
-    const {email, isBleeding, canBleed} = req.body;
-    const userInfo = await User.findOne({email: email});
+    const {id, isBleeding, canBleed} = req.body;
+    console.log(id)
+    const userInfo = await User.findById(id);
     if(userInfo){
         if(canBleed != userInfo.canBleed){
             User.findOneAndUpdate({email: email}, {canBleed:canBleed}).exec();
@@ -82,7 +84,6 @@ const setPeriodStatus = async (req, res) =>{
         }
         userInfo.isBleeding = isBleeding;
         userInfo.canBleed = canBleed
-        userInfo.save()
         const user = userInfo.sendUserInfo(userInfo)
         res.status(200).json(user)
     }else{
@@ -91,8 +92,8 @@ const setPeriodStatus = async (req, res) =>{
 }
 
 const updatePeriod = async (req, res) =>{
-    const {email, periodStartDate, periodEndDate} = req.body
-    const userInfo = await User.findOne({email: email});
+    const {id, periodStartDate, periodEndDate} = req.body
+    const userInfo = await User.findById(id);
     try{
         if(userInfo.periodStartDate != periodStartDate){
             User.findOneAndUpdate({_id:userInfo._id}, {periodStartDate:periodStartDate}).exec();
@@ -104,7 +105,6 @@ const updatePeriod = async (req, res) =>{
         User.findByIdAndUpdate({_id:userInfo._id},{canBleed:false}).exec();
         userInfo.isBleeding = true; 
         userInfo.canBleed = false;
-        userInfo.save()
         const user = userInfo.sendUserInfo(userInfo)
         res.status(200).json(user)
     }catch(err){

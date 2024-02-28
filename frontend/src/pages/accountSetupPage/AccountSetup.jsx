@@ -2,10 +2,8 @@ import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
 import { useDispatch } from 'react-redux';
 import {useNavigate} from 'react-router-dom';
-import Moment from 'moment';
 import {setPeriod} from '../../state';
 import { useSelector } from "react-redux";
-import axios from 'axios';
 import Spinner from '../../components/Spinner';
 import useAccountSetup from '../../hooks/useAccountSetup';
 import usePeriodInfo from '../../hooks/usePeriodInfo';
@@ -14,10 +12,9 @@ import {Form} from 'react-final-form';
 
 
 const AccountSetup = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.token));
-  const {sendAccountInfo, sendDemoInfo,  updateUserData, isLoading} = useAccountSetup();
+  const {sendAccountInfo, sendDemoInfo, isLoading} = useAccountSetup();
   const {updateUserDates, loggedPeriods} = usePeriodInfo();
   const [date, setDate] = useState([
     {

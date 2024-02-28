@@ -15,6 +15,7 @@ import DeleteAccout from './DeleteAccout';
 import ChangePassword from './ChangePassword';
 import Notication from './Notication';
 import Settings from './Settings';
+import useProfile from '../../hooks/useProfile';
 const Proflie = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ const Proflie = () => {
   const [confirmNewPassword, setConfirmPassword] = useState('');
   const [erroMsg, setErrorMsg] = useState('');
   const notification = useSelector((state) => state.notification);
+  const accountType = useSelector((state) => state.role)
+
+  const {deleteAccount} = useProfile();
   let periodEvent = new Events()
   const [pEvents, setEvents] = useState(periodEvent.allEvents)
   const checkUserInfo = async () => {
@@ -74,18 +78,21 @@ const Proflie = () => {
   const openPasswordChange = () =>{
     setPasswordChange(!showPasswordChange)
   }
-  const deleteAccount = () =>{
-    if (deletedEmail === email){
-      axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`, {
-        email
-      },{
-        headers: {'Authorization': `Bearer ${token}`},
-      })
-      dispatch(
-        setLogout()
-      )
-      navigate('/')
-    }
+  // const deleteAccount = () =>{
+  //   if (deletedEmail === email){
+  //     axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`, {
+  //       email
+  //     },{
+  //       headers: {'Authorization': `Bearer ${token}`},
+  //     })
+  //     dispatch(
+  //       setLogout()
+  //     )
+  //     navigate('/')
+  //   }
+  // }
+  const deleteAccountCall = () =>{
+    deleteAccount(deletedEmail)
   }
   const changePassword = async () =>{
       const passwordChange = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
@@ -121,7 +128,7 @@ const Proflie = () => {
           }
         </div>
         {deleteBox &&
-        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccount} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} />} />
+        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccountCall} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} role = {accountType} />} />
         }
         {openNoticationBox &&
          <PageFade content= {<Notication close ={noticationBox} />} />

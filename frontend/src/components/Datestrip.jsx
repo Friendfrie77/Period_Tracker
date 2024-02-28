@@ -1,4 +1,4 @@
-import { Datepicker, DatepickerEvent} from "@meinefinsternis/react-horizontal-date-picker";
+import { Datepicker} from "@meinefinsternis/react-horizontal-date-picker";
 import { useState, useEffect} from "react";
 function Datestrip(props) {
   const [date, setDate] = useState({

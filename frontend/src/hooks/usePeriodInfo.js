@@ -1,17 +1,28 @@
-import {React ,useState} from "react";
+//hook to manage user period info and any function that uses that info
+import {useState} from "react";
 import Moment from 'moment';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
-import { setPeriod } from "../state";
+import { setPeriod, setPeriodStatus } from "../state";
 
 const usePeriodInfo = () =>{
+    //states
     const token = useSelector((state) => state.token)
+    const id = useSelector((state) => state.userId);
     const email = useSelector((state) => state.email)
+    const cycle = useSelector((state) => state.cycle)
+    const periodEndDate = useSelector((state) => state.periodEndDate)
+    const periodStartDate = useSelector((state) => state.periodStartDate)
+    //imports
     const dispatch = useDispatch();
     const [message, setMessage] = useState()
     const [periodMessage, setPMessage] = useState()
     const [loggedPeriods, setLoggedPeriods] =useState([])
-
+    //vars
+    let todaysDate = new Date()
+    todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
+    const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
+    console.log(id,email)
     const removePeriod = async (removeDate) =>{
         if(!removeDate){
             setMessage('Please select a date')
@@ -65,6 +76,37 @@ const usePeriodInfo = () =>{
             }
         }
     }
-    return{removePeriod, addPeriod, updateUserDates, setLoggedPeriods, message, periodMessage, loggedPeriods}
+    const sendPeriodStatus = async (newEndDate) =>{
+        const periodStatusApiCall = await axios.post(`${process.env.REACT_APP_APIURL}/user/updateperiod`, {
+            id, periodStartDate, newEndDate
+        },{
+            headers: {'Authorization': `Bearer ${token}`
+        },
+        });
+        const bloodGod = periodStatusApiCall.data
+        dispatch(
+            setPeriodStatus({
+                canBleed: bloodGod.canBleed,
+                isBleeding: bloodGod.isBleeding,
+            })
+        )
+    }
+    const updatePeriodStatus = async(isBleeding, canBleed) =>{
+        console.log('this trigger')
+        const periodStatusApiCall = await axios.post(`${process.env.REACT_APP_APIURL}/user/setperiodinfo`,{
+            id, isBleeding, canBleed
+        },{
+            headers: {'Authorization': `Bearer ${token}`},
+        }
+        )
+        const bloodGod = periodStatusApiCall.data
+        dispatch(
+            setPeriodStatus({
+                canBleed: bloodGod.canBleed,
+                isBleeding: bloodGod.isBleeding,
+            })
+        )
+    }
+    return{removePeriod, addPeriod, updateUserDates, setLoggedPeriods, sendPeriodStatus, updatePeriodStatus, message, periodMessage, loggedPeriods, cycleStartDate, todaysDate}
 }
 export default usePeriodInfo

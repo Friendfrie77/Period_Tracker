@@ -1,34 +1,44 @@
-import { React, useState } from "react";
+import {useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setPeriod, setLogin } from "../state";
-import usePeriodInfo from "./usePeriodInfo";
+import { setPeriod, setLogin, setCycle, setNewPeriod, setPeriodInfo } from "../state";
+
 
 const useAccountSetup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector((state) => state.email);
+  const id = useSelector((state) => state.userId);
   const token = useSelector((state) => state.token);
-  const userInfo = useSelector((state) => state.previousPeriod);
   const [isLoading, setLoading] = useState(null);
-  const {loggedPeriods} = usePeriodInfo();
   const sendAccountInfo = async (loggedPeriods) => {
     try {
       setLoading(true);
       const addNewAPICall = await axios.post(
         `${process.env.REACT_APP_APIURL}/user/newuser`,
         {
-          email,
+          id,
           loggedPeriods,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      console.log(addNewAPICall)
+      const periodInfo = addNewAPICall.data.periodInfo
       dispatch(
         setPeriod({
           previousPeriod: addNewAPICall.data.previousPeriod,
+        }),
+      );
+      dispatch(
+        setPeriodInfo({
+          cycle: periodInfo.cycle,
+          avgLength: periodInfo.avgLength,
+          periodStartDate: periodInfo.periodStartDate,
+          periodEndDate: periodInfo.periodEndDate,
+          dayTillPeriod: periodInfo.daysTill,
         })
       );
       setLoading(false);
@@ -46,12 +56,13 @@ const useAccountSetup = () => {
         }
     );
     const UserData = demoAccountAPICall.data.userInfo;
-    console.log(UserData)
-    console.log(demoAccountAPICall.data.userInfo)
+    console.log(demoAccountAPICall.data.userId.id)
     dispatch(
       setLogin({
             user: UserData.username,
+            userId: demoAccountAPICall.data.userId.id,
             email: UserData.email,
+            role: UserData.role,
             token: demoAccountAPICall.data.accessToken,
             cycle: UserData.cycle,
             avgLength: UserData.avgLength,

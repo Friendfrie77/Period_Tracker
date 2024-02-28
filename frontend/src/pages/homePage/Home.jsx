@@ -6,25 +6,25 @@ import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
-import { sendPeriodStatus, sendUpdatedPeriod, sendPreviousPeriod, removeCurrentDates, sendPeriodInfo} from "../../utils/sendUserInfo";
+import usePeriodInfo from "../../hooks/usePeriodInfo";
 
 const Home = () => {
+
   const dispatch = useDispatch();
   const cycle = useSelector((state) => state.cycle)
   const userName = useSelector((state) => state.user)
   const periodEndDate = useSelector((state) => state.periodEndDate)
   const periodStartDate = useSelector((state) => state.periodStartDate)
   const avgLength = useSelector((state) => state.avgLength)
-  const token = useSelector((state) => state.token)
-  const email = useSelector((state) => state.email)
-  const previousPeriod= useSelector((state) => state.previousPeriod)
   const [isBleeding, setBleeding] = useState(useSelector((state) => state.isBleeding))
   const [canBleed, setBleed] = useState(useSelector((state) => state.canBleed))
   const [needInfo, setInfo] = useState(true)
+  console.log(isBleeding, canBleed);
+  const{sendPeriodStatus, updatePeriodStatus,cycleStartDate, todaysDate} = usePeriodInfo();
 
-  let todaysDate = new Date()
-  todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
-  const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
+  // let todaysDate = new Date()
+  // todaysDate = Moment(todaysDate).format('YYYY-MM-DD')
+  // const cycleStartDate = Moment(periodStartDate).subtract(cycle, 'days')
   const checkInfo = () => {
     if (periodStartDate && periodEndDate){
       setInfo(false)
@@ -34,67 +34,51 @@ const Home = () => {
 const periodStarted = async () =>{
   if (Moment(periodStartDate).format('YYYY-MM-DD') !== todaysDate){
     const newEndDate = Moment(todaysDate).add(avgLength, 'days').format('YYYY-MM-DD')
-    const update = sendUpdatedPeriod(email, todaysDate, newEndDate, token)
-    const bloodGod = await update
-    dispatch(
-      setPeriodStatus({
-        canBleed: bloodGod.canBleed,
-        isBleeding: bloodGod.isBleeding,
-      })
-    )
-    setBleeding(true)
+    sendPeriodStatus(newEndDate);
     }else{
-      const update = sendPeriodStatus(email, true, false, token)
-      const bloodGod = await update;
-      dispatch(
-        setPeriodStatus({
-          canBleed: bloodGod.canBleed,
-          isBleeding: bloodGod.isBleeding,
-        })
-      )
-      setBleeding(true)
+      updatePeriodStatus(true, false)
     }
 }
 
 const periodEnded = async () =>{
-  if (periodEndDate !== todaysDate){
-    dispatch(
-      setPeriod({
-        previousPeriod: [...previousPeriod,
-          {startDate: periodStartDate, endDate: todaysDate}
-        ]
-      })
-    )
-    dispatch(
-      setIsBleeding({
-        isBleeding: false
-      })
-    )
-    const newDates = {startDate: periodStartDate, endDate: todaysDate};
-    sendPreviousPeriod(email, newDates, token)
-  }else{
-    dispatch(
-      setPeriod({
-        previousPeriod: [...previousPeriod,
-          {startDate: periodStartDate, endDate: periodEndDate}
-        ]
-      })
-    )
-    dispatch(
-      setIsBleeding({
-        isBleeding: false
-      })
-    )
-    const newDates = {startDate: periodStartDate, endDate: periodEndDate}
-    sendPreviousPeriod(email, newDates, token)
-  }
-  sendPeriodStatus(email, false, canBleed, token);
-  removeCurrentDates(email, token);
-  setBleeding(false);
+  // if (periodEndDate !== todaysDate){
+  //   dispatch(
+  //     setPeriod({
+  //       previousPeriod: [...previousPeriod,
+  //         {startDate: periodStartDate, endDate: todaysDate}
+  //       ]
+  //     })
+  //   )
+  //   dispatch(
+  //     setIsBleeding({
+  //       isBleeding: false
+  //     })
+  //   )
+  //   const newDates = {startDate: periodStartDate, endDate: todaysDate};
+  //   sendPreviousPeriod(email, newDates, token)
+  // }else{
+  //   dispatch(
+  //     setPeriod({
+  //       previousPeriod: [...previousPeriod,
+  //         {startDate: periodStartDate, endDate: periodEndDate}
+  //       ]
+  //     })
+  //   )
+  //   dispatch(
+  //     setIsBleeding({
+  //       isBleeding: false
+  //     })
+  //   )
+  //   const newDates = {startDate: periodStartDate, endDate: periodEndDate}
+  //   sendPreviousPeriod(email, newDates, token)
+  // }
+  // sendPeriodStatus(email, false, canBleed, token);
+  // removeCurrentDates(email, token);
+  // setBleeding(false);
 }
 useEffect(()=>{
   checkInfo()
-},[])
+},)
 
 const home = (isBleeding, canBleed, needInfo) =>{
   if (!isBleeding && !canBleed && !needInfo){

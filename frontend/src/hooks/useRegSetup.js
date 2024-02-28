@@ -1,6 +1,6 @@
-import {React ,useState} from "react";
+import {useState} from "react";
 import axios from 'axios';
-import { useSelector, useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 import {useNavigate} from 'react-router-dom';
 import { setLogin } from "../state";
 
@@ -19,10 +19,11 @@ const useRegSetup = () =>{
                 password
             })
             if(newUser){
-                console.log(newUser)
                 dispatch(
                     setLogin({
                         user: newUser.data.newUser.username,
+                        role: newUser.data.newUser.role,
+                        userId: newUser.data.userId.id,
                         email: newUser.data.newUser.email,
                         token: newUser.data.accessToken,
                         cycle: newUser.data.newUser.cycle,

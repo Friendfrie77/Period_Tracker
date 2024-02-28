@@ -12,7 +12,7 @@ const demoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    roll: {
+    role: {
         type: String,
         required: true
     },
@@ -164,6 +164,7 @@ demoSchema.methods.sendUserInfo = function (user) {
     const userInfo = {
       username: user.username,
       cycle: user.cycle,
+      role: user.role,
       avgLength: user.avgLength,
       periodStartDate: user.periodStartDate,
       periodEndDate: user.periodEndDate,

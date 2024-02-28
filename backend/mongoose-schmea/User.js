@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const salt = 13;
 const moment = require("moment");
+const { UserPage } = require("twilio/lib/rest/conversations/v1/user");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -17,7 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  roll: {
+  role: {
     type: String,
     required: true,
   },
@@ -85,9 +86,25 @@ userSchema.methods.hashNewPass = function (password) {
   return newPassword;
 };
 // Setting users period info
-
+//sorting user prev period
+userSchema.methods.sortPrevPeriod = function(user){
+  let sorted = true
+  for(let i = 0; i < user.previousPeriod.length -1; i++){
+    if(user.previousPeriod[i][0] > user.previousPeriod[i + 1 ][0]){
+      sorted = false;
+      break;
+    }
+  }
+  if(!sorted){
+    sortedPeriod = user.previousPeriod.sort((a,b) => a[0] - b[0]);
+    user.previousPeriod = sortedPeriod;
+  }
+  console.log(user.previousPeriod)
+}
 //Calculating the avg length of cycle and period
 userSchema.methods.calcAvgLength = function (user) {
+  user.cycle = 0;
+  user.avgLength = 0;
   if (user.previousPeriod.length <= 1) {
     return false;
   } else {
@@ -98,15 +115,9 @@ userSchema.methods.calcAvgLength = function (user) {
     user.previousPeriod.forEach((date) => {
       totalDays += moment(date.endDate).diff(date.startDate, "days");
       if (oldStartDate != null) {
-        const monthDif = moment(oldStartDate).diff(
-          date.startDate,
-          "month",
-          true
-        );
+        const monthDif = moment(oldStartDate).diff(date.startDate, "month", true);
         if (Math.abs(monthDif) < 1.5) {
-          totalCycle += Math.abs(
-            moment(date.startDate).diff(oldStartDate, "days")
-          );
+          totalCycle += Math.abs(moment(date.startDate).diff(oldStartDate, "days"));
           cycleCount += 1;
         }
       } else {
@@ -114,16 +125,19 @@ userSchema.methods.calcAvgLength = function (user) {
       }
     });
     const avgLength = Math.round(totalDays / user.previousPeriod.length);
-    const cycle = Math.round(totalCycle / cycleCount);
-    user.cycle = cycle;
-    user.avgLength = avgLength;
-    return { avgLength, cycle };
+    if(cycleCount > 0 && totalCycle > 0){
+      const cycle = Math.round(totalCycle / cycleCount);
+      user.cycle = cycle;
+      return {avgLength, cycle };
+    }else{
+      return{avgLength}
+    }
   }
 };
 
 //Estimating Dates of period
 userSchema.methods.estimateDate = function (user) {
-  if (user.previousPeriod.length > 0) {
+  if (user.cycle > 0) {
     let lastPeriod, startDate, endDate;
     let todaysDate = new Date();
     if (!user.periodStartDate || !user.periodEndDate) {
@@ -167,6 +181,7 @@ userSchema.methods.daysTillBlood = function (user) {
 
 // //sending user info after login
 userSchema.methods.sendUserInfo = function (user) {
+  userSchema.methods.sortPrevPeriod(user);
   if (user.periodStartDate || user.periodEndDate == null) {
     userSchema.methods.calcAvgLength(user);
     userSchema.methods.estimateDate(user);
@@ -176,6 +191,7 @@ userSchema.methods.sendUserInfo = function (user) {
   const userInfo = {
     email: user.email,
     username: user.username,
+    role: user.role,
     notification: user.notification,
     cycle: user.cycle,
     avgLength: user.avgLength,
@@ -188,6 +204,21 @@ userSchema.methods.sendUserInfo = function (user) {
   };
   return userInfo;
 };
+
+//Updates cycle info on change of info
+userSchema.methods.calcCycleInfo = function (user){
+  userSchema.methods.calcAvgLength(user);
+  userSchema.methods.estimateDate(user);
+  userSchema.methods.daysTillBlood(user);
+  const periodInfo = {
+    avgLength: user.avgLength,
+    cycle: user.cycle,
+    periodStartDate: user.periodStartDate,
+    periodEndDate: user.periodEndDate,
+    daysTill: user.daysTill
+  }
+  return periodInfo;
+}
 
 
 module.exports = mongoose.model("Users", userSchema);

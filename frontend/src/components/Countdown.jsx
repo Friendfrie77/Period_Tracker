@@ -1,5 +1,4 @@
 import React, { useEffect, useState} from 'react';
-import Moment from 'moment';
 import { CountdownCircleTimer} from "react-countdown-circle-timer";
 
 const renderTime = (dimension, time) =>{

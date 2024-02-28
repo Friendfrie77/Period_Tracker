@@ -46,6 +46,10 @@
         @include for-size(small-phone){
             width: 100%;
         }
+        &:disabled{
+            opacity: 50%;
+            pointer-events: none;
+        }
     }
 }
 .password-change{
