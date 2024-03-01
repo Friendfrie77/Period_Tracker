@@ -99,7 +99,6 @@ userSchema.methods.sortPrevPeriod = function(user){
     sortedPeriod = user.previousPeriod.sort((a,b) => a[0] - b[0]);
     user.previousPeriod = sortedPeriod;
   }
-  console.log(user.previousPeriod)
 }
 //Calculating the avg length of cycle and period
 userSchema.methods.calcAvgLength = function (user) {
@@ -125,12 +124,10 @@ userSchema.methods.calcAvgLength = function (user) {
       }
     });
     const avgLength = Math.round(totalDays / user.previousPeriod.length);
+    user.avgLength = avgLength;
     if(cycleCount > 0 && totalCycle > 0){
       const cycle = Math.round(totalCycle / cycleCount);
       user.cycle = cycle;
-      return {avgLength, cycle };
-    }else{
-      return{avgLength}
     }
   }
 };
@@ -187,7 +184,6 @@ userSchema.methods.sendUserInfo = function (user) {
     userSchema.methods.estimateDate(user);
   }
   userSchema.methods.daysTillBlood(user);
-  user.save();
   const userInfo = {
     email: user.email,
     username: user.username,
@@ -217,6 +213,7 @@ userSchema.methods.calcCycleInfo = function (user){
     periodEndDate: user.periodEndDate,
     daysTill: user.daysTill
   }
+  // user.save();
   return periodInfo;
 }
 

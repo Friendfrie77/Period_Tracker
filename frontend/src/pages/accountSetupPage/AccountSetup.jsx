@@ -1,8 +1,5 @@
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
-import { useDispatch } from 'react-redux';
-import {useNavigate} from 'react-router-dom';
-import {setPeriod} from '../../state';
 import { useSelector } from "react-redux";
 import Spinner from '../../components/Spinner';
 import useAccountSetup from '../../hooks/useAccountSetup';
@@ -10,12 +7,10 @@ import usePeriodInfo from '../../hooks/usePeriodInfo';
 import UserLogin from '../../components/userLoginField/UserLogin';
 import {Form} from 'react-final-form';
 
-
 const AccountSetup = () => {
-  const dispatch = useDispatch();
   const isAuth = Boolean(useSelector((state) => state.token));
   const {sendAccountInfo, sendDemoInfo, isLoading} = useAccountSetup();
-  const {updateUserDates, loggedPeriods} = usePeriodInfo();
+  const {updateUserDates, loggedPeriods, todaysDate, fuckthisshit} = usePeriodInfo();
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -30,16 +25,22 @@ const AccountSetup = () => {
   const demoAccountButton = (val) => {
     sendDemoInfo(val,loggedPeriods)
   }
-  const setDates = (dates) =>{
-    dispatch(
-      setPeriod({
-        previousPeriod: dates
-      })
-    );
-  }
+  // const fuckthisshit = (item) =>{
+  //   if(date.startDate !== date.endDate){
+  //     console.log('aaaaa')
+  //   }else{
+
+  //   }
+  // }
+  console.log(date)
+  // useEffect(() =>{
+  //   fuckthisshit();
+  // })
   useEffect(()=>{
     updateUserDates(date);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[date]);
+  console.log(date)
   const setup = isLoading ? <Spinner /> : (
         <section className='setup-wrapper'>
           {isAuth ? (
@@ -50,7 +51,10 @@ const AccountSetup = () => {
                 editableDateInputs={true}
                 showMonthAndYearPickers={false}
                 fixedHeight = {true}
-                onChange={item => setDate([item.selection])}
+                onChange={(item) => {
+                  setDate([item.selection]);
+                  updateUserDates(date)
+                }}
                 moveRangeOnFirstSelection={false}
                 ranges={date}
               />
@@ -67,6 +71,7 @@ const AccountSetup = () => {
                 onChange={item => setDate([item.selection])}
                 moveRangeOnFirstSelection={false}
                 ranges={date}
+
               />
               <Form
                 onSubmit={demoAccountButton}

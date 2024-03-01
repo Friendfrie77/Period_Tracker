@@ -1,7 +1,19 @@
 const User = require('../mongoose-schmea/User');
+const Guest = require('../mongoose-schmea/Demo')
 const moment = require('moment')
 const twillo = require('../utils/twilio')
 
+//used to check user role and return the mongoose-schmea name that is needed for functions needed. 
+function checkUserRole(role){
+    let roleType;
+    if (role === 'Guest'){
+        roleType = Guest
+    }else{
+        roleType = User
+    }
+    return roleType
+}
+//fix this with id
 async function setNotificationStatus (req, res){
     const {email, status, number} = req.body;
     const user = await User.findOne({email: email})
@@ -22,9 +34,13 @@ async function setNotificationStatus (req, res){
         })
     }
 }
+
+//used to both add new periods for perid for the period info page and also adding periods for a new account
+//used in usePeriodInfo hook, and useAccountSetup hook.
 const addNewUserInfo = async (req, res) => {
-    const {id, loggedPeriods} = req.body;
-    const user = await User.findById(id);
+    const {id, role, loggedPeriods} = req.body;
+    const roleType = checkUserRole(role);
+    const user = await roleType.findById(id);
     try{
         if(user.previousPeriod.length === 0){
             user.previousPeriod = loggedPeriods;
@@ -47,6 +63,7 @@ const addNewUserInfo = async (req, res) => {
         })
     }
 }
+//fix this with id role
 const getUserInfo = async (req, res) =>{
     const {email} = req.body;
     const userInfo = await User.findOne({email: email});
@@ -59,6 +76,7 @@ const getUserInfo = async (req, res) =>{
         res.status(500).json({error : err.messege})
     }
 }
+//fix this id role
 const addNewPeriod = async (req, res) => {
     const {email, startDate, endDate, cycle, avgLength} = req.body;
     try{
@@ -70,24 +88,25 @@ const addNewPeriod = async (req, res) => {
         res.status(500).json({error : err.messege})
     }
 }
-
+//sets user status for if period is near, or if user is on period
+//uesed in: userPeriodInfo hook
 const setPeriodStatus = async (req, res) =>{
-    const {id, isBleeding, canBleed} = req.body;
-    console.log(id)
-    const userInfo = await User.findById(id);
-    if(userInfo){
-        if(canBleed != userInfo.canBleed){
-            User.findOneAndUpdate({email: email}, {canBleed:canBleed}).exec();
+    const {id, role, isBleeding, canBleed} = req.body;
+    const roleType = checkUserRole(role)
+    const user = roleType.findById(id);
+    if(user){
+        if(canBleed != user.canBleed){
+            user.canBleed = canBleed;
+        }if(isBleeding != user.isBleeding){
+            user.isBleeding = isBleeding;
         }
-        if(isBleeding != userInfo.isBleeding){
-            User.findOneAndUpdate({email: email}, {isBleeding:isBleeding}).exec();
+        const periodStatus = {
+            canBleed: user.canBleed,
+            isBleeding: user.isBleeding
         }
-        userInfo.isBleeding = isBleeding;
-        userInfo.canBleed = canBleed
-        const user = userInfo.sendUserInfo(userInfo)
-        res.status(200).json(user)
+        res.status(201).json({periodStatus})
     }else{
-        res.status(500).json({messege: 'Internal Server Error'})
+        res.status(500).json({message: 'Internal Server Error'})
     }
 }
 
@@ -111,23 +130,27 @@ const updatePeriod = async (req, res) =>{
         res.status(500).json({error: err.messege})
     }
 }
-
+//function to add the current period to the list of previous periods, the updated list gets passed from the front end, then saved.
+//used in usePeriodInfo hook, 
 const addPreviousPeriod = async (req, res) =>{
-    const {email, newDates} = req.body;
+    const {id, role, newDates} = req.body;
+    const roleType = checkUserRole(role)
     try{
-        const user = await User.findOne({email: email});
-        User.findOneAndUpdate({email: email}, {previousPeriod: [...user.previousPeriod, {...newDates}]}).exec();
+        roleType.findByIDAndUpdate(id, {previousPeriod: newDates}).exec();
+        res.status(201)
     }catch(err){
         res.status(500).json({error: err.messege})
     }
 }
-
+//function to allow user to remove period via the front end page periodInfo
+//used in the usePeriodInfo hook
 const removePeriod = async (req, res) =>{
-    const {email, removeDate} = req.body;
-    const user = await User.findOne({email:email})
+    const {id, role, removeDate} = req.body;
+    const roleType = checkUserRole(role);
+    const user = await roleType.findById(id);
     try{
         user.previousPeriod.splice(removeDate, 1)
-        User.findByIdAndUpdate({_id:user._id}, {previousPeriod:user.previousPeriod}).exec()
+        roleType.findByIdAndUpdate(id , {previousPeriod:user.previousPeriod}).exec()
         const previousPeriod = user.previousPeriod
         res.status(201).json({message:'Successfully Removed Date', previousPeriod})
     }catch(err){
@@ -135,10 +158,17 @@ const removePeriod = async (req, res) =>{
     }
 }
 
+//used to null out PeriodDates and calcs new ones
 const nullPeriodDates = async (req, res) =>{
-    const {email} = req.body;
+    const {id, role} = req.body;
+    const roleType = checkUserRole(role)
     try{
-        const user = await User.findOneAndUpdate({email:email}, {periodStartDate:null, periodEndDate:null}).exec()
+        await roleType.findByIdAndUpdate(id, {periodStartDate:null, periodEndDate:null}).exec();
+        const user = await roleType.findById(id);
+        if(user){
+            const newUserInfo = user.calcCycleInfo(user);
+            res.status(201).json({newUserInfo});
+        }
     }catch(err){
         res.status(500).json({error:err.message})
     }

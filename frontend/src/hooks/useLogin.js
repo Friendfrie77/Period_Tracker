@@ -20,7 +20,7 @@ const useLogin = () => {
             setLogin({
                   user: UserData.username,
                   email: UserData.email,
-                  userId: loginAPI.data.userId,
+                  userId: loginAPI.data.userId.id,
                   token: loginAPI.data.accessToken,
                   cycle: UserData.cycle,
                   avgLength: loginAPI.data.avgLength,

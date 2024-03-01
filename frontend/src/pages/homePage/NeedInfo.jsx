@@ -8,7 +8,7 @@ const NeedInfo = (props) => {
           <section className="home content">
           <h1>Welcome back, {props.userName}</h1>
           <div className="period-countdown">
-              <h2>Error</h2>
+              <h2>Error: 2 or more sequential periods needed to track</h2>
               <BlankCountdown message = {props.message}></BlankCountdown>
           </div>
           <div className="check-period">
