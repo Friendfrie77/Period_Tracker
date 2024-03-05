@@ -10,7 +10,7 @@ import {Form} from 'react-final-form';
 const AccountSetup = () => {
   const isAuth = Boolean(useSelector((state) => state.token));
   const {sendAccountInfo, sendDemoInfo, isLoading} = useAccountSetup();
-  const {updateUserDates, loggedPeriods, todaysDate, fuckthisshit} = usePeriodInfo();
+  const {updateUserDates, loggedPeriods} = usePeriodInfo();
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -18,24 +18,13 @@ const AccountSetup = () => {
       key: 'selection'
     }
   ]);
-
   const accountInfoButton = () =>{
     sendAccountInfo(loggedPeriods)
   }
   const demoAccountButton = (val) => {
     sendDemoInfo(val,loggedPeriods)
   }
-  // const fuckthisshit = (item) =>{
-  //   if(date.startDate !== date.endDate){
-  //     console.log('aaaaa')
-  //   }else{
 
-  //   }
-  // }
-  console.log(date)
-  // useEffect(() =>{
-  //   fuckthisshit();
-  // })
   useEffect(()=>{
     updateUserDates(date);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,10 +40,7 @@ const AccountSetup = () => {
                 editableDateInputs={true}
                 showMonthAndYearPickers={false}
                 fixedHeight = {true}
-                onChange={(item) => {
-                  setDate([item.selection]);
-                  updateUserDates(date)
-                }}
+                onChange={item => setDate([item.selection])}
                 moveRangeOnFirstSelection={false}
                 ranges={date}
               />

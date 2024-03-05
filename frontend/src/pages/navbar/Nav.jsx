@@ -1,23 +1,26 @@
-import {useRef, useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import { CiLogout, CiLogin } from 'react-icons/ci'
 import { setLogout } from '../../state';
 import { useDispatch } from 'react-redux';
 import { useSelector } from "react-redux";
-import logo from '../../images/logo.svg'
 import logo2 from '../../images/logo2.svg'
-import Login from '../loginPage/Login';
+import usePeriodInfo from '../../hooks/usePeriodInfo';
+import useLogout from '../../hooks/useLogout';
 
 const Nav = ({onDataSentLogin, onDataSentReg}) => {
     const dispatch = useDispatch();
-    const cycle = useSelector((state) => state.cycle);
-    const avgLength = useSelector((state) => state.avgLength)
-    const previousPeriod = useSelector((state) => state.previousPeriod)
-    const isLoggedIn = Boolean(useSelector((state) => state.token))
-    const logout = () =>{
+    // const cycle = useSelector((state) => state.cycle);
+    // const avgLength = useSelector((state) => state.avgLength)
+    // const previousPeriod = useSelector((state) => state.previousPeriod)
+    // const isLoggedIn = Boolean(useSelector((state) => state.token))
+    const {role, token} = usePeriodInfo();
+    const {dispatchLogout} = useLogout();
+
+    const guestLogout = () =>{
         dispatch(
             setLogout()
         )
+        
     }
     const openLogin = () =>{
         onDataSentLogin(true)
@@ -38,15 +41,15 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
                         <div className='mobile-nav' id ='mobile-nav'></div>
                     </label>
                     <ul className='nav-links' id='nav-links'>
-                        {isLoggedIn ? (
+                        {/* {isLoggedIn ? (
                             <li className='stats'>
                                 <h3>Information at a Glance</h3>
                                 <span>Cycle Length: {cycle} days</span><br/>
                                 <span>Average Length: {avgLength} days </span><br />
                                 <span>Periods Logged: {previousPeriod.length}</span>
                             </li>
-                        ) : null}
-                        {isLoggedIn ? (
+                        ) : null} */}
+                        {token ? (
                             <>
                             <li className='nav-item'>
                                 <NavLink to='/home'>Home</NavLink>
@@ -57,11 +60,24 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
                             <li className='nav-item'>
                                 <NavLink to='/profile'>Profile</NavLink>
                             </li>
-                            <li className='logout'>
+                            {role === 'User' ? (
+                                <li className='logout'>
+                                    <button onClick={dispatchLogout}>
+                                        <CiLogout></CiLogout>
+                                    </button>
+                                </li>
+                            ): (
+                                <li className='logout'>
+                                    <button onClick={guestLogout}>
+                                        <CiLogout></CiLogout>
+                                    </button>
+                                </li>
+                            )}
+                            {/* <li className='logout'>
                                 <button onClick={logout}>
                                     <CiLogout></CiLogout>
                                 </button>
-                            </li>
+                            </li> */}
                             </>
                         ): (
                             <>

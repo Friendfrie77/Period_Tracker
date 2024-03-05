@@ -16,7 +16,7 @@ const usePeriodInfo = () => {
   const id = useSelector((state) => state.userId);
   const role = useSelector((state) => state.role);
   const previousPeriod = useSelector((state) => state.previousPeriod);
-  const email = useSelector((state) => state.email);
+  // const email = useSelector((state) => state.email);
   const cycle = useSelector((state) => state.cycle);
   const periodEndDate = useSelector((state) => state.periodEndDate);
   const periodStartDate = useSelector((state) => state.periodStartDate);
@@ -34,8 +34,8 @@ const usePeriodInfo = () => {
   todaysDate = Moment(todaysDate).format("YYYY-MM-DD");
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, "days");
   const tokenHeader = { Authorization: ` Bearer ${token}` };
-  // console.log(id,email, tokenHeader)
-  console.log(previousPeriod)
+  console.log(token, role)
+  // console.log(previousPeriod)
   const removePeriod = async (removeDate) => {
     if (!removeDate) {
       setMessage("Please select a date");
@@ -96,8 +96,6 @@ const usePeriodInfo = () => {
         endDate: Moment(dates[0].endDate).format('YYYY-MM-DD'),
       },
     ];
-    console.log(period[0].startDate !== period[0].endDate);
-    //prob dont need array of arrays here
     if (period[0].startDate !== period[0].endDate) {
       if (loggedPeriods === null) {
         dispatch(
@@ -106,7 +104,7 @@ const usePeriodInfo = () => {
             })
         )
       } else {
-        if(!loggedPeriods.includes(period)){
+        if(!checkIfDateIsPresent(loggedPeriods, period)){
             dispatch(
                 setPeriod({
                     previousPeriod: [...previousPeriod, ...period]
@@ -114,10 +112,14 @@ const usePeriodInfo = () => {
             )
           }
         }
-      console.log(loggedPeriods);
     }
   };
 
+//checks if a period date is in the current list of logged periods
+  const checkIfDateIsPresent = (loggedPeriods, period) => {
+    const result = loggedPeriods.some(dateSet => dateSet.startDate === period.startDate || dateSet.endDate === period.endDate);
+    return result;
+  }
   const fuckthisshit = () =>{
     dispatch(
         setPeriod({
@@ -253,6 +255,8 @@ const usePeriodInfo = () => {
     canBleed,
     isBleeding,
     isLoading,
+    role,
+    token
   };
 };
 export default usePeriodInfo;
