@@ -1,19 +1,15 @@
 import React from 'react'
 import Nav from '../navbar/Nav'
 import BlankCountdown from '../../components/BlankCountdown';
-import Datestrip from '../../components/Datestrip';
 import Footer from '../footer/Footer';
+import HomepageHeader from '../../components/homePageName/HomepageHeader';
 
 const PeriodHere = (props) => {
     return (
         <div className='page-wrapper'>
             <Nav />
             <section className="home content">
-                <h1>Welcome back, {props.userName}</h1>
-                <Datestrip
-                    startValue = {props.periodStartDate}
-                    endValue = {props.periodEndDate}
-                />
+            <HomepageHeader userName = {props.userName} periodStartDate = {props.periodStartDate} periodEndDate = {props.periodEndDate} />
                 <div className="period-countdown">
                     <h2>Your period might be here</h2>
                     <div className='inner-circle'>

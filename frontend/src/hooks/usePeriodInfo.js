@@ -34,7 +34,8 @@ const usePeriodInfo = () => {
   todaysDate = Moment(todaysDate).format("YYYY-MM-DD");
   const cycleStartDate = Moment(periodStartDate).subtract(cycle, "days");
   const tokenHeader = { Authorization: ` Bearer ${token}` };
-  console.log(token, role)
+
+  // console.log(token, role, id)
   // console.log(previousPeriod)
   const removePeriod = async (removeDate) => {
     if (!removeDate) {
@@ -104,20 +105,28 @@ const usePeriodInfo = () => {
             })
         )
       } else {
-        if(!checkIfDateIsPresent(loggedPeriods, period)){
-            dispatch(
-                setPeriod({
-                    previousPeriod: [...previousPeriod, ...period]
-                })
-            )
-          }
+          if(!checkIfDateIsPresent(loggedPeriods, period)){
+              dispatch(
+                  setPeriod({
+                      previousPeriod: [...previousPeriod, ...period]
+                  })
+              )
+            }
         }
     }
+    // clearDates()
   };
 
+const clearDates = () =>{
+  dispatch(
+    setPeriod({
+        previousPeriod: null
+    })
+  )
+};
 //checks if a period date is in the current list of logged periods
   const checkIfDateIsPresent = (loggedPeriods, period) => {
-    const result = loggedPeriods.some(dateSet => dateSet.startDate === period.startDate || dateSet.endDate === period.endDate);
+    const result = loggedPeriods.some(dateSet => dateSet.startDate === period[0].startDate || dateSet.endDate === period[0].endDate);
     return result;
   }
   const fuckthisshit = () =>{
@@ -244,6 +253,7 @@ const usePeriodInfo = () => {
     updatePeriodStatus,
     freedomFromBloodGod,
     nullCurrentDates,
+    checkIfDateIsPresent,
     message,
     periodMessage,
     loggedPeriods,
@@ -256,7 +266,8 @@ const usePeriodInfo = () => {
     isBleeding,
     isLoading,
     role,
-    token
+    token,
+    id,
   };
 };
 export default usePeriodInfo;

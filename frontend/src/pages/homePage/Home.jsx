@@ -12,9 +12,9 @@ const Home = () => {
   const userName = useSelector((state) => state.user)
   const avgLength = useSelector((state) => state.avgLength)
   const [needInfo, setInfo] = useState(true)
-  const{sendPeriodStatus, updatePeriodStatus, freedomFromBloodGod, nullCurrentDates, cycleStartDate, todaysDate, cycle, periodStartDate, periodEndDate, canBleed, isBleeding, isLoading, role} = usePeriodInfo();
-  console.log(`this is account setup role ${role}`)
-  console.log(isBleeding, canBleed)
+  const{sendPeriodStatus, updatePeriodStatus, freedomFromBloodGod, nullCurrentDates, cycleStartDate, todaysDate, cycle, periodStartDate, periodEndDate, canBleed, isBleeding, isLoading} = usePeriodInfo();
+
+  console.log(periodStartDate, periodEndDate)
   const checkInfo = () => {
     if (periodStartDate && periodEndDate){
       setInfo(false)
@@ -35,9 +35,7 @@ const periodEnded = async () =>{
   updatePeriodStatus(false, false);
   nullCurrentDates();
 }
-const test = async () =>{
-  nullCurrentDates();
-}
+
 useEffect(()=>{
   checkInfo()
 },)

@@ -7,22 +7,30 @@ import {useNavigate} from 'react-router-dom';
 const useLogout = () =>{
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const id = useSelector((state) => state.userId);
 
     const dispatchLogout = () =>{
         dispatch(
             setLogout()
         );
-        navigate('/')
+        // navigate('/')
     }
 
     //deletes Guest account when user logs out of it.
 
-    const guestLogout = () =>{
-        const userID = id;
+    const guestLogout = async (role, token, id) =>{
+        console.log('test')
+        const deleteAccountAPI = await axios.post(
+            `${process.env.REACT_APP_APIURL}/auth/deleteuser`,
+            {
+                role,
+                id
+            },
+            {
+                headers: {Authorization: `Bearer ${token}`},
+            })
+        console.log(deleteAccountAPI)
         dispatchLogout();
-
     }
-    return{ dispatchLogout,}
+    return{ dispatchLogout, guestLogout}
 };
 export default useLogout;

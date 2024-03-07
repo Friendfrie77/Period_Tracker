@@ -45,7 +45,7 @@ const Proflie = () => {
       for(const periods in previousPeriod){
         let start = Moment(previousPeriod[periods].startDate)
         let end = Moment(previousPeriod[periods].endDate)
-        periodEvent.newEvent('Period Active', start, end, true)
+        periodEvent.newEvent('Period Was Active', start, end, true)
       }
       if (periodStartDate && periodEndDate){
         let start = Moment(periodStartDate)

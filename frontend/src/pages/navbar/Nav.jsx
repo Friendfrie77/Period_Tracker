@@ -1,32 +1,19 @@
 import { NavLink } from 'react-router-dom';
-import { CiLogout, CiLogin } from 'react-icons/ci'
-import { setLogout } from '../../state';
-import { useDispatch } from 'react-redux';
-import { useSelector } from "react-redux";
+import { CiLogout, CiLogin } from 'react-icons/ci';
 import logo2 from '../../images/logo2.svg'
 import usePeriodInfo from '../../hooks/usePeriodInfo';
 import useLogout from '../../hooks/useLogout';
 
 const Nav = ({onDataSentLogin, onDataSentReg}) => {
-    const dispatch = useDispatch();
-    // const cycle = useSelector((state) => state.cycle);
-    // const avgLength = useSelector((state) => state.avgLength)
-    // const previousPeriod = useSelector((state) => state.previousPeriod)
-    // const isLoggedIn = Boolean(useSelector((state) => state.token))
-    const {role, token} = usePeriodInfo();
-    const {dispatchLogout} = useLogout();
-
-    const guestLogout = () =>{
-        dispatch(
-            setLogout()
-        )
-        
+    const {role, token, id} = usePeriodInfo();
+    const {dispatchLogout, guestLogout} = useLogout();
+    const guestLogoutButton = () =>{
+        guestLogout(role, token, id)
     }
     const openLogin = () =>{
         onDataSentLogin(true)
     }
     const openRegister = () =>{
-
         onDataSentReg(true)
     }
     const navbar = (
@@ -68,7 +55,7 @@ const Nav = ({onDataSentLogin, onDataSentReg}) => {
                                 </li>
                             ): (
                                 <li className='logout'>
-                                    <button onClick={guestLogout}>
+                                    <button onClick={guestLogoutButton}>
                                         <CiLogout></CiLogout>
                                     </button>
                                 </li>

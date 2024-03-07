@@ -10,7 +10,7 @@ import {Form} from 'react-final-form';
 const AccountSetup = () => {
   const isAuth = Boolean(useSelector((state) => state.token));
   const {sendAccountInfo, sendDemoInfo, isLoading} = useAccountSetup();
-  const {updateUserDates, loggedPeriods} = usePeriodInfo();
+  const {updateUserDates, loggedPeriods, testDate} = usePeriodInfo();
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -29,7 +29,7 @@ const AccountSetup = () => {
     updateUserDates(date);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[date]);
-  console.log(date)
+  console.log(loggedPeriods, 'yest')
   const setup = isLoading ? <Spinner /> : (
         <section className='setup-wrapper'>
           {isAuth ? (
@@ -59,6 +59,15 @@ const AccountSetup = () => {
                 ranges={date}
 
               />
+              {/* <DateRange
+                editableDateInputs={true}
+                showMonthAndYearPickers={false}
+                fixedHeight = {true}
+                onChange={item => updateDates([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={date}
+
+              /> */}
               <Form
                 onSubmit={demoAccountButton}
                 validate = {values =>{

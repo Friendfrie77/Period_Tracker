@@ -3,8 +3,17 @@ const User = require('../mongoose-schmea/User');
 const Guest = require('../mongoose-schmea/Demo');
 const GenPeriods = require('../utils/genGuestPeriodInfo');
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 
+//used to check user role and return the mongoose-schmea name that is needed for functions needed. 
+function checkUserRole(role){
+    let roleType;
+    if (role === 'Guest'){
+        roleType = Guest
+    }else{
+        roleType = User
+    }
+    return roleType
+}
 const register = async (req, res) => {
     const { email, username, password} = req.body;
     const results = await User.exists({email: email})
@@ -68,21 +77,15 @@ const login = async (req, res) => {
 const deleteAccount = async (req, res) =>{
     let user;
     const {role, id} = req.body;
-    if(id === 'Guest'){
-        user =  await Guest.findOne({id: id})
-    }else{
-        user = User
+    userRole = checkUserRole(role);
+    try{
+        userRole.deleteOne({_id: id}).exec();
+        res.status(200).json({messege: 'Account Deleted'})
+    }catch{
+        res.status(401).json({
+            error:'No account found'
+        })
     }
-    // const {email} = req.body;
-    // const user = await User.findOne({email:email});
-    // if (user){
-    //     User.deleteOne({_id: user._id}).exec();
-    //     res.status(200).json({messege: 'Account Deleted'})
-    // } else{
-    //     res.status(401).json({
-    //         error:'No account found'
-    //     })
-    // }
 }
 
 const changePassword = async (req, res) =>{
@@ -111,19 +114,20 @@ const changePassword = async (req, res) =>{
 const demoAccount = async (req, res) =>{
     const {username, loggedPeriods} = req.body;
     let user;
-    if(loggedPeriods.length === 0){
+    user = new Guest({username, password:'password', role:'Guest', cycle: '', 
+        periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, avgLength: ''})
+    if(!loggedPeriods){
         let periodInfo = []
         GenPeriods.genAllPeriods(periodInfo, 4);
-        user = new Guest({username, password:'password', role:'Guest', cycle: '', 
-        periodStartDate: '', periodEndDate: '', canBleed: false, isBleeding: false, avgLength: '', previousPeriod:[...periodInfo]})
-        // user.save();
-        // console.log(user)
+        user.previousPeriod = [...periodInfo]
     }else{
-        //come back to;
+        user.previousPeriod = [...loggedPeriods]
     }
     const userId = {id: user._id};
     const accessToken = jwt.sign(userId, process.env.ACCESS_TOKEN_SECRET);
     const userInfo = user.sendUserInfo(user)
     res.status(200).json({accessToken, userInfo, userId});
 }
+
+
 module.exports = {register, login, deleteAccount, changePassword, demoAccount}

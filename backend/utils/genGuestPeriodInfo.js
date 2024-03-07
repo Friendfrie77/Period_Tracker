@@ -21,7 +21,6 @@ const genPrevPeriod = (guestPeriodInfo) =>{
     }else{
         const lastArr = guestPeriodInfo[guestPeriodInfo.length - 1]
         lastPeriodStartDate = moment(lastArr.endDate).subtract(randomCylce, 'days').format('YYYY-MM-DD')
-        // lastPeriodStartDate = moment(lastPeriodStartDate).subtract((guestPeriodInfo.length - 1), 'month').format('YYYY-MM-DD')
         lastPeriodEndDate = moment(lastPeriodStartDate).add(randomLength, 'days').format('YYYY-MM-DD')
     }
     return {startDate: lastPeriodStartDate, endDate: lastPeriodEndDate}

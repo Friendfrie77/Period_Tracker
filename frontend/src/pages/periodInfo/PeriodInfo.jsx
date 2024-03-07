@@ -4,10 +4,9 @@ import Footer from '../footer/Footer';
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
 import usePeriodInfo from '../../hooks/usePeriodInfo';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import Moment from 'moment';
-import axios from 'axios';
-import { setPeriod } from '../../state';
+import PeriodStats from '../../components/PeriodStats';
 
 function PeriodInfo() {
   const userInfo =useSelector((state) => state.previousPeriod)
@@ -19,8 +18,8 @@ function PeriodInfo() {
       key: 'selection'
     }
   ]);
-  // const [loggedPeriods, setLoggedPeriods] =useState([])
-  const {removePeriod, addPeriod, updateUserDates, setLoggedPeriods,  message, periodMessage, loggedPeriods} = usePeriodInfo()
+  const [newPeriod, setNewPeriods] =useState([])
+  const {removePeriod, addPeriod, checkIfDateIsPresent, message, periodMessage, loggedPeriods} = usePeriodInfo()
 
   const optionChange = (event) =>{
     setRemove(event.target.value)
@@ -29,41 +28,34 @@ function PeriodInfo() {
     removePeriod(removeDate)
   }
   const addPeriodButton = async () =>{
-    addPeriod(loggedPeriods);
+    addPeriod(newPeriod);
   };
-  // const userData = () =>{
-  //   const startDate = Moment(date[0].startDate).format()
-  //   const endDate = Moment(date[0].endDate).format()
 
-  //   let period = [{
-  //     startDate: startDate,
-  //     endDate: endDate
-  //   }]
-  //   if (period[0].startDate !== period[0].endDate){
-  //     if(loggedPeriods.length === 0){
-  //       setLoggedPeriods(period)
-  //     }else{
-  //       let newLogged = [...loggedPeriods, ...period]
-  //       setLoggedPeriods(newLogged)
-  //     }
-  //   }
-  // }
-  const removeNewPeriod = (key) =>{
-    const periodUpdate = [...loggedPeriods]
-    periodUpdate.splice(key, 1)
-    setLoggedPeriods(periodUpdate)
+  const addNewPeriod = (date) =>{
+    let period = [
+      {
+        startDate: Moment(date[0].startDate).format('YYYY-MM-DD'),
+        endDate: Moment(date[0].endDate).format('YYYY-MM-DD'),
+      },
+    ];
+    if(period[0].startDate !== period[0].endDate){
+      if(newPeriod.length === 0){
+        setNewPeriods(period)
+      }else if(!checkIfDateIsPresent(newPeriod, period)){
+        setNewPeriods([...newPeriod, ...period])
+      }
+    }
   }
-    // const setDates = (dates) =>{
-    //   dispatch(
-    //     setPeriod({
-    //       previousPeriod: dates
-    //     })
-    //   );
-    // }
-    useEffect(()=>{
-      updateUserDates(date)
-    },[date]);
-    console.log(loggedPeriods)
+  const removeNewPeriod = (key) =>{
+    const periodUpdate = [...newPeriod]
+    periodUpdate.splice(key, 1)
+    setNewPeriods(periodUpdate)
+  }
+  useEffect(()=>{
+    addNewPeriod(date)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[date]);
+  console.log(loggedPeriods)
 
   const content =
     <div className='page-wrapper'>
@@ -82,10 +74,10 @@ function PeriodInfo() {
             />
          <div className='period-add'>
           <h2>Periods to add:</h2>
-          {loggedPeriods.length ?(
+          {newPeriod.length ?(
             <>
             <ol>
-            {loggedPeriods.map((dates, key)=>(
+            {newPeriod.map((dates, key)=>(
               <li key={key}>
                 {`${Moment(dates.startDate).format('MMMM Do')} - ${Moment(dates.endDate).format('MMMM Do')}`}&nbsp;<button onClick={()=>removeNewPeriod(key)} className='btn-period-list'>&#120684;</button>
               </li>
@@ -111,6 +103,7 @@ function PeriodInfo() {
           </fieldset>
           <button className='button' onClick={removePeriodButton}>Remove</button>
         </div>
+        <PeriodStats />
       </section>
       <Footer />
     </div>

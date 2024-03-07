@@ -1,221 +1,247 @@
- $color1: #8FDDC3;
- $color2: #241E4E;
- $color4: #5C0F47;
- $color5: #8FDDC3;
- $color6: #5CFFC9;
- $textcolor: #EAE8FF;
- $button-color:#AF4D98;
- $login-input-background: #4B203F;
- $backgroundgrad: linear-gradient($color2, #302867, #7B145F,  $color4);
- $drop-shadow-wrappers: (rgba(0,0,0,.4) 0px 5px 10px);
- $radius: 5px;
- $box-padding: 1rem;
+$color1: #8fddc3;
+$color2: #241e4e;
+$color4: #5c0f47;
+$color5: #8fddc3;
+$color6: #5cffc9;
+$textcolor: #eae8ff;
+$button-color: #af4d98;
+$login-input-background: #4b203f;
+$backgroundgrad: linear-gradient($color2, #302867, #7b145f, $color4);
+$drop-shadow-wrappers: (rgba(0, 0, 0, 0.4) 0px 5px 10px);
+$radius: 5px;
+$box-padding: 1rem;
 
-@mixin for-size($size){
-    @if $size == tablet-only{
-        @media (max-width: 768px){ @content;}
+@mixin for-size($size) {
+  @if $size == tablet-only {
+    @media (max-width: 768px) {
+      @content;
     }
-    @if $size == small-tablet-only{
-        @media (max-width: 720px){ @content;}
+  }
+  @if $size == small-tablet-only {
+    @media (max-width: 720px) {
+      @content;
     }
-    @if $size == large-phone-only{
-        @media (max-width: 535px) {@content;}
+  }
+  @if $size == large-phone-only {
+    @media (max-width: 535px) {
+      @content;
     }
-    @if $size == phone-only{
-        @media (max-width: 425px){ @content;}
+  }
+  @if $size == phone-only {
+    @media (max-width: 425px) {
+      @content;
     }
-    @if $size == small-phone{
-        @media (max-width: 320px){ @content;}
+  }
+  @if $size == small-phone {
+    @media (max-width: 320px) {
+      @content;
     }
-    @if $size == small-desktop{
-        @media (max-width: 1300px){@content;}
+  }
+  @if $size == small-desktop {
+    @media (max-width: 1300px) {
+      @content;
     }
-    @if $size == Desktop{
-        @media (min-width: 1300px) {@content;}
+  }
+  @if $size == Desktop {
+    @media (min-width: 1300px) {
+      @content;
     }
+  }
 }
 
-@mixin button-mixin{
-    background-color: $button-color;
-    border: none;
-    border-radius: $radius;
-    color: $textcolor;
-    transition: all .2s ease-in;
-    &:active{
-        transform: translateY(2px);
-    }
-    &:hover{
-        background-color: $color2;
-        border-bottom: #5CFFC9;
-    }
-    &:disabled{
-        opacity: 50%;
-        pointer-events: none;
-    }
+@mixin button-mixin {
+  background-color: $button-color;
+  border: none;
+  border-radius: $radius;
+  color: $textcolor;
+  transition: all 0.2s ease-in;
+  &:active {
+    transform: translateY(2px);
+  }
+  &:hover {
+    background-color: $color2;
+    border-bottom: #5cffc9;
+  }
+  &:disabled {
+    opacity: 50%;
+    pointer-events: none;
+  }
 }
-@mixin phone-width-100{
-    @include for-size(tablet-only){
-        width: 100%
-    }
+@mixin phone-width-100 {
+  @include for-size(tablet-only) {
+    width: 100%;
+  }
 }
-@import './reset';
-@import './big-cal/big-cal-styles';
+@import "./reset";
+@import "./big-cal/big-cal-styles";
 
-:root{
-    --fs-welcome: clamp(2.5rem, calc(6vw + 1rem), 4.5rem);
-    --fs-header:clamp(2rem, calc(5vw + .5rem), 4.5rem);
-    --fs-subheader:clamp(1.6rem, calc(4vw + .3rem), 3rem);
-    --fs-horizontal-cal:clamp(1rem, calc(3vw + .5rem), 3rem);
-    --fs-hero:clamp(1.5rem, calc(4vw + .5rem), 4.25rem);
-    --fs-hero-button:clamp(1.5rem, calc(4vw + .5rem), 2.5rem);
-    --fs-info-card: clamp(1.5rem, calc(2vw + .2rem), 2rem);
-    --fs-body: 1.5rem;
-    --fs-cal: 1.5rem;
-    --fs-signup: 1.15rem;
-    @include for-size(large-phone-only){
-        --fs-cal: .9rem;
-        --fs-body: 1.2rem;
-        --fs-signup: 1rem;
-    }
- }
+:root {
+  --fs-welcome: clamp(2.5rem, calc(6vw + 1rem), 4.5rem);
+  --fs-header: clamp(2rem, calc(5vw + 0.5rem), 4.5rem);
+  --fs-subheader: clamp(1.6rem, calc(4vw + 0.3rem), 3rem);
+  --fs-horizontal-cal: clamp(1rem, calc(3vw + 0.5rem), 3rem);
+  --fs-hero: clamp(1.5rem, calc(4vw + 0.5rem), 4.25rem);
+  --fs-hero-button: clamp(1.5rem, calc(4vw + 0.5rem), 2.5rem);
+  --fs-info-card: clamp(1.5rem, calc(2vw + 0.2rem), 2rem);
+  --fs-body: 1.5rem;
+  --fs-cal: 1.5rem;
+  --fs-signup: 1.15rem;
+  @include for-size(large-phone-only) {
+    --fs-cal: 0.9rem;
+    --fs-body: 1.2rem;
+    --fs-signup: 1rem;
+  }
+}
 /* Font familys */
 /* bebas-neue-regular - latin */
 @font-face {
-    font-family: 'Bebas Neue';
-    src: url('./../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.eot');
-    src: local("Bebas Neue"),
-         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff2') format('woff2'),
-         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff') format('woff'),
-         url('../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.ttf') format('truetype')
-  }
+  font-family: "Bebas Neue";
+  src: url("./../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.eot");
+  src: local("Bebas Neue"),
+    url("../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff2")
+      format("woff2"),
+    url("../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.woff")
+      format("woff"),
+    url("../fonts/bebas-neue-v9-latin/bebas-neue-v9-latin-regular.ttf")
+      format("truetype");
+}
 
 /* Comfortaa */
 @font-face {
-    font-family: 'Comfortaa';
-    src: url('./../fonts/Comfortaa/Comfortaa-Light.ttf');
-    src: local('Comfortaa'),
-         url('../fonts/Comfortaa/Comfortaa-Light.ttf') format('truetype')
+  font-family: "Comfortaa";
+  src: url("./../fonts/Comfortaa/Comfortaa-Light.ttf");
+  src: local("Comfortaa"),
+    url("../fonts/Comfortaa/Comfortaa-Light.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Varela_Round';
-    src: url('../fonts/Varela_Round/VarelaRound-Regular.ttf');
-    src: local('Varela_Round'),
-         url('../fonts/Varela_Round/VarelaRound-Regular.ttf') format('truetype')
+  font-family: "Varela_Round";
+  src: url("../fonts/Varela_Round/VarelaRound-Regular.ttf");
+  src: local("Varela_Round"),
+    url("../fonts/Varela_Round/VarelaRound-Regular.ttf") format("truetype");
 }
 
-  $Copy-Font: 'Varela_Round', Sans-Serif;
-  $Header-Font: 'Varela_Round', Sans-Serif;
+$Copy-Font: "Varela_Round", Sans-Serif;
+$Header-Font: "Varela_Round", Sans-Serif;
 
-
-
-p, span, button, a, label, select, ul, li, ol{
-    font-family: $Copy-Font;
+p,
+span,
+button,
+a,
+label,
+select,
+ul,
+li,
+ol {
+  font-family: $Copy-Font;
 }
 
-h1, h2, h3, h4{
-    font-family: $Header-Font;
+h1,
+h2,
+h3,
+h4 {
+  font-family: $Header-Font;
 }
-.message-warning{
-    color: red !important;
-
+.message-warning {
+  color: red !important;
 }
-.warning{
-    color: red !important;
+.warning {
+  color: red !important;
 }
-.button{
-    margin-top: 16px;
-    width: 125px;
-    align-self: center;
-    box-shadow: $drop-shadow-wrappers;
-    height: 35px;
+.button {
+  margin-top: 16px;
+  width: 125px;
+  align-self: center;
+  box-shadow: $drop-shadow-wrappers;
+  height: 35px;
+  font-size: var(--fs-body);
+  @include button-mixin;
+}
+.message {
+  text-align: center;
+  color: $textcolor;
+  font-size: var(--fs-subheader);
+}
+.welcome-text {
+  color: $textcolor;
+  font-size: var(--fs-welcome);
+  padding-bottom: 1.5rem;
+  max-width: 2100px;
+  width: 100%;
+  margin: 0 auto;
+}
+.page-fade {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 11;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  animation: pagefade 0.2s ease-in;
+}
+.warning-box {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: $box-padding;
+  top: 50%;
+  left: 50%;
+  background-color: $color4;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  border-radius: $radius;
+  color: $textcolor;
+  align-items: center;
+  z-index: 1;
+  @include for-size(tablet-only) {
+    width: 95%;
+  }
+  h1 {
     font-size: var(--fs-body);
-    @include button-mixin;
-}
-.message{
-    text-align: center;
-    color: $textcolor;
-    font-size: var(--fs-subheader);
-}
-.welcome-text{
-    color: $textcolor;
-    font-size: var(--fs-welcome);
-    padding-bottom: 1.5rem;
-}
-.page-fade{
-    background-color: rgba(0,0,0,.5);
-    position: fixed;
-    z-index: 11;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    animation: pagefade .2s ease-in;
-}
-.warning-box{
+  }
+  form {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    padding: $box-padding;
-    top: 50%;
-    left: 50%;
-    background-color: $color4;
-    transform: translate(-50%, -50%);
-    width: 50%;
-    border-radius: $radius;
-    color: $textcolor;
+    width: 100%;
     align-items: center;
-    z-index: 1;
-    @include for-size(tablet-only){
-        width: 95%;
-    }
-    h1{
-        font-size: var(--fs-body);
-
-    }
-    form{
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        margin: auto;
-    }
-    .button{
-        box-shadow: $drop-shadow-wrappers;
-        width: 25%;
-        margin: 1rem;
-        border-radius: $radius;
-        height: auto;
-        background-color: $button-color;
-        color: $textcolor;
-        font-family: $Header-Font;
-        font-size: 1.1rem;
-        padding: 5px 8px;
-    }
-    .text-button{
-        background-color: transparent;
-        border: none;
-        box-shadow: none;
-        color: $color5;
-    }
+    margin: auto;
+  }
+  .button {
+    box-shadow: $drop-shadow-wrappers;
+    width: 25%;
+    margin: 1rem;
+    border-radius: $radius;
+    height: auto;
+    background-color: $button-color;
+    color: $textcolor;
+    font-family: $Header-Font;
+    font-size: 1.1rem;
+    padding: 5px 8px;
+  }
+  .text-button {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: $color5;
+  }
 }
 
-
-@import './wrappers';
-@import './layouts';
-@import './index';
-@import './login';
-@import './accountSetup';
-@import './react-calendar';
-@import './home';
-@import './periodinfo';
-@import './profile';
-@import './react-calendar-theme';
-@import './animations';
-@import './loading';
-@import './nav';
-@import './footer';
-@import './horizontal-date-picker';
-@import './reactTelephoneInput';
-@import './period-stats';
-@import './infoCard';
+@import "./wrappers";
+@import "./layouts";
+@import "./index";
+@import "./login";
+@import "./accountSetup";
+@import "./react-calendar";
+@import "./home";
+@import "./periodinfo";
+@import "./profile";
+@import "./react-calendar-theme";
+@import "./animations";
+@import "./loading";
+@import "./nav";
+@import "./footer";
+@import "./horizontal-date-picker";
+@import "./reactTelephoneInput";
+@import "./period-stats";
+@import "./infoCard";
