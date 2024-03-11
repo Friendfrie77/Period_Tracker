@@ -1,12 +1,11 @@
 
 import {React ,useState} from "react";
-import {Form, Field} from 'react-final-form';
+import {Form} from 'react-final-form';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
 import {passwordRegex} from '../../utils/password-regex';
 import useRegSetup from '../../hooks/useRegSetup';
-import UserLogin
- from "../../components/userLoginField/UserLogin";
+import UserLogin from "../../components/userLoginField/UserLogin";
 export default function SignUp(props){
     const {regNewUser ,isLoading} = useRegSetup();
     const [vaildReg, setVaildReg] = useState(false)

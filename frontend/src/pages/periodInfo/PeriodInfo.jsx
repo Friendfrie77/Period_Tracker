@@ -3,7 +3,7 @@ import Nav from '../navbar/Nav'
 import Footer from '../footer/Footer';
 import {useEffect, useState} from 'react';
 import { DateRange } from 'react-date-range';
-import usePeriodInfo from '../../hooks/usePeriodInfo';
+import useUserInfo from '../../hooks/useUserInfo';
 import { useSelector} from "react-redux";
 import Moment from 'moment';
 import PeriodStats from '../../components/PeriodStats';
@@ -19,7 +19,7 @@ function PeriodInfo() {
     }
   ]);
   const [newPeriod, setNewPeriods] =useState([])
-  const {removePeriod, addPeriod, checkIfDateIsPresent, message, periodMessage, loggedPeriods} = usePeriodInfo()
+  const {removePeriod, addPeriod, checkIfDateIsPresent, message, periodMessage, loggedPeriods} = useUserInfo()
 
   const optionChange = (event) =>{
     setRemove(event.target.value)

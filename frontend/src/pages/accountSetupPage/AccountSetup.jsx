@@ -3,14 +3,14 @@ import { DateRange } from 'react-date-range';
 import { useSelector } from "react-redux";
 import Spinner from '../../components/Spinner';
 import useAccountSetup from '../../hooks/useAccountSetup';
-import usePeriodInfo from '../../hooks/usePeriodInfo';
+import useUserInfo from '../../hooks/useUserInfo';
 import UserLogin from '../../components/userLoginField/UserLogin';
 import {Form} from 'react-final-form';
 
 const AccountSetup = () => {
   const isAuth = Boolean(useSelector((state) => state.token));
   const {sendAccountInfo, sendDemoInfo, isLoading} = useAccountSetup();
-  const {updateUserDates, loggedPeriods, testDate} = usePeriodInfo();
+  const {updateUserDates, loggedPeriods} = useUserInfo();
   const [date, setDate] = useState([
     {
       startDate: new Date(),

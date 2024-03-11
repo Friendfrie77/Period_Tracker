@@ -5,14 +5,14 @@ import PeriodNotActive from "./PeriodNotActive";
 import PeriodActive from "./PeriodActive";
 import PeriodHere from "./PeriodHere";
 import NeedInfo from "./NeedInfo";
-import usePeriodInfo from "../../hooks/usePeriodInfo";
+import useUserInfo from "../../hooks/useUserInfo";
 import Spinner from "../../components/Spinner";
 
 const Home = () => {
   const userName = useSelector((state) => state.user)
   const avgLength = useSelector((state) => state.avgLength)
   const [needInfo, setInfo] = useState(true)
-  const{sendPeriodStatus, updatePeriodStatus, freedomFromBloodGod, nullCurrentDates, cycleStartDate, todaysDate, cycle, periodStartDate, periodEndDate, canBleed, isBleeding, isLoading} = usePeriodInfo();
+  const{sendPeriodStatus, updatePeriodStatus, freedomFromBloodGod, nullCurrentDates, cycleStartDate, todaysDate, cycle, periodStartDate, periodEndDate, canBleed, isBleeding, isLoading} = useUserInfo();
 
   console.log(periodStartDate, periodEndDate)
   const checkInfo = () => {

@@ -10,13 +10,14 @@ import {
   setPeriodInfo,
 } from "../state";
 
-const usePeriodInfo = () => {
+const useUserInfo = () => {
   //states
   const token = useSelector((state) => state.token);
   const id = useSelector((state) => state.userId);
   const role = useSelector((state) => state.role);
   const previousPeriod = useSelector((state) => state.previousPeriod);
-  // const email = useSelector((state) => state.email);
+  const userName = useSelector((state) => state.user)
+  const email = useSelector((state) => state.email)
   const cycle = useSelector((state) => state.cycle);
   const periodEndDate = useSelector((state) => state.periodEndDate);
   const periodStartDate = useSelector((state) => state.periodStartDate);
@@ -268,6 +269,9 @@ const clearDates = () =>{
     role,
     token,
     id,
+    previousPeriod, 
+    userName,
+    email
   };
 };
-export default usePeriodInfo;
+export default useUserInfo;

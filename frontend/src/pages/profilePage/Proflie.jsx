@@ -1,11 +1,7 @@
-import {useState, useEffect} from 'react';
-import Moment from 'moment';
+import {useState} from 'react';
 import { useSelector } from "react-redux";
 import axios from 'axios';
 import Nav from '../navbar/Nav'
-import {useNavigate} from 'react-router-dom';
-import { setLogout } from '../../state';
-import { useDispatch } from 'react-redux';
 import Footer from '../footer/Footer';
 import ProfileCal from '../../components/ProfileCal';
 import {Events } from '../../classes/events';
@@ -16,55 +12,26 @@ import ChangePassword from './ChangePassword';
 import Notication from './Notication';
 import Settings from './Settings';
 import useProfile from '../../hooks/useProfile';
+import useUserInfo from '../../hooks/useUserInfo';
 const Proflie = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userName = useSelector((state) => state.user)
-  const periodEndDate = useSelector((state) => state.periodEndDate)
-  const periodStartDate = useSelector((state) => state.periodStartDate)
-  const token = useSelector((state) => state.token)
-  const email = useSelector((state) => state.email)
-  const previousPeriod = useSelector((state) => state.previousPeriod)
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false);
   const [openNoticationBox, setNotication] = useState(false);
   const [deletedEmail, setDeletedEmail] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmPassword] = useState('');
   const [erroMsg, setErrorMsg] = useState('');
   const notification = useSelector((state) => state.notification);
-  const accountType = useSelector((state) => state.role)
+  //hooks
+  const {deleteAccount, setOldPassword, setNewPassword, setConfirmPassword, oldPassword, newPassword, confirmNewPassword} = useProfile();
+  const {periodStartDate, periodEndDate, previousPeriod, userName, email, role} = useUserInfo();
 
-  const {deleteAccount} = useProfile();
-  let periodEvent = new Events()
-  const [pEvents, setEvents] = useState(periodEvent.allEvents)
-  const checkUserInfo = async () => {
-    if (pEvents.length == 0){
-      for(const periods in previousPeriod){
-        let start = Moment(previousPeriod[periods].startDate)
-        let end = Moment(previousPeriod[periods].endDate)
-        periodEvent.newEvent('Period Was Active', start, end, true)
-      }
-      if (periodStartDate && periodEndDate){
-        let start = Moment(periodStartDate)
-        let end = Moment(periodEndDate)
-        periodEvent.newEvent('Period Active', start, end, true)
-      }
-    }
+  const checkUserInfo = () => {
+    const events = new Events();
+    events.checkForEvents(previousPeriod, periodStartDate, periodEndDate, email,);
+    return events.allEvents
   }
   const emailChange = (email) => {
     setDeletedEmail(email.target.value)
-  }
-  const oldPasswordChange = (password) =>{
-    setOldPassword(password.target.value)
-  }
-  const newPasswordChange = (password) =>{
-    setNewPassword(password.target.value)
-  }
-  const confirmPassword = (password) =>{
-    setConfirmPassword(password.target.value)
   }
   const settingToggle = () =>{
     setOpen(!open)
@@ -78,37 +45,22 @@ const Proflie = () => {
   const openPasswordChange = () =>{
     setPasswordChange(!showPasswordChange)
   }
-  // const deleteAccount = () =>{
-  //   if (deletedEmail === email){
-  //     axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`, {
-  //       email
-  //     },{
-  //       headers: {'Authorization': `Bearer ${token}`},
-  //     })
-  //     dispatch(
-  //       setLogout()
-  //     )
-  //     navigate('/')
-  //   }
-  // }
   const deleteAccountCall = () =>{
     deleteAccount(deletedEmail)
   }
   const changePassword = async () =>{
-      const passwordChange = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
-        email, oldPassword, newPassword
-      },{
-        headers: {'Authorization': `Bearer ${token}`},
-      })
-      const message = await passwordChange
-      setOldPassword('')
-      setNewPassword('')
-      setConfirmPassword('')
-      return ({isVaild: message.data.isValid, message: message.data.messege})
+      // const passwordChange = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+      //   email, oldPassword, newPassword
+      // },{
+      //   headers: {'Authorization': `Bearer ${token}`},
+      // })
+      // const message = await passwordChange
+      // setOldPassword('')
+      // setNewPassword('')
+      // setConfirmPassword('')
+      // return ({isVaild: message.data.isValid, message: message.data.messege})
   }
-  useEffect(() =>{
-    checkUserInfo()
-  },[])
+  console.log(oldPassword)
   const content = (
     <div className='page-wrapper'>
       <Nav />
@@ -117,7 +69,7 @@ const Proflie = () => {
         <div className='calander'>
           <h2>Here is how you month looks</h2>
           <ProfileCal
-            event= {pEvents}
+            event= {checkUserInfo()}
           />
         </div>
         <PeriodStats />
@@ -128,13 +80,13 @@ const Proflie = () => {
           }
         </div>
         {deleteBox &&
-        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccountCall} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} role = {accountType} />} />
+        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccountCall} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} role = {role} />} />
         }
         {openNoticationBox &&
          <PageFade content= {<Notication close ={noticationBox} />} />
         }
         {showPasswordChange &&
-          <PageFade content= {<ChangePassword callPasswordChange = {changePassword} oldPassword = {oldPassword} oldPasswordChange= {oldPasswordChange} newPassword = {newPassword} newPasswordChange = {newPasswordChange} confirmNewPassword = {confirmNewPassword} confirmPassword = {confirmPassword} close={openPasswordChange} /> } />
+          <PageFade content= {<ChangePassword close={openPasswordChange} /> } />
         }
       </section>
       <Footer />

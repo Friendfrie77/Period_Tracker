@@ -89,23 +89,22 @@ const deleteAccount = async (req, res) =>{
 }
 
 const changePassword = async (req, res) =>{
-    const {email, oldPassword, newPassword} = req.body;
-    const user = await User.findOne(({email: email}))
-    let isVaild;
-    if (user){
-        const isSame = user.authPassword(oldPassword, function(err, same){
+    const {userId, oldPassword, newPassword} = req.body;
+    const user = await User.findById(userId);
+    if(!user){
+        res.status(500).json({messege: 'An error has Occurred'})
+    }else{
+        user.authPassword(oldPassword, function(err, same){
             if(err){
-                res.status(500).json({
-                    error: 'Internal error please try again later'
-                });
-            } else if (!same){
-                res.status(200).json({
-                    isValid: false, messege: 'Incorrect password'
-                });
+                res.status(500).json({messege: 'An error has Occurred'})
+            }else if(!same){
+                res.status(401).json({
+                    message: 'Current Password Incorrect'
+                })
             }else{
-                user.password = newPassword
-                user.save()
-                res.status(200).json({isValid: true, messege: 'Password Updated'})
+                user.password = newPassword;
+                user.save();
+                res.status(200).json({message : 'Password Updated'})
             }
         })
     }

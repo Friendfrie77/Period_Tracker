@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { CiLogout, CiLogin } from 'react-icons/ci';
 import logo2 from '../../images/logo2.svg'
-import usePeriodInfo from '../../hooks/usePeriodInfo';
+import usePeriodInfo from '../../hooks/useUserInfo';
 import useLogout from '../../hooks/useLogout';
 
 const Nav = ({onDataSentLogin, onDataSentReg}) => {
