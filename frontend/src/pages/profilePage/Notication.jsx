@@ -51,9 +51,7 @@ function Notication(props) {
             close()
         }
     }
-    const test = () =>{
-        console.log(phoneNumber)
-    }
+
   return (
     <div className='warning-box'>
         {notification &&

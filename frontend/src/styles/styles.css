@@ -1303,6 +1303,11 @@ h4 {
   color: #eae8ff;
   transform: all 0.3s ease;
 }
+.username-input label:disabled,
+.password-input label:disabled,
+.email-input label:disabled {
+  opacity: 0.5;
+}
 .username-input label:after,
 .password-input label:after,
 .email-input label:after {
@@ -1436,6 +1441,10 @@ select:-webkit-autofill:focus {
   position: absolute;
   bottom: 0px;
   left: 4px;
+}
+
+.input-disabled {
+  opacity: 0.5;
 }
 
 .demo-form {

@@ -1,6 +1,4 @@
 import {useState} from 'react';
-import { useSelector } from "react-redux";
-import axios from 'axios';
 import Nav from '../navbar/Nav'
 import Footer from '../footer/Footer';
 import ProfileCal from '../../components/ProfileCal';
@@ -11,28 +9,21 @@ import DeleteAccout from './DeleteAccout';
 import ChangePassword from './ChangePassword';
 import Notication from './Notication';
 import Settings from './Settings';
-import useProfile from '../../hooks/useProfile';
 import useUserInfo from '../../hooks/useUserInfo';
 const Proflie = () => {
   const [open, setOpen] = useState(false);
   const [deleteBox, setDelete] = useState(false);
   const [showPasswordChange, setPasswordChange] = useState(false);
   const [openNoticationBox, setNotication] = useState(false);
-  const [deletedEmail, setDeletedEmail] = useState('');
-  const [erroMsg, setErrorMsg] = useState('');
-  const notification = useSelector((state) => state.notification);
   //hooks
-  const {deleteAccount, setOldPassword, setNewPassword, setConfirmPassword, oldPassword, newPassword, confirmNewPassword} = useProfile();
-  const {periodStartDate, periodEndDate, previousPeriod, userName, email, role} = useUserInfo();
+  const {periodStartDate, periodEndDate, previousPeriod, userName, email} = useUserInfo();
 
   const checkUserInfo = () => {
     const events = new Events();
     events.checkForEvents(previousPeriod, periodStartDate, periodEndDate, email,);
     return events.allEvents
   }
-  const emailChange = (email) => {
-    setDeletedEmail(email.target.value)
-  }
+
   const settingToggle = () =>{
     setOpen(!open)
   }
@@ -45,22 +36,6 @@ const Proflie = () => {
   const openPasswordChange = () =>{
     setPasswordChange(!showPasswordChange)
   }
-  const deleteAccountCall = () =>{
-    deleteAccount(deletedEmail)
-  }
-  const changePassword = async () =>{
-      // const passwordChange = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
-      //   email, oldPassword, newPassword
-      // },{
-      //   headers: {'Authorization': `Bearer ${token}`},
-      // })
-      // const message = await passwordChange
-      // setOldPassword('')
-      // setNewPassword('')
-      // setConfirmPassword('')
-      // return ({isVaild: message.data.isValid, message: message.data.messege})
-  }
-  console.log(oldPassword)
   const content = (
     <div className='page-wrapper'>
       <Nav />
@@ -76,11 +51,11 @@ const Proflie = () => {
         <div className='account-settings'>
           <button onClick={settingToggle}>Settings</button>
           {open &&
-            <PageFade content = {<Settings openPassword = {openPasswordChange} openNotication = {noticationBox} openDeleteBox= {openDeleteBox} close={settingToggle} erroMsg= {erroMsg} />} />
+            <PageFade content = {<Settings openPassword = {openPasswordChange} openNotication = {noticationBox} openDeleteBox= {openDeleteBox} close={settingToggle} />} />
           }
         </div>
         {deleteBox &&
-        <PageFade content = {<DeleteAccout deleteAccount ={deleteAccountCall} deletedEmail={deletedEmail} emailChange={emailChange} openDeleteBox={openDeleteBox} role = {role} />} />
+        <PageFade content = {<DeleteAccout openDeleteBox={openDeleteBox} />} />
         }
         {openNoticationBox &&
          <PageFade content= {<Notication close ={noticationBox} />} />

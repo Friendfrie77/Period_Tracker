@@ -5,13 +5,16 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import logo from '../../images/logo.svg';
+import useProfile from '../../hooks/useProfile';
 function Index() {
     const [loginOpen, setLogin] = useState(false)
     const [newAccount, setAccount] = useState(false)
     const [loading, setLoading] = useState(false);
     const [err, setErrMsg] = useState('');
+    const [message] = useProfile();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    console.log(`This is delete message:${message}`)
     const openLogin = () =>{
         setLogin(!loginOpen)
     }
@@ -38,7 +41,6 @@ function Index() {
             setLoading(false)
         });
         const user = await results
-        console.log(user)
         if(user){
             dispatch(
                 setLogin({
@@ -47,7 +49,6 @@ function Index() {
             )
         }
     }
-    
     const content = (
         <section className='index-wrapper content'>
             <div className='index-background-img'>

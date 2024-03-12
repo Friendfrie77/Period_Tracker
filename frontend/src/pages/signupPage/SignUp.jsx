@@ -1,5 +1,5 @@
 
-import {React ,useState} from "react";
+import {React} from "react";
 import {Form} from 'react-final-form';
 import Spinner from '../../components/Spinner';
 import {AiOutlineClose} from 'react-icons/ai';
@@ -8,7 +8,6 @@ import useRegSetup from '../../hooks/useRegSetup';
 import UserLogin from "../../components/userLoginField/UserLogin";
 export default function SignUp(props){
     const {regNewUser ,isLoading} = useRegSetup();
-    const [vaildReg, setVaildReg] = useState(false)
     const onSubmit = async (values) => {
         const res = regNewUser(values);
         if(res){

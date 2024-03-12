@@ -25,6 +25,9 @@
     border-bottom: 1px solid $textcolor;
     color: $textcolor;
     transform: all 0.3s ease;
+    &:disabled{
+      opacity: .5;
+    }
     &:after {
       content: "";
       position: absolute;
@@ -148,4 +151,7 @@ select:-webkit-autofill:focus {
   position: absolute;
   bottom: 0px;
   left: 4px;
+}
+.input-disabled{
+  opacity: .5;
 }

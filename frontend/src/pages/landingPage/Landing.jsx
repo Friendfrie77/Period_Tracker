@@ -1,16 +1,18 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
 import Nav from '../navbar/Nav'
 import Login from '../loginPage/Login';
 import SignUp from '../signupPage/SignUp';
-import Phone from '../../images/phone.png'
+import Phone from '../../images/phone-test.png'
 import Laptop from '../../images/laptop.jpg'
 import Footer from '../footer/Footer';
+import useProfile from '../../hooks/useProfile';
 import IndexInfoCards from '../../components/indexPageCards/IndexInfoCards';
 const IndexPage = () => {
   const [loginOpen, setLogin] = useState(false)
   const [regOpen, setReg] = useState(false)
   const [isLoading, setLoading] = useState(true)
   const [err, setErrMsg] = useState('');
+  const {message} = useProfile();
   const handleDataReceiveLogin = (data) => {
     setLogin(data);
   };
@@ -34,6 +36,12 @@ const IndexPage = () => {
   const demo = () =>{
     
   }
+  useEffect(()=>{
+    console.log(message)
+    if(message.message){
+      alert(message.message)
+    }
+  },[])
   const content =(
     <section className='page-wrapper'>
       <Nav onDataSentLogin={handleDataReceiveLogin} onDataSentReg = {handleDataReceiveReg} />

@@ -12,55 +12,93 @@ const useProfile = () =>{
     const userId = useSelector((state) => state.userId);
     const token = useSelector((state) => state.token);
     //Normal States
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState({
+        type: null,
+        message: null
+    })
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const deleteAccount = (confirmEmail) =>{
+    const deleteAccount = async (values) =>{
         if(userRole === "Guest"){
-            //fix backend logic
-            axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`,{
-                userRole ,userId
-            },{
-                headers:{'Authorization': `Bearer ${token}`},
-            })
-        }else{
-            if(confirmEmail === userEmail){
-                //fix case in route
-                axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`,{
-                    userEmail
+            try{
+                const deleteAccountAPICall = await axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`,{
+                    userRole, userId
                 },{
-                    headers:{'Authorization': `Bearer ${token}`},
+                    headers: {'Authorization' : `Bearer ${token}`},
+                })
+                setMessage({
+                    type: 'success',
+                    message: deleteAccountAPICall.data.messege
                 })
                 dispatch(
                     setLogout()
                 )
                 navigate('/')
+            }catch(err){
+                setMessage({
+                    type: 'error',
+                    msg: err.response.data.message
+                })
+            }
+        }else{
+            try{
+                if(values.email !== userEmail){
+                    throw new Error('Email does not match account Email.');
+                }else{
+                    const deleteAccountAPICall = await axios.post(`${process.env.REACT_APP_APIURL}/auth/deleteuser`,{
+                        userRole, userId
+                    },{
+                        headers: {'Authorization' : `Bearer ${token}`},
+                    })
+                    setMessage({
+                        type: 'success',
+                        message: deleteAccountAPICall.data.messege
+                    })
+                    dispatch(
+                        setLogout()
+                    )
+                    navigate('/')
+                }
+            }catch(err){
+                if(err.message){
+                    setMessage({
+                        type: 'error',
+                        message: err.message
+                    })
+                }else if(err.response.data.message){
+                    setMessage({
+                        type: 'error',
+                        msg: err.response.data.message
+                    })
+                }
             }
         }
     }
-    const changePassword = async (oldPassword, newPassword) =>{
-        const passwordChangeCall = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
-            userId, oldPassword, newPassword
-        }, {
-            headers: {'Authorization': `Bearer ${token}`}
-        });
-        console.log(passwordChangeCall)
+    const changePassword = async (values) =>{
+        const {oldPassword, newPassword} = values
+        try{
+            const passwordChangeCall = await axios.post(`${process.env.REACT_APP_APIURL}/auth/changepassword`,{
+                userId, oldPassword, newPassword
+            }, {
+                headers: {'Authorization': `Bearer ${token}`}
+            });
+            const res = passwordChangeCall.data.message;
+            setMessage({
+                type:'success',
+                msg: res
+            })
+        }catch(err){
+            setMessage({
+                type: 'error',
+                msg: err.response.data.message
+            })
+        }
     }
 
-    const oldPasswordChange = (password) =>{
-        setOldPassword(password.target.value)
-    }
-    const newPasswordChange = (password) =>{
-        setNewPassword(password.target.value)
-    }
-      const confirmPassword = (password) =>{
-        setConfirmPassword(password.target.value)
-    }
 
-    return{deleteAccount, setOldPassword, setNewPassword, setConfirmPassword, changePassword,oldPasswordChange, newPasswordChange, confirmPassword, oldPassword, newPassword, confirmNewPassword}
+
+    return{deleteAccount, changePassword, message, userRole}
 }
 export default useProfile;
